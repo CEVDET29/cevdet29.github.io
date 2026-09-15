@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Modern Standart Arapçada sık kullanılan 100 fiil; Türkçe anlamları ve temel mâzi-muzari çekimleri">
+  <title>En Çok Kullanılan 100 Arapça Fiil</title>
+  <link rel="stylesheet" href="assets/styles.css?v=13">
+  <style>
+    .verb-shell{width:min(1480px,calc(100% - 32px));margin:0 auto;padding:32px 0 64px}.verb-hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:end;margin-bottom:24px;padding:32px;border:1px solid var(--border);border-radius:24px;background:var(--surface);box-shadow:var(--shadow)}.verb-hero h1{margin:.25rem 0 .6rem;font-size:clamp(2rem,4vw,3.4rem);line-height:1.05}.verb-hero p{max-width:780px;margin:0;color:var(--muted);font-size:1.05rem}.verb-count{display:grid;place-items:center;min-width:130px;aspect-ratio:1;border-radius:50%;background:var(--teal);color:white}.verb-count strong{font-size:2.7rem;line-height:1}.verb-count span{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em}.study-note,.template-card,.verb-workspace{margin-top:20px;padding:24px;border:1px solid var(--border);border-radius:20px;background:var(--surface);box-shadow:var(--shadow)}.study-note{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.study-note article{padding:16px;border-radius:14px;background:var(--surface-soft)}.study-note h2,.study-note h3{margin:0 0 8px}.study-note p{margin:0;color:var(--muted);line-height:1.55}.template-heading,.workspace-heading{display:flex;justify-content:space-between;gap:20px;align-items:end;margin-bottom:16px}.template-heading h2,.workspace-heading h2{margin:0}.template-heading p,.workspace-heading p{max-width:720px;margin:5px 0 0;color:var(--muted)}.table-scroll{overflow:auto;border:1px solid var(--border);border-radius:14px}.verb-table,.conjugation-template{width:100%;border-collapse:collapse;background:var(--surface)}.verb-table th,.verb-table td,.conjugation-template th,.conjugation-template td{padding:12px 14px;border-bottom:1px solid var(--border);text-align:left;vertical-align:middle}.verb-table th,.conjugation-template th{position:sticky;top:0;z-index:2;background:var(--surface-soft);font-size:.78rem;text-transform:uppercase;letter-spacing:.04em}.verb-table tbody tr:hover{background:var(--surface-soft)}.verb-table .rank{width:54px;color:var(--muted);font-variant-numeric:tabular-nums}.verb-table .meaning{min-width:160px;font-weight:750}.verb-table .arabic-cell{min-width:145px;font-family:var(--arabic-font,"Traditional Arabic",serif);font-size:calc(1.55rem * var(--arabic-scale));line-height:1.35;text-align:right;white-space:nowrap}.verb-table .tools{min-width:130px;white-space:nowrap}.row-tool{margin:2px;padding:6px 9px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);font:inherit;font-size:.76rem;cursor:pointer}.row-tool:hover{border-color:var(--teal);color:var(--teal)}.band{display:inline-flex;margin-top:4px;padding:3px 7px;border-radius:999px;background:var(--surface-soft);color:var(--muted);font-size:.7rem;font-weight:650}.verb-toolbar{display:grid;grid-template-columns:minmax(220px,1fr) minmax(170px,240px) auto;gap:12px;margin:18px 0}.verb-toolbar input,.verb-toolbar select{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:11px;background:var(--surface);color:var(--text);font:inherit}.verb-toolbar button{padding:12px 16px;border:0;border-radius:11px;background:var(--teal);color:white;font:inherit;font-weight:750;cursor:pointer}.result-count{margin:0 0 10px;color:var(--muted);font-size:.9rem}.conjugation-template td[lang="ar"]{font-family:var(--arabic-font,"Traditional Arabic",serif);font-size:calc(1.35rem * var(--arabic-scale));text-align:right;white-space:nowrap}.source-note{margin-top:20px;padding:18px 22px;border-left:4px solid var(--teal);border-radius:10px;background:var(--surface-soft);color:var(--muted);line-height:1.55}.source-note strong{color:var(--text)}.source-note a{color:var(--teal)}.empty-row{text-align:center!important;color:var(--muted);padding:40px!important}.print-only{display:none}
+    .template-hint{margin:8px 0 0;color:var(--muted);font-size:.82rem}.conjugation-template tbody tr{cursor:pointer;transition:background .15s ease,box-shadow .15s ease}.conjugation-template tbody tr:hover{background:var(--surface-soft)}.conjugation-template tbody tr:focus-visible{outline:3px solid var(--teal);outline-offset:-3px}.conjugation-template tbody tr.is-selected{background:var(--teal-soft)!important;box-shadow:inset 5px 0 var(--teal)}.template-row-tools{min-width:128px;white-space:nowrap}.row-tool.is-speaking{border-color:var(--teal);color:var(--teal)}#print-verbs{justify-self:start;align-self:center;padding:7px 10px;border:1px solid var(--border);background:transparent;color:var(--text);font-size:.78rem;font-weight:650}.verb-print-grid{display:none}
+    @media(max-width:820px){.verb-shell{width:min(100% - 20px,1480px);padding-top:18px}.verb-hero{grid-template-columns:1fr;padding:22px}.verb-count{display:none}.study-note{grid-template-columns:1fr;padding:16px}.template-card,.verb-workspace{padding:16px}.verb-toolbar{grid-template-columns:1fr}.workspace-heading,.template-heading{display:block}.template-actions{justify-content:flex-start;margin-top:12px}.verb-table th,.verb-table td{padding:10px}.verb-table .arabic-cell{font-size:calc(1.35rem * var(--arabic-scale))}}
+    @media print{
+      @page{size:A4 portrait;margin:12mm 11mm 13mm}
+      :root,[data-theme="dark"]{color-scheme:light;--bg:#fff;--surface:#fff;--surface-soft:#eee;--text:#000;--muted:#333;--border:#999}
+      html,body{width:100%!important;margin:0!important;padding:0!important;background:#fff!important;color:#000!important}
+      .topbar,.verb-hero,.study-note,.template-card,.verb-toolbar,.source-note,.toast,.result-count,.screen-table,.row-tool,.band,.skip-link{display:none!important}
+      .verb-shell,.verb-workspace{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;box-shadow:none!important;background:#fff!important}
+      .workspace-heading{display:block!important;margin:0 0 1.5mm}
+      .workspace-heading .eyebrow{display:none}
+      .workspace-heading h2{margin:0;font-size:13pt;color:#000!important}
+      .workspace-heading p{display:none}
+      .print-only{display:block;margin:0 0 2.5mm;padding-bottom:1.5mm;border-bottom:.6pt solid #888;color:#000!important;font-size:7.6pt;line-height:1.3}
+      .verb-print-grid{display:block!important;width:100%!important}
+      .verb-print-table{width:100%!important;table-layout:fixed;border-collapse:collapse;background:#fff!important;color:#000!important}
+      .verb-print-table thead{display:table-header-group}
+      .verb-print-table th,.verb-print-table td{padding:.9mm 1.4mm!important;border:.4pt solid #b4b4b4!important;background:#fff!important;color:#000!important;vertical-align:middle}
+      .verb-print-table th{border-color:#666!important;background:#e9e9e9!important;font-size:7.6pt;font-weight:700;text-align:center;letter-spacing:.02em}
+      .verb-print-table th:nth-child(1){width:8mm}
+      .verb-print-table th:nth-child(2){width:46mm}
+      .verb-print-table tr{break-inside:avoid;page-break-inside:avoid}
+      .verb-print-table tbody tr:nth-child(5n) td{border-bottom-width:.9pt!important;border-bottom-color:#5a5a5a!important}
+      .verb-print-table .pr-rank{color:#555!important;font-size:7.6pt;text-align:center;font-variant-numeric:tabular-nums}
+      .verb-print-table .pr-meaning{font-size:8.3pt;line-height:1.2;overflow-wrap:break-word;hyphens:auto}
+      .verb-print-table .pr-ar{font-family:var(--arabic-font,"Traditional Arabic",serif);font-size:12.5pt;line-height:1.22;text-align:center;direction:rtl;white-space:nowrap}
+    }
+  </style>
+</head>
+<body data-page="verbs">
+  <a class="skip-link" href="#main">İçeriğe geç</a>
+  <header class="topbar"><div class="topbar__inner">
+    <a class="brand" href="index.html" aria-label="Ana sayfaya dön"><span class="brand__mark" aria-hidden="true">ض</span><span><strong>Arapça Öğreniyorum</strong><small>100 fiil çalışma tablosu</small></span></a>
+    <div class="reading-tools" aria-label="Okuma araçları"><button class="text-button" id="arabic-smaller" type="button" aria-label="Arapça yazıyı küçült">A−</button><button class="text-button" id="arabic-larger" type="button" aria-label="Arapça yazıyı büyüt">A+</button><button class="icon-button" id="theme-toggle" type="button" aria-label="Koyu temayı aç" title="Tema değiştir"><span aria-hidden="true">◐</span></button></div>
+  </div></header>
+
+  <main id="main" class="verb-shell">
+    <section class="verb-hero">
+      <div><p class="eyebrow">Modern Standart Arapça · Çalışma tablosu</p><h1>En çok kullanılan 100 fiil</h1><p>Her fiili dört temel biçimiyle birlikte öğren: “o yaptı”, “o yapıyor/yapar”, “ben yaptım” ve “ben yapıyorum/yaparım”. Harekeler, zayıf ve düzensiz fiillerdeki değişiklikleri görmeyi kolaylaştırır.</p></div>
+      <div class="verb-count" aria-label="100 fiil"><strong>100</strong><span>temel fiil</span></div>
+    </section>
+
+    <section class="study-note" aria-label="Tabloyu kullanma rehberi">
+      <article><h2>Nasıl çalışmalı?</h2><p>Günde 10 fiil seç. Önce mâzi ve muzariyi sesli oku; sonra “ben” biçimlerini kapatıp kendin üret.</p></article>
+      <article><h3>Mâzi · <span class="arabic inline" lang="ar" dir="rtl" data-arabic-tools="true">الْمَاضِي</span></h3><p>Tamamlanmış işi anlatır: <b class="arabic inline" lang="ar" dir="rtl" data-arabic-tools="true">كَتَبَ</b> “o yazdı”, <b class="arabic inline" lang="ar" dir="rtl" data-arabic-tools="true">كَتَبْتُ</b> “ben yazdım”.</p></article>
+      <article><h3>Muzari · <span class="arabic inline" lang="ar" dir="rtl" data-arabic-tools="true">الْمُضَارِع</span></h3><p>Süren veya alışkanlık olan işi anlatır: <b class="arabic inline" lang="ar" dir="rtl" data-arabic-tools="true">يَكْتُبُ</b> “o yazıyor/yazar”, <b class="arabic inline" lang="ar" dir="rtl" data-arabic-tools="true">أَكْتُبُ</b> “ben yazıyorum/yazarım”.</p></article>
+    </section>
+
+    <section class="template-card" aria-labelledby="template-title">
+      <div class="template-heading"><div><p class="eyebrow">Çekim mantığı</p><h2 id="template-title"><span class="arabic inline" lang="ar" dir="rtl" data-arabic-tools="true">كَتَبَ</span> fiilinin 14 şahıs şablonu</h2></div><p>Bu tablo düzenli bir fiilin bütün şahıslarını gösterir. Her satırın sonundaki düğmeler yalnızca o satırı okur veya kopyalar.</p></div>
+      <p class="template-hint">Takip etmek istediğin satırlara tıkla. Her satırın vurgusu bağımsızdır ve aynı satıra tekrar tıklayıncaya kadar korunur.</p>
+      <div class="table-scroll"><table class="conjugation-template"><thead><tr><th>#</th><th>Zamir</th><th>Mâzi</th><th>Muzari</th><th>Türkçe</th><th>Araçlar</th></tr></thead><tbody>
+        <tr><td>1</td><td class="arabic" lang="ar" dir="rtl" data-arabic-tools="true">هُوَ</td><td lang="ar" dir="rtl" data-arabic-tools="true">كَتَبَ</td><td lang="ar" dir="rtl" data-arabic-tools="true">يَكْتُبُ</td><td>o yazdı / yazıyor · erkek</td></tr>
+        <tr><td>2</td><td class="arabic" lang="ar" dir="rtl" data-arabic-tools="true">هُمَا</td><td lang="ar" dir="rtl" data-arabic-tools="true">كَتَبَا</td><td lang="ar" dir="rtl" data-arabic-tools="true">يَكْتُبَانِ</td><td>o ikisi · erkek</td></tr>
+        <tr><td>3</td><td class="arabic" lang="ar" dir="rtl" data-arabic-tools="true">هُمْ</td><td lang="ar" dir="rtl" data-arabic-tools="true">كَتَبُوا</td><td lang="ar" dir="rtl" data-arabic-tools="true">يَكْتُبُونَ</td><td>onlar · erkek/karma</td></tr>
+        <tr><td>4</td><td class="arabic" lang="ar" dir="rtl" data-arabic-tools="true">هِيَ</td><td lang="ar" dir="rtl" data-arabic-tools="true">كَتَبَتْ</td><td lang="ar" dir="rtl" data-arabic-tools="true">تَكْتُبُ</td><td>o · kadın</td></tr>
+        <tr><td>5</td><td class="arabic" lang="ar" dir="rtl" data-arabic-tools="true">هُمَا</td><td lang="ar" dir="rtl" data-arabic-tools="true">كَتَبَتَا</td><td lang="ar" dir="rtl" data-arabic-tools="true">تَكْتُبَانِ</td><td>o ikisi · kadın</td></tr>
+        <tr><td>6</td><td class="arabic" lang="ar" dir="rtl" data-arabic-tools="true">هُنَّ</td><td lang="ar" dir="rtl" data-arabic-tools="true">كَتَبْنَ</td><td lang="ar" dir="rtl" data-arabic-tools="true">يَكْتُبْنَ</td><td>onlar · kadınlar</td></tr>
+        <tr><td>7</td><td class="arabic" lang="ar" dir="rtl" data-arabic-tools="true">أَنْتَ</td><td lang="ar" dir="rtl" data-arabic-tools="true">كَتَبْتَ</td><td lang="ar" dir="rtl" data-arabic-tools="true">تَكْتُبُ</td><td>sen · erkek</td></tr>
+        <tr><td>8</td><td class="arabic" lang="ar" dir="rtl" data-arabic-tools="true">أَنْتُمَا</td><td lang="ar" dir="rtl" data-arabic-tools="true">كَتَبْتُمَا</td><td lang="ar" dir="rtl" data-arabic-tools="true">تَكْتُبَانِ</td><td>siz ikiniz · erkek</td></tr>
+        <tr><td>9</td><td class="arabic" lang="ar" dir="rtl" data-arabic-tools="true">أَنْتُمْ</td><td lang="ar" dir="rtl" data-arabic-tools="true">كَتَبْتُمْ</td><td lang="ar" dir="rtl" data-arabic-tools="true">تَكْتُبُونَ</td><td>siz · erkek/karma</td></tr>
+        <tr><td>10</td><td class="arabic" lang="ar" dir="rtl" data-arabic-tools="true">أَنْتِ</td><td lang="ar" dir="rtl" data-arabic-tools="true">كَتَبْتِ</td><td lang="ar" dir="rtl" data-arabic-tools="true">تَكْتُبِينَ</td><td>sen · kadın</td></tr>
+        <tr><td>11</td><td class="arabic" lang="ar" dir="rtl" data-arabic-tools="true">أَنْتُمَا</td><td lang="ar" dir="rtl" data-arabic-tools="true">كَتَبْتُمَا</td><td lang="ar" dir="rtl" data-arabic-tools="true">تَكْتُبَانِ</td><td>siz ikiniz · kadın</td></tr>
+        <tr><td>12</td><td class="arabic" lang="ar" dir="rtl" data-arabic-tools="true">أَنْتُنَّ</td><td lang="ar" dir="rtl" data-arabic-tools="true">كَتَبْتُنَّ</td><td lang="ar" dir="rtl" data-arabic-tools="true">تَكْتُبْنَ</td><td>siz · kadınlar</td></tr>
+        <tr><td>13</td><td class="arabic" lang="ar" dir="rtl" data-arabic-tools="true">أَنَا</td><td lang="ar" dir="rtl" data-arabic-tools="true">كَتَبْتُ</td><td lang="ar" dir="rtl" data-arabic-tools="true">أَكْتُبُ</td><td>ben</td></tr>
+        <tr><td>14</td><td class="arabic" lang="ar" dir="rtl" data-arabic-tools="true">نَحْنُ</td><td lang="ar" dir="rtl" data-arabic-tools="true">كَتَبْنَا</td><td lang="ar" dir="rtl" data-arabic-tools="true">نَكْتُبُ</td><td>biz</td></tr>
+      </tbody></table></div>
+    </section>
+
+    <section class="verb-workspace" aria-labelledby="verbs-title">
+      <div class="workspace-heading"><div><p class="eyebrow">Ezber ve tekrar tablosu</p><h2 id="verbs-title">100 fiilin temel çekimleri</h2></div><p>Sıra, öğrenici odaklı kullanım önceliğidir; tür ve metin alanına göre gerçek sıklık sırası değişebilir.</p></div>
+      <div class="verb-toolbar"><label><span class="sr-only">Fiil veya anlam ara</span><input id="verb-search" type="search" placeholder="Türkçe veya Arapça ara…"></label><label><span class="sr-only">Sıklık dilimi</span><select id="band-filter"><option value="all">Bütün 100 fiil</option><option value="1">1–25 · Çok sık</option><option value="2">26–50 · Sık</option><option value="3">51–75 · Yaygın</option><option value="4">76–100 · Tamamlama</option></select></label><button id="print-verbs" type="button">Yazdır</button></div>
+      <p class="result-count" id="result-count" aria-live="polite">100 fiil gösteriliyor.</p><p class="print-only">Mâzi = tamamlanmış iş · Muzari = süren veya alışkanlık olan iş · “O” sütunları 3. tekil eril, “Ben” sütunları 1. tekildir.</p>
+      <div class="table-scroll screen-table"><table class="verb-table"><thead><tr><th>#</th><th>Türkçe anlam</th><th>Mâzi · o</th><th>Muzari · o</th><th>Mâzi · ben</th><th>Muzari · ben</th><th>Araçlar</th></tr></thead><tbody id="verb-rows"></tbody></table></div>
+      <div class="verb-print-grid" id="verb-print-grid" aria-hidden="true"></div>
+    </section>
+
+    <aside class="source-note"><strong>Kaynak ve kapsam:</strong> Liste, Modern Standart Arapça öğrenicileri için yayımlanmış yaygın 100 fiil listesi temel alınarak düzenlendi; çekim biçimleri açık kaynak <a href="https://github.com/linuxscout/qutrub">Qutrub</a> çekim sistemi ve standart sözlük kalıplarıyla karşılaştırıldı. Ham sözcük sıklığının metin türüne göre değiştiğini görmek için <a href="https://github.com/CAMeL-Lab/Camel_Arabic_Frequency_Lists">CAMeL MSA Frequency Lists</a> kullanılabilir. Bu sayfadaki sıra kesin ve değişmez bir evrensel derece değil, pratik öğrenme önceliğidir.</aside>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    const verbs = [
+      ["كَانَ","يَكُونُ","كُنْتُ","أَكُونُ","olmak"],
+      ["عَمِلَ","يَعْمَلُ","عَمِلْتُ","أَعْمَلُ","çalışmak; yapmak"],
+      ["أَكَلَ","يَأْكُلُ","أَكَلْتُ","آكُلُ","yemek"],
+      ["شَرِبَ","يَشْرَبُ","شَرِبْتُ","أَشْرَبُ","içmek"],
+      ["ذَهَبَ","يَذْهَبُ","ذَهَبْتُ","أَذْهَبُ","gitmek"],
+      ["رَأَى","يَرَى","رَأَيْتُ","أَرَى","görmek"],
+      ["سَمِعَ","يَسْمَعُ","سَمِعْتُ","أَسْمَعُ","duymak; dinlemek"],
+      ["قَرَأَ","يَقْرَأُ","قَرَأْتُ","أَقْرَأُ","okumak"],
+      ["كَتَبَ","يَكْتُبُ","كَتَبْتُ","أَكْتُبُ","yazmak"],
+      ["تَكَلَّمَ","يَتَكَلَّمُ","تَكَلَّمْتُ","أَتَكَلَّمُ","konuşmak"],
+      ["عَاشَ","يَعِيشُ","عِشْتُ","أَعِيشُ","yaşamak"],
+      ["مَاتَ","يَمُوتُ","مُتُّ","أَمُوتُ","ölmek"],
+      ["ضَحِكَ","يَضْحَكُ","ضَحِكْتُ","أَضْحَكُ","gülmek"],
+      ["بَكَى","يَبْكِي","بَكَيْتُ","أَبْكِي","ağlamak"],
+      ["لَعِبَ","يَلْعَبُ","لَعِبْتُ","أَلْعَبُ","oynamak"],
+      ["نَامَ","يَنَامُ","نِمْتُ","أَنَامُ","uyumak"],
+      ["اِسْتَيْقَظَ","يَسْتَيْقِظُ","اِسْتَيْقَظْتُ","أَسْتَيْقِظُ","uyanmak"],
+      ["جَلَسَ","يَجْلِسُ","جَلَسْتُ","أَجْلِسُ","oturmak"],
+      ["وَقَفَ","يَقِفُ","وَقَفْتُ","أَقِفُ","durmak; ayağa kalkmak"],
+      ["دَرَسَ","يَدْرُسُ","دَرَسْتُ","أَدْرُسُ","ders çalışmak"],
+      ["عَلِمَ","يَعْلَمُ","عَلِمْتُ","أَعْلَمُ","bilmek"],
+      ["تَعَلَّمَ","يَتَعَلَّمُ","تَعَلَّمْتُ","أَتَعَلَّمُ","öğrenmek"],
+      ["فَهِمَ","يَفْهَمُ","فَهِمْتُ","أَفْهَمُ","anlamak"],
+      ["اِشْتَرَى","يَشْتَرِي","اِشْتَرَيْتُ","أَشْتَرِي","satın almak"],
+      ["بَاعَ","يَبِيعُ","بِعْتُ","أَبِيعُ","satmak"],
+      ["مَشَى","يَمْشِي","مَشَيْتُ","أَمْشِي","yürümek"],
+      ["رَكَضَ","يَرْكُضُ","رَكَضْتُ","أَرْكُضُ","koşmak"],
+      ["غَنَّى","يُغَنِّي","غَنَّيْتُ","أُغَنِّي","şarkı söylemek"],
+      ["قَالَ","يَقُولُ","قُلْتُ","أَقُولُ","söylemek"],
+      ["صَرَخَ","يَصْرُخُ","صَرَخْتُ","أَصْرُخُ","bağırmak"],
+      ["ضَرَبَ","يَضْرِبُ","ضَرَبْتُ","أَضْرِبُ","vurmak"],
+      ["أَحَبَّ","يُحِبُّ","أَحْبَبْتُ","أُحِبُّ","sevmek"],
+      ["كَرِهَ","يَكْرَهُ","كَرِهْتُ","أَكْرَهُ","nefret etmek; sevmemek"],
+      ["خَافَ","يَخَافُ","خِفْتُ","أَخَافُ","korkmak"],
+      ["أَرَادَ","يُرِيدُ","أَرَدْتُ","أُرِيدُ","istemek"],
+      ["اِحْتَاجَ","يَحْتَاجُ","اِحْتَجْتُ","أَحْتَاجُ","ihtiyaç duymak"],
+      ["صَلَّى","يُصَلِّي","صَلَّيْتُ","أُصَلِّي","namaz kılmak; dua etmek"],
+      ["طَبَخَ","يَطْبُخُ","طَبَخْتُ","أَطْبُخُ","yemek pişirmek"],
+      ["قَادَ","يَقُودُ","قُدْتُ","أَقُودُ","sürmek; yönetmek"],
+      ["عَادَ","يَعُودُ","عُدْتُ","أَعُودُ","dönmek"],
+      ["بَدَأَ","يَبْدَأُ","بَدَأْتُ","أَبْدَأُ","başlamak"],
+      ["اِنْتَهَى","يَنْتَهِي","اِنْتَهَيْتُ","أَنْتَهِي","bitmek; sona ermek"],
+      ["حَضَرَ","يَحْضُرُ","حَضَرْتُ","أَحْضُرُ","katılmak; hazır bulunmak"],
+      ["غَادَرَ","يُغَادِرُ","غَادَرْتُ","أُغَادِرُ","ayrılmak; terk etmek"],
+      ["قَتَلَ","يَقْتُلُ","قَتَلْتُ","أَقْتُلُ","öldürmek"],
+      ["وُلِدَ","يُولَدُ","وُلِدْتُ","أُولَدُ","doğmak; dünyaya gelmek"],
+      ["اِشْتَكَى","يَشْتَكِي","اِشْتَكَيْتُ","أَشْتَكِي","şikâyet etmek"],
+      ["حَلَّ","يَحُلُّ","حَلَلْتُ","أَحُلُّ","çözmek"],
+      ["قَبِلَ","يَقْبَلُ","قَبِلْتُ","أَقْبَلُ","kabul etmek"],
+      ["رَفَضَ","يَرْفُضُ","رَفَضْتُ","أَرْفُضُ","reddetmek"],
+      ["اِحْتَفَلَ","يَحْتَفِلُ","اِحْتَفَلْتُ","أَحْتَفِلُ","kutlamak"],
+      ["اِعْتَذَرَ","يَعْتَذِرُ","اِعْتَذَرْتُ","أَعْتَذِرُ","özür dilemek"],
+      ["قَدَّمَ","يُقَدِّمُ","قَدَّمْتُ","أُقَدِّمُ","sunmak; takdim etmek"],
+      ["زَارَ","يَزُورُ","زُرْتُ","أَزُورُ","ziyaret etmek"],
+      ["سَافَرَ","يُسَافِرُ","سَافَرْتُ","أُسَافِرُ","seyahat etmek"],
+      ["تَرْجَمَ","يُتَرْجِمُ","تَرْجَمْتُ","أُتَرْجِمُ","tercüme etmek"],
+      ["تَحَدَّثَ","يَتَحَدَّثُ","تَحَدَّثْتُ","أَتَحَدَّثُ","konuşmak; söz etmek"],
+      ["اِتَّفَقَ","يَتَّفِقُ","اِتَّفَقْتُ","أَتَّفِقُ","anlaşmak; aynı fikirde olmak"],
+      ["اِخْتَلَفَ","يَخْتَلِفُ","اِخْتَلَفْتُ","أَخْتَلِفُ","farklı olmak; anlaşmazlığa düşmek"],
+      ["شَتَمَ","يَشْتِمُ","شَتَمْتُ","أَشْتِمُ","hakaret etmek"],
+      ["اِحْتَرَمَ","يَحْتَرِمُ","اِحْتَرَمْتُ","أَحْتَرِمُ","saygı duymak"],
+      ["حَلَمَ","يَحْلُمُ","حَلَمْتُ","أَحْلُمُ","rüya görmek"],
+      ["فَتَحَ","يَفْتَحُ","فَتَحْتُ","أَفْتَحُ","açmak"],
+      ["أَغْلَقَ","يُغْلِقُ","أَغْلَقْتُ","أُغْلِقُ","kapatmak"],
+      ["كَسَبَ","يَكْسِبُ","كَسَبْتُ","أَكْسِبُ","kazanmak"],
+      ["خَسِرَ","يَخْسَرُ","خَسِرْتُ","أَخْسَرُ","kaybetmek"],
+      ["اِبْتَسَمَ","يَبْتَسِمُ","اِبْتَسَمْتُ","أَبْتَسِمُ","gülümsemek"],
+      ["فَكَّرَ","يُفَكِّرُ","فَكَّرْتُ","أُفَكِّرُ","düşünmek"],
+      ["قَامَ","يَقُومُ","قُمْتُ","أَقُومُ","kalkmak; yerine getirmek"],
+      ["دَعَا","يَدْعُو","دَعَوْتُ","أَدْعُو","çağırmak; davet etmek; dua etmek"],
+      ["اِسْتَمْتَعَ","يَسْتَمْتِعُ","اِسْتَمْتَعْتُ","أَسْتَمْتِعُ","keyif almak"],
+      ["سَأَلَ","يَسْأَلُ","سَأَلْتُ","أَسْأَلُ","sormak"],
+      ["أَجَابَ","يُجِيبُ","أَجَبْتُ","أُجِيبُ","cevap vermek"],
+      ["أَخْبَرَ","يُخْبِرُ","أَخْبَرْتُ","أُخْبِرُ","haber vermek; bildirmek"],
+      ["اِرْتَدَى","يَرْتَدِي","اِرْتَدَيْتُ","أَرْتَدِي","giymek"],
+      ["غَسَلَ","يَغْسِلُ","غَسَلْتُ","أَغْسِلُ","yıkamak"],
+      ["عَشِقَ","يَعْشَقُ","عَشِقْتُ","أَعْشَقُ","âşık olmak; çok sevmek"],
+      ["كَافَحَ","يُكَافِحُ","كَافَحْتُ","أُكَافِحُ","mücadele etmek"],
+      ["اِسْتَعَدَّ","يَسْتَعِدُّ","اِسْتَعْدَدْتُ","أَسْتَعِدُّ","hazırlanmak"],
+      ["حَمَلَ","يَحْمِلُ","حَمَلْتُ","أَحْمِلُ","taşımak"],
+      ["تَذَكَّرَ","يَتَذَكَّرُ","تَذَكَّرْتُ","أَتَذَكَّرُ","hatırlamak"],
+      ["نَسِيَ","يَنْسَى","نَسِيتُ","أَنْسَى","unutmak"],
+      ["اِخْتَبَرَ","يَخْتَبِرُ","اِخْتَبَرْتُ","أَخْتَبِرُ","sınamak; test etmek"],
+      ["رَحَّبَ","يُرَحِّبُ","رَحَّبْتُ","أُرَحِّبُ","karşılamak; hoş geldin demek"],
+      ["رَسَمَ","يَرْسُمُ","رَسَمْتُ","أَرْسُمُ","çizmek"],
+      ["هَدَى","يَهْدِي","هَدَيْتُ","أَهْدِي","yol göstermek; hidayet etmek"],
+      ["تَابَعَ","يُتَابِعُ","تَابَعْتُ","أُتَابِعُ","takip etmek"],
+      ["اِخْتَارَ","يَخْتَارُ","اِخْتَرْتُ","أَخْتَارُ","seçmek"],
+      ["هَرَبَ","يَهْرُبُ","هَرَبْتُ","أَهْرُبُ","kaçmak"],
+      ["تَجَنَّبَ","يَتَجَنَّبُ","تَجَنَّبْتُ","أَتَجَنَّبُ","kaçınmak"],
+      ["تَفَاجَأَ","يَتَفَاجَأُ","تَفَاجَأْتُ","أَتَفَاجَأُ","şaşırmak"],
+      ["تَنَازَلَ","يَتَنَازَلُ","تَنَازَلْتُ","أَتَنَازَلُ","vazgeçmek; feragat etmek"],
+      ["اِنْضَمَّ","يَنْضَمُّ","اِنْضَمَمْتُ","أَنْضَمُّ","katılmak; dâhil olmak"],
+      ["بَحَثَ","يَبْحَثُ","بَحَثْتُ","أَبْحَثُ","aramak; araştırmak"],
+      ["نَظَّفَ","يُنَظِّفُ","نَظَّفْتُ","أُنَظِّفُ","temizlemek"],
+      ["تَوَقَّفَ","يَتَوَقَّفُ","تَوَقَّفْتُ","أَتَوَقَّفُ","durmak"],
+      ["حَقَّقَ","يُحَقِّقُ","حَقَّقْتُ","أُحَقِّقُ","gerçekleştirmek; başarmak"],
+      ["اِسْتَسْلَمَ","يَسْتَسْلِمُ","اِسْتَسْلَمْتُ","أَسْتَسْلِمُ","teslim olmak"],
+      ["حَاوَلَ","يُحَاوِلُ","حَاوَلْتُ","أُحَاوِلُ","denemek; çalışmak"],
+      ["طَرَقَ","يَطْرُقُ","طَرَقْتُ","أَطْرُقُ","kapıyı çalmak; vurmak"]
+    ];
+
+    const rows = document.getElementById("verb-rows");
+    const search = document.getElementById("verb-search");
+    const bandFilter = document.getElementById("band-filter");
+    const resultCount = document.getElementById("result-count");
+    const stripMarks = value => value.normalize("NFD").replace(/[\u064B-\u065F\u0670]/g, "").toLocaleLowerCase("tr");
+    const bandFor = rank => Math.ceil(rank / 25);
+    const bandLabel = band => ["", "Çok sık", "Sık", "Yaygın", "Tamamlama"][band];
+
+    let activeAudio = null;
+    let activeReadButton = null;
+    let speechRun = 0;
+
+    function stopSpeech() {
+      speechRun += 1;
+      activeAudio?.pause();
+      activeAudio = null;
+      window.speechSynthesis?.cancel();
+      activeReadButton?.classList.remove("is-speaking");
+      activeReadButton = null;
+    }
+
+    function speechChunks(text) {
+      const rawParts = text.split("،");
+      const parts = rawParts.map((part, index) => `${part.trim()}${index < rawParts.length - 1 ? "،" : ""}`).filter(part => part !== "،" && part.trim());
+      const chunks = [];
+      parts.forEach(part => {
+        const last = chunks.at(-1);
+        if (last && `${last} ${part}`.length <= 150) chunks[chunks.length - 1] = `${last} ${part}`;
+        else chunks.push(part);
+      });
+      return chunks.length ? chunks : [text];
+    }
+
+    async function speakWithSystemVoice(text, button, run) {
+      if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
+        button?.classList.remove("is-speaking");
+        return showMessage("Ses açılamadı. İnternet bağlantısını veya tarayıcının Arapça sesini kontrol et.");
+      }
+      let voices = window.speechSynthesis.getVoices();
+      if (!voices.length) {
+        await new Promise(resolve => {
+          const done = () => { window.speechSynthesis.removeEventListener("voiceschanged", done); resolve(); };
+          window.speechSynthesis.addEventListener("voiceschanged", done, {once:true});
+          setTimeout(done, 1200);
+        });
+        voices = window.speechSynthesis.getVoices();
+      }
+      if (run !== speechRun) return;
+      const utterance = new SpeechSynthesisUtterance(text);
+      const arabicVoice = voices.find(voice => voice.lang.toLowerCase().startsWith("ar"));
+      if (arabicVoice) utterance.voice = arabicVoice;
+      utterance.lang = arabicVoice?.lang || "ar-SA";
+      utterance.rate = 0.72;
+      utterance.onend = () => { if (run === speechRun) stopSpeech(); };
+      utterance.onerror = () => { if (run === speechRun) { stopSpeech(); showMessage("Ses başlatılamadı. Sayfayı yenileyip tekrar dene."); } };
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function speak(text, button) {
+      if (!text) return;
+      stopSpeech();
+      const run = speechRun;
+      activeReadButton = button || null;
+      activeReadButton?.classList.add("is-speaking");
+      const chunks = speechChunks(text);
+      const sources = [["https://translate.googleapis.com/translate_tts","gtx"],["https://translate.google.com/translate_tts","tw-ob"]];
+
+      const playChunk = (chunkIndex, sourceIndex = 0) => {
+        if (run !== speechRun) return;
+        if (chunkIndex >= chunks.length) return stopSpeech();
+        if (sourceIndex >= sources.length) return speakWithSystemVoice(text, button, run);
+        const [host, client] = sources[sourceIndex];
+        const url = new URL(host);
+        url.searchParams.set("ie", "UTF-8");
+        url.searchParams.set("client", client);
+        url.searchParams.set("tl", "ar");
+        url.searchParams.set("q", chunks[chunkIndex]);
+        const audio = new Audio(url.toString());
+        let failed = false;
+        activeAudio = audio;
+        const nextSource = () => {
+          if (failed || run !== speechRun) return;
+          failed = true;
+          playChunk(chunkIndex, sourceIndex + 1);
+        };
+        audio.addEventListener("ended", () => playChunk(chunkIndex + 1), {once:true});
+        audio.addEventListener("error", nextSource, {once:true});
+        audio.play().catch(nextSource);
+      };
+      playChunk(0);
+    }
+
+    async function copy(text, message = "Fiilin dört çekimi kopyalandı.") {
+      try { await navigator.clipboard.writeText(text); }
+      catch {
+        const helper = document.createElement("textarea"); helper.value = text; helper.style.position = "fixed"; helper.style.opacity = "0"; document.body.appendChild(helper); helper.select(); document.execCommand("copy"); helper.remove();
+      }
+      showMessage(message);
+    }
+
+    function showMessage(message) {
+      const toast = document.getElementById("toast"); toast.textContent = message; toast.classList.add("show"); setTimeout(() => toast.classList.remove("show"), 2400);
+    }
+
+    function renderPrintTables(matches) {
+      const printGrid = document.getElementById("verb-print-grid");
+      printGrid.replaceChildren();
+      if (!matches.length) return;
+      const table = document.createElement("table");
+      table.className = "verb-print-table";
+      table.innerHTML = "<thead><tr><th>#</th><th>T\u00fcrk\u00e7e anlam</th><th>M\u00e2zi \u00b7 o</th><th>Muzari \u00b7 o</th><th>M\u00e2zi \u00b7 ben</th><th>Muzari \u00b7 ben</th></tr></thead>";
+      const body = document.createElement("tbody");
+      matches.forEach(({verb, rank}) => {
+        const [past, present, pastI, presentI, meaning] = verb;
+        const row = document.createElement("tr");
+        row.innerHTML = `<td class="pr-rank">${rank}</td><td class="pr-meaning">${meaning}</td>` +
+          [past, present, pastI, presentI].map(value => `<td class="pr-ar" lang="ar" dir="rtl">${value}</td>`).join("");
+        body.appendChild(row);
+      });
+      table.appendChild(body);
+      printGrid.appendChild(table);
+    }
+
+    function render() {
+      const query = stripMarks(search.value.trim());
+      const selectedBand = bandFilter.value;
+      const matches = verbs.map((verb, index) => ({verb, rank:index + 1})).filter(({verb, rank}) => {
+        const inBand = selectedBand === "all" || String(bandFor(rank)) === selectedBand;
+        return inBand && (!query || stripMarks(verb.join(" ")).includes(query));
+      });
+      rows.replaceChildren();
+      if (!matches.length) {
+        const row = document.createElement("tr"); row.innerHTML = '<td class="empty-row" colspan="7">Aramayla eşleşen fiil bulunamadı.</td>'; rows.appendChild(row);
+      }
+      matches.forEach(({verb, rank}) => {
+        const [past, present, pastI, presentI, meaning] = verb;
+        const row = document.createElement("tr");
+        row.innerHTML = `<td class="rank">${rank}</td><td class="meaning">${meaning}<br><span class="band">${bandLabel(bandFor(rank))}</span></td>${[past,present,pastI,presentI].map(value => `<td class="arabic-cell" lang="ar" dir="rtl" data-arabic-tools="true">${value}</td>`).join("")}<td class="tools"><button class="row-tool" type="button" data-action="speak">Oku</button><button class="row-tool" type="button" data-action="copy">Kopyala</button></td>`;
+        row.querySelector('[data-action="speak"]').addEventListener("click", event => speak([past,present,pastI,presentI].join("، "), event.currentTarget));
+        row.querySelector('[data-action="copy"]').addEventListener("click", () => copy(`${past} — ${present} — ${pastI} — ${presentI} — ${meaning}`));
+        rows.appendChild(row);
+      });
+      resultCount.textContent = `${matches.length} fiil gösteriliyor.`;
+      renderPrintTables(matches);
+    }
+
+    search.addEventListener("input", render);
+    bandFilter.addEventListener("change", render);
+    document.getElementById("print-verbs").addEventListener("click", () => window.print());
+    const templateRows = [...document.querySelectorAll(".conjugation-template tbody tr")];
+    templateRows.forEach(row => {
+      const rowText = [...row.cells].slice(1, 4).map(cell => cell.textContent.trim()).join("، ");
+      const tools = document.createElement("td");
+      tools.className = "template-row-tools";
+      const readButton = document.createElement("button");
+      readButton.type = "button";
+      readButton.className = "row-tool";
+      readButton.textContent = "Oku";
+      readButton.setAttribute("aria-label", `${row.cells[4].textContent.trim()} satırını oku`);
+      const copyButton = document.createElement("button");
+      copyButton.type = "button";
+      copyButton.className = "row-tool";
+      copyButton.textContent = "Kopyala";
+      copyButton.setAttribute("aria-label", `${row.cells[4].textContent.trim()} satırını kopyala`);
+      readButton.addEventListener("click", event => { event.stopPropagation(); speak(rowText, event.currentTarget); });
+      copyButton.addEventListener("click", event => { event.stopPropagation(); copy(rowText, "Seçilen şahıs çekimi kopyalandı."); });
+      tools.append(readButton, copyButton);
+      row.appendChild(tools);
+      row.tabIndex = 0;
+      row.setAttribute("aria-selected", "false");
+      const toggle = () => {
+        const wasSelected = row.classList.contains("is-selected");
+        row.classList.toggle("is-selected", !wasSelected);
+        row.setAttribute("aria-selected", String(!wasSelected));
+      };
+      row.addEventListener("click", event => { if (!event.target.closest("button")) toggle(); });
+      row.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); toggle(); }
+      });
+    });
+    render();
+  </script>
+  <script src="assets/app.js?v=15"></script>
+</body>
+</html>
