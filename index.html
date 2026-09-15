@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Cevdet Baş'ın kişisel projeleri ve çalışmaları.">
+  <meta name="theme-color" content="#090d17">
+  <title>Cevdet Baş — Projeler</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23090d17'/%3E%3Cpath d='M43 21a16 16 0 1 0 0 22 13 13 0 1 1 0-22Z' fill='%23f2b84b'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #070a12;
+      --bg-soft: #0c111d;
+      --surface: rgba(15, 22, 36, 0.78);
+      --surface-strong: #111827;
+      --text: #f4f7fb;
+      --muted: #99a5b8;
+      --line: rgba(255, 255, 255, 0.09);
+      --amber: #f2b84b;
+      --amber-soft: rgba(242, 184, 75, 0.13);
+      --blue: #63b3ed;
+      --violet: #a78bfa;
+      --green: #5ee0b7;
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      overflow-x: hidden;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 84% 4%, rgba(99, 179, 237, 0.12), transparent 28rem),
+        radial-gradient(circle at 8% 40%, rgba(242, 184, 75, 0.08), transparent 30rem),
+        var(--bg);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+
+    .page-shell {
+      width: min(1160px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 92px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-weight: 720;
+      letter-spacing: 0.01em;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      place-items: center;
+      border: 1px solid rgba(242, 184, 75, 0.26);
+      border-radius: 12px;
+      color: var(--amber);
+      background: var(--amber-soft);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .header-link {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 650;
+      text-decoration: none;
+      transition: color 180ms ease;
+    }
+
+    .header-link:hover { color: var(--text); }
+
+    main { padding: 78px 0 72px; }
+
+    .hero {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(240px, 0.55fr);
+      gap: 48px;
+      align-items: end;
+      padding-bottom: 72px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 24px;
+      color: var(--amber);
+      font-size: 0.8rem;
+      font-weight: 750;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 28px;
+      height: 1px;
+      background: currentColor;
+      content: "";
+    }
+
+    h1 {
+      max-width: 790px;
+      margin: 0;
+      font-size: clamp(3.2rem, 8vw, 6.8rem);
+      font-weight: 760;
+      letter-spacing: -0.065em;
+      line-height: 0.92;
+    }
+
+    .hero-name {
+      display: block;
+      color: transparent;
+      background: linear-gradient(100deg, #ffffff 12%, #aab9ce 82%);
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+
+    .hero-copy {
+      max-width: 31rem;
+      margin: 0 0 5px;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.5vw, 1.14rem);
+      line-height: 1.75;
+    }
+
+    .hero-copy strong {
+      color: #dce4ef;
+      font-weight: 650;
+    }
+
+    .projects-section { scroll-margin-top: 30px; }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 22px;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 4vw, 2.35rem);
+      letter-spacing: -0.035em;
+    }
+
+    .project-count {
+      margin: 0 2px 3px 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .project-card {
+      position: relative;
+      min-height: 270px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(145deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018));
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+    }
+
+    .project-link,
+    .project-static {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      min-height: 270px;
+      padding: 30px;
+      text-decoration: none;
+    }
+
+    .project-link {
+      transition: transform 220ms ease, border-color 220ms ease, background-color 220ms ease;
+    }
+
+    .project-card:has(.project-link) {
+      border-color: rgba(242, 184, 75, 0.22);
+      background:
+        radial-gradient(circle at 88% 12%, rgba(242, 184, 75, 0.13), transparent 15rem),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.018));
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+
+    .project-card:has(.project-link)::after {
+      position: absolute;
+      right: -46px;
+      bottom: -72px;
+      width: 220px;
+      height: 220px;
+      border: 1px solid rgba(242, 184, 75, 0.11);
+      border-radius: 50%;
+      box-shadow: 0 0 0 28px rgba(242, 184, 75, 0.025), 0 0 0 56px rgba(242, 184, 75, 0.018);
+      content: "";
+      pointer-events: none;
+    }
+
+    .project-card:has(.project-link):hover {
+      border-color: rgba(242, 184, 75, 0.42);
+      background-color: rgba(242, 184, 75, 0.025);
+      transform: translateY(-4px);
+    }
+
+    .project-card:has(.project-link):focus-within {
+      outline: 3px solid rgba(99, 179, 237, 0.62);
+      outline-offset: 3px;
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 52px;
+    }
+
+    .icon-box {
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      color: var(--card-accent, var(--muted));
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .icon-box svg {
+      width: 23px;
+      height: 23px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 30px;
+      padding: 6px 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(7, 10, 18, 0.28);
+      font-size: 0.73rem;
+      font-weight: 750;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .status-live {
+      border-color: rgba(94, 224, 183, 0.2);
+      color: var(--green);
+      background: rgba(94, 224, 183, 0.07);
+    }
+
+    .status-live::before {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 0 4px rgba(94, 224, 183, 0.08);
+      content: "";
+    }
+
+    .card-content { margin-top: auto; }
+
+    .card-content h3 {
+      margin: 0 0 11px;
+      font-size: clamp(1.35rem, 2.2vw, 1.75rem);
+      letter-spacing: -0.025em;
+    }
+
+    .card-content p {
+      max-width: 31rem;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.65;
+    }
+
+    .active-card .card-content {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: end;
+    }
+
+    .open-icon {
+      display: grid;
+      width: 46px;
+      height: 46px;
+      place-items: center;
+      border: 1px solid rgba(242, 184, 75, 0.25);
+      border-radius: 50%;
+      color: var(--amber);
+      background: var(--amber-soft);
+      transition: transform 220ms ease, background-color 220ms ease;
+    }
+
+    .project-link:hover .open-icon {
+      background: rgba(242, 184, 75, 0.19);
+      transform: translate(3px, -3px);
+    }
+
+    .open-icon svg {
+      width: 19px;
+      height: 19px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 2;
+    }
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 106px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    footer p { margin: 0; }
+
+    .footer-signature {
+      color: #cad4e2;
+      font-weight: 650;
+    }
+
+    @media (max-width: 760px) {
+      .page-shell { width: min(100% - 28px, 1160px); }
+      .site-header { min-height: 76px; }
+      .header-link { display: none; }
+      main { padding: 56px 0 54px; }
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding-bottom: 54px;
+      }
+      h1 { font-size: clamp(3.1rem, 18vw, 5rem); }
+      .hero-copy { max-width: 37rem; }
+      .section-heading { align-items: center; }
+      .project-count { display: none; }
+      .project-grid { grid-template-columns: 1fr; }
+      .project-card,
+      .project-link,
+      .project-static { min-height: 242px; }
+      .project-link,
+      .project-static { padding: 24px; }
+      .card-top { margin-bottom: 40px; }
+      footer {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        gap: 7px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Cevdet Baş ana sayfa">
+        <span class="brand-mark" aria-hidden="true">CB</span>
+        <span>Cevdet Baş</span>
+      </a>
+      <a class="header-link" href="#projeler">Projeleri keşfet ↓</a>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="ana-baslik">
+        <div>
+          <p class="eyebrow">Kişisel proje merkezi</p>
+          <h1 id="ana-baslik"><span class="hero-name">Cevdet Baş</span></h1>
+        </div>
+        <p class="hero-copy">
+          Öğrenirken ürettiğim, günlük hayatı kolaylaştıran ve merak ettiğim konuları keşfettiğim <strong>dijital çalışmalar.</strong>
+        </p>
+      </section>
+
+      <section class="projects-section" id="projeler" aria-labelledby="projeler-baslik">
+        <div class="section-heading">
+          <h2 id="projeler-baslik">Projeler</h2>
+          <p class="project-count">01 aktif · 03 hazırlıkta</p>
+        </div>
+
+        <div class="project-grid">
+          <article class="project-card active-card" style="--card-accent: var(--amber);">
+            <a class="project-link" href="/ezan-vakti/" aria-label="Ezan Vakti projesini aç">
+              <div class="card-top">
+                <span class="icon-box" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M4 21h16M6 21V10l6-5 6 5v11M9 21v-6h6v6M8 8V4h2v2.4M15.5 7.9V3h2v6.5"/></svg>
+                </span>
+                <span class="status status-live">Yayında</span>
+              </div>
+              <div class="card-content">
+                <div>
+                  <h3>Ezan Vakti</h3>
+                  <p>Günlük namaz vakitlerini sade ve hızlı bir arayüzle takip edin.</p>
+                </div>
+                <span class="open-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M5 19 19 5M9 5h10v10"/></svg>
+                </span>
+              </div>
+            </a>
+          </article>
+
+          <article class="project-card" style="--card-accent: var(--blue);">
+            <div class="project-static">
+              <div class="card-top">
+                <span class="icon-box" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5v-16ZM20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5v-16Z"/></svg>
+                </span>
+                <span class="status">Yakında</span>
+              </div>
+              <div class="card-content">
+                <h3>Arapça Öğreniyorum</h3>
+                <p>Arapça öğrenme sürecini destekleyen notlar, alıştırmalar ve kaynaklar.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" style="--card-accent: var(--violet);">
+            <div class="project-static">
+              <div class="card-top">
+                <span class="icon-box" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 1v5M15 1v5M9 18v5M15 18v5M18 9h5M18 14h5M1 9h5M1 14h5M10 10h4v4h-4z"/></svg>
+                </span>
+                <span class="status">Yakında</span>
+              </div>
+              <div class="card-content">
+                <h3>STM32 Çalışmaları</h3>
+                <p>Gömülü sistemler, mikrodenetleyiciler ve elektronik geliştirme notları.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="project-card" style="--card-accent: var(--green);">
+            <div class="project-static">
+              <div class="card-top">
+                <span class="icon-box" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="m8 9-4 3 4 3M16 9l4 3-4 3M14 5l-4 14"/></svg>
+                </span>
+                <span class="status">Yakında</span>
+              </div>
+              <div class="card-content">
+                <h3>Diğer Projeler</h3>
+                <p>Yazılım, elektronik ve yeni fikirlerden oluşan bağımsız çalışmalar.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p class="footer-signature">Cevdet Baş</p>
+      <p>Merakla öğreniyor, özenle geliştiriyorum.</p>
+    </footer>
+  </div>
+</body>
+</html>
