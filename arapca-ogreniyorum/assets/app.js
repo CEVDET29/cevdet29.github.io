@@ -1945,34 +1945,21 @@
     activeSpeakButton = null;
   }
 
+  const ONLINE_TTS_SOURCES = [
+    ["https://translate.googleapis.com/translate_tts", "gtx"],
+    ["https://translate.google.com/translate_tts", "tw-ob"]
+  ];
+
   function speakArabic(text, button) {
     if (!text) return;
 
-    const cleanText = text.replace(/\s+/g, " ").trim().slice(0, 300);
+    const cleanText = text.replace(/\s+/g, " ").trim().slice(0, 200);
     if (!cleanText) return;
-
-    if (!speechSupported()) {
-      showVoiceHelp("Bu tarayıcı sesli okumayı desteklemiyor.");
-      return;
-    }
 
     const wasSameButton = activeSpeakButton === button;
     stopActiveSpeech();
     if (wasSameButton) return;
 
-    const arabicVoice = findArabicVoice();
-    if (!arabicVoice) {
-      showVoiceHelp("Cihazında yüklü bir Arapça konuşma sesi yok, bu yüzden Arapça metin seslendirilemiyor.");
-      return;
-    }
-
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.voice = arabicVoice;
-    utterance.lang = arabicVoice.lang || "ar-SA";
-    utterance.rate = 0.75;
-    utterance.pitch = 1;
-
-    const startedAt = Date.now();
     activeSpeakButton = button;
     button.classList.add("is-speaking");
 
@@ -1981,21 +1968,97 @@
       if (activeSpeakButton === button) activeSpeakButton = null;
     };
 
+    const fallbackToOnline = (reason) => {
+      playOnlineVoice(cleanText, button, finish, reason);
+    };
+
+    if (!speechSupported()) {
+      fallbackToOnline("Bu tarayıcı yerleşik konuşma desteği sunmuyor.");
+      return;
+    }
+
+    const voices = window.speechSynthesis.getVoices() || [];
+    const arabicVoice = voices.find((voice) => voice.lang?.toLowerCase().startsWith("ar")) || null;
+
+    // Ses listesi boşsa liste henüz yüklenmemiş olabilir (Android'de sık görülür):
+    // reddetmek yerine dili belirterek dene, sessiz kalırsa çevrimiçi sese düş.
+    if (!arabicVoice && voices.length > 0) {
+      fallbackToOnline(`Cihazında yüklü bir Arapça konuşma sesi yok (${voices.length} ses bulundu, hiçbiri Arapça değil).`);
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    if (arabicVoice) utterance.voice = arabicVoice;
+    utterance.lang = arabicVoice?.lang || "ar-SA";
+    utterance.rate = 0.75;
+    utterance.pitch = 1;
+
+    const startedAt = Date.now();
+    // Gercek konusma metnin uzunlugu kadar surer. Arapcayi okuyamayan bir ses
+    // (orn. yalnizca Turkce Microsoft Tolga) uzunluk ne olursa olsun ~300 ms'de
+    // biter; bu esigin altinda kalan her okuma sessiz sayilir.
+    const minSpokenMs = Math.min(2500, 400 + cleanText.length * 35);
+
     utterance.onend = () => {
-      const silent = Date.now() - startedAt < 350;
-      finish();
-      if (silent) {
-        showVoiceHelp(`“${arabicVoice.name}” sesi Arapça metni seslendiremedi.`);
+      if (activeSpeakButton !== button) return;
+      if (Date.now() - startedAt >= minSpokenMs) {
+        finish();
+        return;
       }
+      fallbackToOnline(arabicVoice
+        ? `“${arabicVoice.name}” sesi Arapça metni seslendiremedi.`
+        : "Cihazında Arapça konuşma sesi bulunamadı.");
     };
 
     utterance.onerror = (event) => {
-      finish();
-      if (event?.error === "interrupted" || event?.error === "canceled") return;
-      showVoiceHelp("Ses başlatılamadı.");
+      if (activeSpeakButton !== button) return;
+      if (event?.error === "interrupted" || event?.error === "canceled") {
+        finish();
+        return;
+      }
+      fallbackToOnline("Cihazın konuşma motoru Arapça metni okuyamadı.");
     };
 
     window.speechSynthesis.speak(utterance);
+  }
+
+  function playOnlineVoice(text, button, finish, reason) {
+    const playSource = (index) => {
+      if (activeSpeakButton !== button) return;
+      if (index >= ONLINE_TTS_SOURCES.length) {
+        finish();
+        showVoiceHelp(reason);
+        return;
+      }
+
+      const [host, client] = ONLINE_TTS_SOURCES[index];
+      const url = new URL(host);
+      url.searchParams.set("ie", "UTF-8");
+      url.searchParams.set("client", client);
+      url.searchParams.set("tl", "ar");
+      url.searchParams.set("q", text);
+
+      const audio = new Audio(url.toString());
+      let done = false;
+      activeCardAudio = audio;
+
+      const next = () => {
+        if (done) return;
+        done = true;
+        if (activeCardAudio === audio) activeCardAudio = null;
+        playSource(index + 1);
+      };
+
+      audio.addEventListener("ended", () => {
+        done = true;
+        if (activeCardAudio === audio) activeCardAudio = null;
+        finish();
+      }, { once: true });
+      audio.addEventListener("error", next, { once: true });
+      audio.play().catch(next);
+    };
+
+    playSource(0);
   }
 
   function speechSupported() {
