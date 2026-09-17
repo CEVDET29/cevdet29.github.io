@@ -8,7 +8,7 @@
   const preferredDark = window.matchMedia?.("(prefers-color-scheme: dark)").matches;
   const originalArabicText = new WeakMap();
   const arabicFonts = [
-    { value: "noto-naskh", label: "Noto Naskh Arabic", stack: '"Noto Naskh Arabic", "Traditional Arabic", serif' },
+    { value: "noto-naskh", label: "Noto Naskh Arabic · varsayılan", stack: '"Noto Naskh Arabic", "Traditional Arabic", serif' },
     { value: "amiri", label: "Amiri", stack: '"Amiri", "Traditional Arabic", serif' },
     { value: "scheherazade", label: "Scheherazade New", stack: '"Scheherazade New", "Traditional Arabic", serif' },
     { value: "lateef", label: "Lateef", stack: '"Lateef", "Traditional Arabic", serif' },
@@ -18,12 +18,26 @@
     { value: "cairo", label: "Cairo", stack: '"Cairo", "Segoe UI", sans-serif' },
     { value: "tajawal", label: "Tajawal", stack: '"Tajawal", "Segoe UI", sans-serif' },
     { value: "reem-kufi", label: "Reem Kufi", stack: '"Reem Kufi", "Segoe UI", sans-serif' },
-    { value: "traditional", label: "Traditional Arabic · eski varsayılan", stack: '"Traditional Arabic", "Noto Naskh Arabic", "Scheherazade New", "Amiri", serif' },
+    { value: "traditional", label: "Traditional Arabic · Windows", stack: '"Traditional Arabic", "Noto Naskh Arabic", "Scheherazade New", "Amiri", serif' },
     { value: "arabic-typesetting", label: "Arabic Typesetting · bilgisayar hattı", stack: '"Arabic Typesetting", "Traditional Arabic", "Noto Naskh Arabic", serif' },
     { value: "simplified-arabic", label: "Simplified Arabic · görsele yakın", stack: '"Simplified Arabic", "Arabic Typesetting", "Traditional Arabic", serif' },
     { value: "uthman-naskh", label: "Osman Taha Nesih · mushaf", stack: '"Uthman Naskh", "Scheherazade New", "Amiri", serif' },
     { value: "uthman-hafs", label: "Osmanî Hafs · Kur’an", stack: '"Uthman Hafs", "Uthman Naskh", "Scheherazade New", serif' }
   ];
+
+  const DEFAULT_ARABIC_FONT = "noto-naskh";
+  const EAGER_ARABIC_FONTS = new Set(["noto-naskh", "amiri", "traditional", "arabic-typesetting", "simplified-arabic"]);
+  const EXTRA_FONT_CSS_URL = "https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Harmattan:wght@400;500;600;700&family=Lateef:wght@400;500;600;700&family=Noto+Kufi+Arabic:wght@400;600;700&family=Noto+Sans+Arabic:wght@400;600;700&family=Reem+Kufi:wght@400;600;700&family=Scheherazade+New:wght@400;700&family=Tajawal:wght@400;500;700&display=swap";
+  let extraFontsRequested = false;
+
+  function ensureExtraArabicFonts() {
+    if (extraFontsRequested) return;
+    extraFontsRequested = true;
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = EXTRA_FONT_CSS_URL;
+    document.head.appendChild(link);
+  }
 
   const REVIEW_INTERVAL_DAYS = [1, 3, 7, 14];
   const REVIEW_QUEUE_KEY = `${STORAGE_PREFIX}:review-queue`;
@@ -275,6 +289,8 @@
 
   function applyTheme(theme) {
     body.dataset.theme = theme;
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeColorMeta) themeColorMeta.setAttribute("content", theme === "dark" ? "#111619" : "#f2eee6");
     if (themeToggle) {
       const isDark = theme === "dark";
       themeToggle.setAttribute("aria-label", isDark ? "Açık temayı aç" : "Koyu temayı aç");
@@ -302,6 +318,8 @@
   }
 
   setupUniversalArabicTools();
+  setupReadingProgress();
+
 
   function setupArabicReadingPreferences() {
     const tools = ensureReadingTools();
@@ -310,11 +328,11 @@
     const fontKey = `${STORAGE_PREFIX}:arabic-font`;
     const fontDefaultVersionKey = `${STORAGE_PREFIX}:arabic-font-default-version`;
     const harakatKey = `${STORAGE_PREFIX}:harakat`;
-    if (localStorage.getItem(fontDefaultVersionKey) !== "2") {
-      localStorage.setItem(fontKey, "traditional");
-      localStorage.setItem(fontDefaultVersionKey, "2");
+    if (localStorage.getItem(fontDefaultVersionKey) !== "3") {
+      localStorage.setItem(fontKey, DEFAULT_ARABIC_FONT);
+      localStorage.setItem(fontDefaultVersionKey, "3");
     }
-    const savedFont = localStorage.getItem(fontKey) || "traditional";
+    const savedFont = localStorage.getItem(fontKey) || DEFAULT_ARABIC_FONT;
     let showHarakat = localStorage.getItem(harakatKey) !== "hidden";
     let lastFontWheelAt = 0;
 
@@ -349,6 +367,7 @@
 
     function applyFont(value) {
       const font = arabicFonts.find((item) => item.value === value) || arabicFonts[0];
+      if (!EAGER_ARABIC_FONTS.has(font.value)) ensureExtraArabicFonts();
       fontSelector.value = font.value;
       document.documentElement.style.setProperty("--arabic-font", font.stack);
       document.documentElement.dataset.arabicFont = font.value;
@@ -398,18 +417,100 @@
     window.addEventListener("resize", syncTopbarHeight, { passive: true });
   }
 
-  function ensureReadingTools() {
-    let tools = document.querySelector(".reading-tools");
-    if (tools) return tools;
+  function setupReadingProgress() {
+    const topbar = document.querySelector(".topbar");
+    if (!topbar) return;
+    if (!document.querySelector(".lesson-content, .reference-content, main")) return;
 
+    const bar = document.createElement("div");
+    bar.className = "reading-progress";
+    bar.setAttribute("aria-hidden", "true");
+    const fill = document.createElement("span");
+    bar.appendChild(fill);
+    topbar.appendChild(bar);
+
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = scrollable > 40 ? Math.min(1, Math.max(0, window.scrollY / scrollable)) : 0;
+      fill.style.transform = `scaleX(${ratio})`;
+      bar.classList.toggle("is-visible", scrollable > 400);
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    update();
+  }
+
+  function ensureReadingTools() {
     const topbarInner = document.querySelector(".topbar__inner");
     if (!topbarInner) return null;
 
-    tools = document.createElement("div");
-    tools.className = "reading-tools";
-    tools.setAttribute("aria-label", "Okuma araçları");
-    topbarInner.appendChild(tools);
-    if (themeToggle) tools.appendChild(themeToggle);
+    let tools = document.querySelector(".reading-tools");
+    if (!tools) {
+      tools = document.createElement("div");
+      tools.className = "reading-tools";
+      tools.setAttribute("aria-label", "Okuma araçları");
+    }
+    tools.id = tools.id || "reading-tools";
+    if (themeToggle && themeToggle.parentElement !== tools) tools.appendChild(themeToggle);
+    if (themeToggle && !themeToggle.querySelector(".control-label")) {
+      const themeLabel = document.createElement("span");
+      themeLabel.className = "control-label";
+      themeLabel.textContent = "Tema";
+      themeToggle.appendChild(themeLabel);
+    }
+
+    if (!tools.closest(".topbar__controls")) {
+      const controls = document.createElement("div");
+      controls.className = "topbar__controls";
+
+      const settingsToggle = document.createElement("button");
+      settingsToggle.type = "button";
+      settingsToggle.id = "reading-settings-toggle";
+      settingsToggle.className = "icon-button settings-toggle";
+      settingsToggle.setAttribute("aria-expanded", "false");
+      settingsToggle.setAttribute("aria-controls", tools.id);
+      settingsToggle.setAttribute("aria-label", "Okuma ayarlarını aç");
+      settingsToggle.title = "Okuma ayarları";
+      settingsToggle.innerHTML = '<span aria-hidden="true">\u2699</span>';
+
+      topbarInner.appendChild(controls);
+      controls.append(settingsToggle, tools);
+
+      const setPanel = (open) => {
+        tools.dataset.open = open ? "true" : "false";
+        settingsToggle.setAttribute("aria-expanded", String(open));
+        settingsToggle.setAttribute("aria-label", open ? "Okuma ayarlarını kapat" : "Okuma ayarlarını aç");
+        settingsToggle.classList.toggle("is-active", open);
+      };
+      setPanel(false);
+
+      settingsToggle.addEventListener("click", (event) => {
+        event.stopPropagation();
+        setPanel(tools.dataset.open !== "true");
+      });
+
+      document.addEventListener("click", (event) => {
+        if (tools.dataset.open !== "true") return;
+        if (controls.contains(event.target)) return;
+        setPanel(false);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape" || tools.dataset.open !== "true") return;
+        setPanel(false);
+        settingsToggle.focus();
+      });
+    }
+
     return tools;
   }
 
@@ -1847,101 +1948,87 @@
   function speakArabic(text, button) {
     if (!text) return;
 
+    const cleanText = text.replace(/\s+/g, " ").trim().slice(0, 300);
+    if (!cleanText) return;
+
+    if (!speechSupported()) {
+      showToast("Bu tarayıcı sesli okumayı desteklemiyor. Chrome, Edge veya Safari ile dene.");
+      return;
+    }
+
+    const wasSameButton = activeSpeakButton === button;
     stopActiveSpeech();
+    if (wasSameButton) return;
 
-    const onlineVoiceSources = [
-      ["https://translate.googleapis.com/translate_tts", "gtx"],
-      ["https://translate.google.com/translate_tts", "tw-ob"]
-    ];
-    activeSpeakButton = button;
-    button.classList.add("is-speaking");
-
-    const playSource = (sourceIndex) => {
-      if (sourceIndex >= onlineVoiceSources.length) {
-        activeCardAudio = null;
-        activeSpeakButton = null;
-        button.classList.remove("is-speaking");
-        speakWithSystemVoice(text, button);
-        return;
-      }
-
-      const [host, client] = onlineVoiceSources[sourceIndex];
-      const onlineVoiceUrl = new URL(host);
-      onlineVoiceUrl.searchParams.set("ie", "UTF-8");
-      onlineVoiceUrl.searchParams.set("client", client);
-      onlineVoiceUrl.searchParams.set("tl", "ar");
-      onlineVoiceUrl.searchParams.set("q", text);
-
-      const audio = new Audio(onlineVoiceUrl.toString());
-      let sourceFailed = false;
-      activeCardAudio = audio;
-
-      const tryNextSource = () => {
-        if (sourceFailed) return;
-        sourceFailed = true;
-        if (activeCardAudio === audio) activeCardAudio = null;
-        playSource(sourceIndex + 1);
-      };
-
-      audio.addEventListener("ended", () => {
-        if (activeCardAudio === audio) {
-          activeCardAudio = null;
-          activeSpeakButton = null;
-        }
-        button.classList.remove("is-speaking");
-      }, { once: true });
-      audio.addEventListener("error", tryNextSource, { once: true });
-      audio.play().catch(tryNextSource);
-    };
-
-    playSource(0);
-  }
-
-  async function speakWithSystemVoice(text, button) {
-    if (!("speechSynthesis" in window) || !("SpeechSynthesisUtterance" in window)) {
-      showToast("İnternet sesi açılamadı. İnternet bağlantını kontrol edip tekrar dene.");
-      return;
-    }
-
-    let voices = window.speechSynthesis.getVoices();
-    if (!voices.length) {
-      await new Promise((resolve) => {
-        const finishWaiting = () => {
-          window.speechSynthesis.removeEventListener("voiceschanged", finishWaiting);
-          resolve();
-        };
-        window.speechSynthesis.addEventListener("voiceschanged", finishWaiting, { once: true });
-        window.setTimeout(finishWaiting, 1200);
-      });
-      voices = window.speechSynthesis.getVoices();
-    }
-
-    const arabicVoice = voices.find((voice) => voice.lang.toLowerCase().startsWith("ar"));
-    if (!arabicVoice) {
-      showToast("Çevrimiçi ses engellendi. Dosyayı Edge veya Chrome'da açıp yeniden dene.");
-      return;
-    }
-
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = arabicVoice.lang;
-    utterance.rate = 0.72;
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    const arabicVoice = findArabicVoice();
+    utterance.lang = arabicVoice?.lang || "ar-SA";
+    if (arabicVoice) utterance.voice = arabicVoice;
+    utterance.rate = 0.75;
     utterance.pitch = 1;
-    utterance.voice = arabicVoice;
 
+    let started = false;
     activeSpeakButton = button;
     button.classList.add("is-speaking");
-    utterance.onend = () => {
+
+    const finish = () => {
       button.classList.remove("is-speaking");
       if (activeSpeakButton === button) activeSpeakButton = null;
     };
-    utterance.onerror = () => {
-      button.classList.remove("is-speaking");
-      if (activeSpeakButton === button) activeSpeakButton = null;
-      showToast("Ses başlatılamadı. Sayfayı yenileyip tekrar dene.");
+
+    utterance.onstart = () => {
+      started = true;
     };
+    utterance.onend = finish;
+    utterance.onerror = (event) => {
+      finish();
+      if (event?.error === "interrupted" || event?.error === "canceled") return;
+      showToast(missingVoiceMessage());
+    };
+
     window.speechSynthesis.speak(utterance);
+
+    window.setTimeout(() => {
+      if (started || activeSpeakButton !== button) return;
+      if (window.speechSynthesis.speaking || window.speechSynthesis.pending) return;
+      finish();
+      showToast(missingVoiceMessage());
+    }, 1500);
   }
 
+  function speechSupported() {
+    return "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+  }
+
+  function findArabicVoice() {
+    if (!speechSupported()) return null;
+    const voices = window.speechSynthesis.getVoices() || [];
+    return voices.find((voice) => voice.lang?.toLowerCase().startsWith("ar")) || null;
+  }
+
+  function missingVoiceMessage() {
+    const platform = `${navigator.userAgent} ${navigator.platform || ""}`.toLowerCase();
+    if (/iphone|ipad|ipod|mac os/.test(platform)) {
+      return "Cihazında Arapça ses yok. Ayarlar → Erişilebilirlik → Konuşulan İçerik → Sesler → Arapça'yı indir.";
+    }
+    if (/android/.test(platform)) {
+      return "Cihazında Arapça ses yok. Ayarlar → Erişilebilirlik → Metin okuma çıkışı → Arapça dil paketini indir.";
+    }
+    if (/windows/.test(platform)) {
+      return "Bilgisayarında Arapça ses yok. Ayarlar → Saat ve dil → Dil ve bölge → Arapça ekle (konuşma paketiyle).";
+    }
+    return "Cihazında Arapça ses paketi bulunamadı. İşletim sisteminin dil ayarlarından Arapça sesi ekle.";
+  }
+
+  function warmUpVoices() {
+    if (!speechSupported()) return;
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.addEventListener?.("voiceschanged", () => {
+      window.speechSynthesis.getVoices();
+    });
+  }
+
+  warmUpVoices();
   async function copyArabicText(text) {
     if (!text) return;
     try {
