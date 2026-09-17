@@ -1952,7 +1952,7 @@
     if (!cleanText) return;
 
     if (!speechSupported()) {
-      showToast("Bu tarayıcı sesli okumayı desteklemiyor. Chrome, Edge veya Safari ile dene.");
+      showVoiceHelp("Bu tarayıcı sesli okumayı desteklemiyor.");
       return;
     }
 
@@ -1960,14 +1960,19 @@
     stopActiveSpeech();
     if (wasSameButton) return;
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
     const arabicVoice = findArabicVoice();
-    utterance.lang = arabicVoice?.lang || "ar-SA";
-    if (arabicVoice) utterance.voice = arabicVoice;
+    if (!arabicVoice) {
+      showVoiceHelp("Cihazında yüklü bir Arapça konuşma sesi yok, bu yüzden Arapça metin seslendirilemiyor.");
+      return;
+    }
+
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.voice = arabicVoice;
+    utterance.lang = arabicVoice.lang || "ar-SA";
     utterance.rate = 0.75;
     utterance.pitch = 1;
 
-    let started = false;
+    const startedAt = Date.now();
     activeSpeakButton = button;
     button.classList.add("is-speaking");
 
@@ -1976,24 +1981,21 @@
       if (activeSpeakButton === button) activeSpeakButton = null;
     };
 
-    utterance.onstart = () => {
-      started = true;
+    utterance.onend = () => {
+      const silent = Date.now() - startedAt < 350;
+      finish();
+      if (silent) {
+        showVoiceHelp(`“${arabicVoice.name}” sesi Arapça metni seslendiremedi.`);
+      }
     };
-    utterance.onend = finish;
+
     utterance.onerror = (event) => {
       finish();
       if (event?.error === "interrupted" || event?.error === "canceled") return;
-      showToast(missingVoiceMessage());
+      showVoiceHelp("Ses başlatılamadı.");
     };
 
     window.speechSynthesis.speak(utterance);
-
-    window.setTimeout(() => {
-      if (started || activeSpeakButton !== button) return;
-      if (window.speechSynthesis.speaking || window.speechSynthesis.pending) return;
-      finish();
-      showToast(missingVoiceMessage());
-    }, 1500);
   }
 
   function speechSupported() {
@@ -2006,18 +2008,107 @@
     return voices.find((voice) => voice.lang?.toLowerCase().startsWith("ar")) || null;
   }
 
-  function missingVoiceMessage() {
-    const platform = `${navigator.userAgent} ${navigator.platform || ""}`.toLowerCase();
-    if (/iphone|ipad|ipod|mac os/.test(platform)) {
-      return "Cihazında Arapça ses yok. Ayarlar → Erişilebilirlik → Konuşulan İçerik → Sesler → Arapça'yı indir.";
+  function detectPlatform() {
+    const info = `${navigator.userAgent} ${navigator.platform || ""}`.toLowerCase();
+    if (/iphone|ipad|ipod/.test(info)) return "ios";
+    if (/android/.test(info)) return "android";
+    if (/mac os|macintosh/.test(info)) return "mac";
+    if (/windows/.test(info)) return "windows";
+    return "other";
+  }
+
+  const VOICE_HELP_STEPS = {
+    windows: {
+      title: "Windows'ta Arapça sesi ekle",
+      steps: [
+        "Ayarlar → Saat ve dil → Konuşma → Sesleri yönet.",
+        "“Ses ekle” düğmesine bas ve listeden Arapça'yı (العربية) seç.",
+        "İndirme bitince tarayıcıyı tamamen kapatıp yeniden aç."
+      ],
+      note: "Alternatif: Ayarlar → Saat ve dil → Dil ve bölge → Dil ekle → Arapça (kurulum seçeneklerinde “Konuşma” kutusu işaretli olsun)."
+    },
+    mac: {
+      title: "Mac'te Arapça sesi ekle",
+      steps: [
+        "Sistem Ayarları → Erişilebilirlik → Konuşulan İçerik → Sistem sesi.",
+        "Listenin altındaki “Sesi Yönet”ten Arapça sesleri indir.",
+        "İndirme bitince tarayıcıyı yeniden başlat."
+      ]
+    },
+    ios: {
+      title: "iPhone/iPad'de Arapça sesi ekle",
+      steps: [
+        "Ayarlar → Erişilebilirlik → Konuşulan İçerik → Sesler.",
+        "Arapça'yı seçip bir sesi indir.",
+        "Safari'yi kapatıp yeniden aç."
+      ]
+    },
+    android: {
+      title: "Android'de Arapça sesi ekle",
+      steps: [
+        "Ayarlar → Erişilebilirlik → Metin okuma çıkışı.",
+        "Motorun ayarlarından “Ses verilerini yükle” → Arapça paketini indir.",
+        "Tarayıcıyı kapatıp yeniden aç."
+      ]
+    },
+    other: {
+      title: "Arapça sesi ekle",
+      steps: [
+        "İşletim sisteminin konuşma/erişilebilirlik ayarlarını aç.",
+        "Arapça konuşma (text-to-speech) paketini indir.",
+        "Tarayıcıyı yeniden başlat."
+      ]
     }
-    if (/android/.test(platform)) {
-      return "Cihazında Arapça ses yok. Ayarlar → Erişilebilirlik → Metin okuma çıkışı → Arapça dil paketini indir.";
+  };
+
+  let voiceHelpDialog = null;
+
+  function showVoiceHelp(reason) {
+    const platform = detectPlatform();
+    const help = VOICE_HELP_STEPS[platform] || VOICE_HELP_STEPS.other;
+
+    if (!voiceHelpDialog) {
+      voiceHelpDialog = document.createElement("div");
+      voiceHelpDialog.className = "voice-help";
+      voiceHelpDialog.setAttribute("role", "dialog");
+      voiceHelpDialog.setAttribute("aria-modal", "true");
+      voiceHelpDialog.setAttribute("aria-labelledby", "voice-help-title");
+      voiceHelpDialog.hidden = true;
+      document.body.appendChild(voiceHelpDialog);
+
+      voiceHelpDialog.addEventListener("click", (event) => {
+        if (event.target === voiceHelpDialog || event.target.closest("[data-voice-help-close]")) {
+          hideVoiceHelp();
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && voiceHelpDialog && !voiceHelpDialog.hidden) hideVoiceHelp();
+      });
     }
-    if (/windows/.test(platform)) {
-      return "Bilgisayarında Arapça ses yok. Ayarlar → Saat ve dil → Dil ve bölge → Arapça ekle (konuşma paketiyle).";
-    }
-    return "Cihazında Arapça ses paketi bulunamadı. İşletim sisteminin dil ayarlarından Arapça sesi ekle.";
+
+    const edgeNote = platform === "windows"
+      ? '<p class="voice-help__note">Önce şunu dene: Bu sayfayı <strong>Microsoft Edge</strong> ile aç. Edge çoğu kurulumda kendi çevrimiçi Arapça sesleriyle gelir; çalışırsa hiçbir şey kurmana gerek kalmaz.</p>'
+      : "";
+    const extraNote = help.note ? `<p class="voice-help__note">${help.note}</p>` : "";
+
+    voiceHelpDialog.innerHTML = `
+      <div class="voice-help__card">
+        <p class="voice-help__reason">${reason || ""}</p>
+        <h2 id="voice-help-title">${help.title}</h2>
+        <ol class="voice-help__steps">${help.steps.map((step) => `<li>${step}</li>`).join("")}</ol>
+        ${edgeNote}
+        ${extraNote}
+        <p class="voice-help__note">Ses gelene kadar Arapça metinleri kendi sesinle okuyabilirsin; alıştırmaların geri kalanı normal çalışır.</p>
+        <button type="button" class="primary-button" data-voice-help-close>Anladım</button>
+      </div>
+    `;
+    voiceHelpDialog.hidden = false;
+    voiceHelpDialog.querySelector("[data-voice-help-close]")?.focus();
+  }
+
+  function hideVoiceHelp() {
+    if (voiceHelpDialog) voiceHelpDialog.hidden = true;
   }
 
   function warmUpVoices() {
