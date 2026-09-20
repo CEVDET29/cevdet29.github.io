@@ -6,6 +6,13 @@
 <meta name="theme-color" content="#0E1339">
 <!-- Sekme simgesi. Gomulu olduğu icin tarayici ayrica /favicon.ico istemez. -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%230E1339'/><path d='M13 45a19 19 0 0 1 38 0' fill='none' stroke='%23FFB454' stroke-width='5' stroke-linecap='round'/><circle cx='45.4' cy='31.6' r='5' fill='%23FFB454'/></svg>">
+<!-- Telefona "uygulama olarak" kurulabilmesi icin gereken manifest ve ikonlar. -->
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Vakit">
 <title>Vakit</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2055,6 +2062,19 @@ setView(VIEW);
 if(store.get("vakit.odak")) setFocus(true);
 planAuto();
 refresh(bayatMi());
+</script>
+
+<script>
+/* Service worker yalnizca guvenli baglamda (https veya localhost) kaydedilir;
+   dosyayi cift tiklayip file:// ile acmak bundan etkilenmez. */
+(function(){
+  var h = location.hostname;
+  var guvenli = (location.protocol === "https:" || h === "localhost" || h === "127.0.0.1");
+  if(!guvenli || !("serviceWorker" in navigator)) return;
+  window.addEventListener("load", function(){
+    navigator.serviceWorker.register("sw.js").catch(function(){});
+  });
+})();
 </script>
 </body>
 </html>
