@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&amp;family=Amiri:wght@400;700&amp;display=swap">
-  <link rel="stylesheet" href="assets/styles.css?v=15">
+  <link rel="stylesheet" href="assets/styles.css?v=28">
 </head>
 <body data-page="lesson" data-lesson-id="ders-06" data-lesson-title="Arapça Ders 06 Sonucu">
   <a class="skip-link" href="#main">Derse geç</a>
@@ -28,7 +28,7 @@
 
   <main id="main" class="lesson-shell">
     <aside class="lesson-nav" aria-label="Ders bölümleri">
-      <a href="#baslangic">Başlangıç</a><a href="#kavramlar">Yeni kavramlar</a><a href="#tam-tablo">14 şahıs tablosu</a><a href="#gruplar">Ek grupları</a><a href="#kelimeler">Kelimeler</a><a href="#cumleler">Cümleler</a><a href="#alistirma-1">Alıştırma 1</a><a href="#alistirma-2">Alıştırma 2</a><a href="#kuran">Kur’an bağlantısı</a><a href="#konusma">Konuşma</a><a href="#sonuc">Ders sonu</a>
+      <a href="#baslangic">Başlangıç</a><a href="#kavramlar">Yeni kavramlar</a><a href="#tam-tablo">14 şahıs tablosu</a><a href="#cekim-izgarasi">Çekim ızgarası</a><a href="#gruplar">Ek grupları</a><a href="#kelimeler">Kelimeler</a><a href="#cumleler">Cümleler</a><a href="#alistirma-1">Alıştırma 1</a><a href="#alistirma-2">Alıştırma 2</a><a href="#kuran">Kur’an bağlantısı</a><a href="#konusma">Konuşma</a><a href="#sonuc">Ders sonu</a>
     </aside>
 
     <article class="lesson-content">
@@ -69,6 +69,12 @@
           <tr><td>13</td><td class="arabic" lang="ar" dir="rtl">أَنَا</td><td class="arabic" lang="ar" dir="rtl">كَتَبْتُ</td><td>ben yazdım</td><td><span lang="ar" dir="rtl">ـْتُ</span></td></tr>
           <tr><td>14</td><td class="arabic" lang="ar" dir="rtl">نَحْنُ</td><td class="arabic" lang="ar" dir="rtl">كَتَبْنَا</td><td>biz yazdık</td><td><span lang="ar" dir="rtl">ـْنَا</span></td></tr>
         </tbody></table></div>
+      </section>
+
+      <section class="lesson-section" id="cekim-izgarasi">
+        <p class="section-kicker">3 · Tek bakışta</p><h2>On dört şahıs, geleneksel düzende</h2>
+        <p>Aynı çekimi sarf kitaplarındaki matris düzeninde gör: sütunlar tekil-ikil-çoğul, satırlar gâib’den mütekellim’e.</p>
+        <div data-conjugation-grid="كَتَبَ" data-tense="mazi"></div>
       </section>
 
       <section class="lesson-section" id="gruplar">
@@ -133,12 +139,12 @@
           <label class="check-line"><input type="checkbox" name="speaking_read_aloud" value="tamam"><span>Tabloyu ve iki konuşmayı hoparlörle dinleyip en az üçer kez sesli okudum.</span></label>
         </section>
 
-        <section class="lesson-section lesson-finish" id="sonuc"><p class="section-kicker">10 · Ders sonu</p><h2>Çalışmanı tamamla</h2><p>Cevaplarını kontrol ettikten sonra sonucu kopyalayıp ChatGPT konuşmasına yapıştır.</p><div class="finish-actions"><button class="primary-button" type="button" id="check-answers">Cevaplarımı kontrol et</button><button class="secondary-button" type="button" id="copy-report" disabled>Sonucu kopyala</button></div><div class="result-card" id="result-card" hidden aria-live="polite"><div class="result-score"><span id="score-number">0/12</span><small>Doğru cevap</small></div><div><h3 id="result-title">Sonucun hazır</h3><p id="result-message"></p></div></div><div class="completion-box"><label class="check-line"><input type="checkbox" name="lesson_complete" value="tamam" id="lesson-complete"><span>Bu dersi tamamladım ve sonucu ChatGPT’ye göndermeye hazırım.</span></label><button class="danger-link" type="button" id="reset-lesson">Bu dersteki cevapları sıfırla</button></div></section>
+        <section class="lesson-section lesson-finish" id="sonuc"><p class="section-kicker">10 · Ders sonu</p><h2>Çalışmanı tamamla</h2><p>Cevaplarını kontrol ettikten sonra sonucu kopyalayıp ChatGPT konuşmasına yapıştır.</p><div class="finish-actions"><button class="primary-button" type="button" id="check-answers">Cevaplarımı kontrol et</button><button class="secondary-button" type="button" id="copy-report" disabled>Sonucu kopyala</button></div><div class="result-card" id="result-card" hidden aria-live="polite"><div class="result-score"><span id="score-number">0/12</span><small>Doğru cevap</small></div><div><h3 id="result-title">Sonucun hazır</h3><p id="result-message"></p></div></div><div class="completion-box"><label class="check-line"><input type="checkbox" name="lesson_complete" value="tamam" id="lesson-complete"><span>Bu dersi tamamladım.</span></label><button class="danger-link" type="button" id="reset-lesson">Bu dersteki cevapları sıfırla</button></div></section>
       </form>
 
       <nav class="lesson-bottom-nav" aria-label="Ders gezinme"><a class="secondary-button" href="ders-05.html">← Ders 05</a><a class="primary-button" href="ders-07.html">Ders 07 →</a></nav>
     </article>
   </main>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div><script src="assets/app.js?v=20"></script>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div><script src="assets/app.js?v=26"></script>
 </body>
 </html>

@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;600;700&amp;family=Amiri:wght@400;700&amp;display=swap">
-  <link rel="stylesheet" href="assets/styles.css?v=15">
+  <link rel="stylesheet" href="assets/styles.css?v=28">
 </head>
 <body data-page="lesson" data-lesson-id="ders-03" data-lesson-title="Arapça Ders 03 Sonucu">
   <a class="skip-link" href="#main">Derse geç</a>
@@ -99,27 +99,9 @@
         <h2>Geleneksel 14 şahıs sırası</h2>
         <p>Kur’an ve klasik Arapça öğretiminde çekimler genellikle bu sırayla gösterilir. Aynı yazılan iki <b lang="ar" dir="rtl">هُمَا</b> ve iki <b lang="ar" dir="rtl">أَنْتُمَا</b> tabloda görevleri ayrı olduğu için iki kez yer alır.</p>
 
-        <div class="pronoun-table-wrap">
-          <table class="pronoun-table">
-            <thead><tr><th>Sıra</th><th>Arapça</th><th>Türkçe</th><th>Özellik</th></tr></thead>
-            <tbody>
-              <tr><td>1</td><td class="arabic" lang="ar" dir="rtl">هُوَ</td><td>o</td><td><span class="person-badge">erkek · tekil</span></td></tr>
-              <tr><td>2</td><td class="arabic" lang="ar" dir="rtl">هُمَا</td><td>o ikisi</td><td><span class="person-badge">erkek · ikil</span></td></tr>
-              <tr><td>3</td><td class="arabic" lang="ar" dir="rtl">هُمْ</td><td>onlar</td><td><span class="person-badge">erkek/karma · çoğul</span></td></tr>
-              <tr><td>4</td><td class="arabic" lang="ar" dir="rtl">هِيَ</td><td>o</td><td><span class="person-badge">kadın · tekil</span></td></tr>
-              <tr><td>5</td><td class="arabic" lang="ar" dir="rtl">هُمَا</td><td>o ikisi</td><td><span class="person-badge">kadın · ikil</span></td></tr>
-              <tr><td>6</td><td class="arabic" lang="ar" dir="rtl">هُنَّ</td><td>onlar</td><td><span class="person-badge">kadın · çoğul</span></td></tr>
-              <tr><td>7</td><td class="arabic" lang="ar" dir="rtl">أَنْتَ</td><td>sen</td><td><span class="person-badge">erkek · tekil</span></td></tr>
-              <tr><td>8</td><td class="arabic" lang="ar" dir="rtl">أَنْتُمَا</td><td>siz ikiniz</td><td><span class="person-badge">erkek · ikil</span></td></tr>
-              <tr><td>9</td><td class="arabic" lang="ar" dir="rtl">أَنْتُمْ</td><td>siz</td><td><span class="person-badge">erkek/karma · çoğul</span></td></tr>
-              <tr><td>10</td><td class="arabic" lang="ar" dir="rtl">أَنْتِ</td><td>sen</td><td><span class="person-badge">kadın · tekil</span></td></tr>
-              <tr><td>11</td><td class="arabic" lang="ar" dir="rtl">أَنْتُمَا</td><td>siz ikiniz</td><td><span class="person-badge">kadın · ikil</span></td></tr>
-              <tr><td>12</td><td class="arabic" lang="ar" dir="rtl">أَنْتُنَّ</td><td>siz</td><td><span class="person-badge">kadın · çoğul</span></td></tr>
-              <tr><td>13</td><td class="arabic" lang="ar" dir="rtl">أَنَا</td><td>ben</td><td><span class="person-badge">tekil</span></td></tr>
-              <tr><td>14</td><td class="arabic" lang="ar" dir="rtl">نَحْنُ</td><td>biz</td><td><span class="person-badge">ikil/çoğul</span></td></tr>
-            </tbody>
-          </table>
-        </div>
+        <h3 class="pronoun-grid-title">Bütün tablo tek bakışta</h3>
+        <div data-pronoun-grid></div>
+
 
         <div class="memory-rule"><span aria-hidden="true">!</span><p><strong>Bugünkü hedef:</strong> Bütün tabloyu ezberlemek değil; <b lang="ar" dir="rtl">أَنَا، نَحْنُ، أَنْتَ، أَنْتِ، هُوَ، هِيَ، أَنْتُمْ، هُمْ</b> zamirlerini tanımaktır.</p></div>
 
@@ -233,7 +215,7 @@
           <p>Önce cevaplarını kontrol et. Ardından sonucu kopyalayıp ChatGPT konuşmasına yapıştır.</p>
           <div class="finish-actions"><button class="primary-button" type="button" id="check-answers">Cevaplarımı kontrol et</button><button class="secondary-button" type="button" id="copy-report" disabled>Sonucu kopyala</button></div>
           <div class="result-card" id="result-card" hidden aria-live="polite"><div class="result-score"><span id="score-number">0/12</span><small>Doğru cevap</small></div><div><h3 id="result-title">Sonucun hazır</h3><p id="result-message"></p></div></div>
-          <div class="completion-box"><label class="check-line"><input type="checkbox" name="lesson_complete" value="tamam" id="lesson-complete"><span>Bu dersi tamamladım ve sonucu ChatGPT’ye göndermeye hazırım.</span></label><button class="danger-link" type="button" id="reset-lesson">Bu dersteki cevapları sıfırla</button></div>
+          <div class="completion-box"><label class="check-line"><input type="checkbox" name="lesson_complete" value="tamam" id="lesson-complete"><span>Bu dersi tamamladım.</span></label><button class="danger-link" type="button" id="reset-lesson">Bu dersteki cevapları sıfırla</button></div>
         </section>
       </form>
 
@@ -242,6 +224,6 @@
   </main>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="assets/app.js?v=20"></script>
+  <script src="assets/app.js?v=26"></script>
 </body>
 </html>

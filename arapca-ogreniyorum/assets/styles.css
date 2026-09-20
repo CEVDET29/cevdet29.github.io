@@ -3461,3 +3461,832 @@ th > .arabic-tools {
   width: 100%;
   justify-content: center;
 }
+
+/* --- Kelime kelime çözümleme --- */
+:root {
+  --role-isim: #1f6f5c;
+  --role-fiil: #b4341f;
+  --role-zamir: #6b4bb0;
+  --role-harf: #9b6518;
+  --role-soru: #1f5d8c;
+  --role-ek: #a8347a;
+}
+
+body[data-theme="dark"] {
+  --role-isim: #6fd3b6;
+  --role-fiil: #ff9a86;
+  --role-zamir: #bda6f5;
+  --role-harf: #e9b567;
+  --role-soru: #86c2ee;
+  --role-ek: #f2a0cf;
+}
+
+[data-role="isim"] { --role-color: var(--role-isim); }
+[data-role="fiil"] { --role-color: var(--role-fiil); }
+[data-role="zamir"] { --role-color: var(--role-zamir); }
+[data-role="harf"] { --role-color: var(--role-harf); }
+[data-role="soru"] { --role-color: var(--role-soru); }
+[data-role="ek"] { --role-color: var(--role-ek); }
+
+.word-map-legend {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.6rem;
+  justify-items: start;
+}
+
+.word-map-toggle {
+  align-self: start;
+}
+
+.word-map-legend__keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.word-map-legend__item {
+  padding: 0.2rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--role-color) 45%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--role-color) 12%, transparent);
+  color: var(--role-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.word-map-legend__hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.word-map {
+  margin-top: 0.85rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--border);
+}
+
+body[data-word-map="hidden"] .word-map {
+  display: none;
+}
+
+.word-map__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.word-chip {
+  display: grid;
+  gap: 0.15rem;
+  justify-items: center;
+  padding: 0.35rem 0.6rem;
+  border: 1px solid color-mix(in srgb, var(--role-color) 35%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--role-color) 9%, transparent);
+  cursor: pointer;
+  font: inherit;
+  text-align: center;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.word-chip:hover,
+.word-chip:focus-visible {
+  background: color-mix(in srgb, var(--role-color) 18%, transparent);
+  border-color: var(--role-color);
+}
+
+.word-chip.is-open {
+  background: color-mix(in srgb, var(--role-color) 22%, transparent);
+  border-color: var(--role-color);
+}
+
+.word-chip__ar {
+  font-family: var(--arabic-font);
+  font-size: calc(1.25rem * var(--arabic-scale, 1));
+  line-height: 1.9;
+  color: var(--role-color);
+}
+
+.word-chip__tr {
+  font-size: 0.78rem;
+  line-height: 1.3;
+  color: var(--muted);
+}
+
+.word-map__note {
+  margin: 0.6rem 0 0;
+  padding: 0.6rem 0.75rem;
+  border-inline-start: 3px solid var(--role-color, var(--border));
+  border-radius: 10px;
+  background: var(--surface-soft);
+  color: var(--text);
+  font-size: 0.87rem;
+  line-height: 1.55;
+}
+
+@media print {
+  .word-map-legend__hint,
+  .word-map-toggle {
+    display: none;
+  }
+
+  .word-chip {
+    border-color: #999;
+    background: none;
+  }
+}
+
+.word-map__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.word-map__note-text {
+  margin: 0;
+  flex: 1 1 auto;
+}
+
+.word-map__note-speak {
+  flex: 0 0 auto;
+}
+
+/* Kelime haritası taşıyan örnek cümle kartları */
+.practice-sentence:has(.word-map) {
+  grid-template-areas:
+    "number arabic tools"
+    "number translation translation"
+    "wordmap wordmap wordmap";
+  align-items: start;
+}
+
+.practice-sentence .word-map {
+  grid-area: wordmap;
+}
+
+body[data-word-map="shown"] .practice-sentence-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (max-width: 860px) {
+  body[data-word-map="shown"] .practice-sentence-grid,
+  .practice-sentence-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.word-map__note-text .arabic {
+  font-size: calc(1.02em * var(--arabic-scale, 1));
+  line-height: 1.9;
+  vertical-align: baseline;
+}
+
+/* Ders gövdesindeki hazır kelime ayrıştırmalarını da renklendir */
+.word-breakdown > span[data-role] .arabic {
+  color: var(--role-color);
+}
+
+.word-breakdown > span[data-role] {
+  border-bottom: 2px solid color-mix(in srgb, var(--role-color) 45%, transparent);
+}
+
+.word-breakdown > span.has-note {
+  cursor: pointer;
+}
+
+.word-breakdown > span.has-note:hover,
+.word-breakdown > span.has-note:focus-visible,
+.word-breakdown > span.is-open {
+  border-bottom-color: var(--role-color);
+  background: color-mix(in srgb, var(--role-color) 12%, transparent);
+  border-radius: 8px 8px 0 0;
+}
+
+.word-breakdown__note {
+  flex-basis: 100%;
+  margin: 0.55rem 0 0;
+  padding: 0.55rem 0.7rem;
+  border-inline-start: 3px solid var(--role-color, var(--border));
+  border-radius: 10px;
+  background: var(--surface-soft);
+  font-size: 0.87rem;
+  line-height: 1.55;
+}
+
+.word-breakdown__note .arabic {
+  font-size: calc(1.02em * var(--arabic-scale, 1));
+  line-height: 1.9;
+}
+
+.word-breakdown__note .arabic,
+.word-map__note-text .arabic {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+/* --- Fiil tabloları: mâzi / muzari ve şahıs işaretleri --- */
+.verb-table td.arabic-cell[data-tense],
+.conjugation-template td[data-tense] {
+  color: var(--role-fiil);
+}
+
+.verb-table td.arabic-cell[data-tense="muzari"],
+.conjugation-template td[data-tense="muzari"] {
+  text-decoration: underline dotted color-mix(in srgb, var(--role-fiil) 55%, transparent);
+  text-underline-offset: 7px;
+  text-decoration-thickness: 2px;
+}
+
+.verb-mark {
+  color: var(--role-ek);
+  font-weight: 700;
+}
+
+.verb-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.9rem;
+}
+
+.verb-legend__item {
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--role-fiil) 40%, transparent);
+  background: color-mix(in srgb, var(--role-fiil) 10%, transparent);
+  color: var(--role-fiil);
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.verb-legend__item[data-tense="muzari"] {
+  text-decoration: underline dotted currentColor;
+  text-underline-offset: 4px;
+}
+
+.verb-legend__item--mark {
+  border-color: color-mix(in srgb, var(--role-ek) 45%, transparent);
+  background: color-mix(in srgb, var(--role-ek) 12%, transparent);
+  color: var(--role-ek);
+}
+
+.verb-legend__hint {
+  flex-basis: 100%;
+  margin: 0.2rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+@media print {
+  .verb-legend__hint {
+    display: none;
+  }
+}
+
+/* .word-breakdown span kuralı iç içe span'lara da uyduğu için araç kutusu
+   hücre gibi biçimleniyor ve düğmeler alt alta diziliyordu. */
+.word-breakdown span.arabic-tools {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+/* --- Yazdırma düzeltmeleri --- */
+@media print {
+  /* Ekran okuyucu atlama bağlantıları kâğıda basılmamalı */
+  .skip-link {
+    display: none !important;
+  }
+
+  /* Başvuru sayfasındaki içindekiler çubuğu kâğıtta sağdan taşıyordu */
+  .reference-toc,
+  .site-footer,
+  .new-concepts,
+  .progress-card,
+  .review-dashboard {
+    display: none !important;
+  }
+
+  /* Ana sayfa: gezinme kartlarını mürekkep yemeyen sade listeye indir */
+  body[data-page="home"] .primary-button,
+  body[data-page="home"] .reference-banner__arrow,
+  body[data-page="home"] .status-pill {
+    display: none !important;
+  }
+
+  body[data-page="home"] .course-intro,
+  body[data-page="home"] .lesson-card,
+  body[data-page="home"] .reference-banner,
+  body[data-page="home"] .method-grid article,
+  body[data-page="home"] .course-roadmap li,
+  body[data-page="home"] .section-block {
+    background: none !important;
+    box-shadow: none !important;
+    border-color: #999 !important;
+  }
+
+  body[data-page="home"] .lesson-card {
+    break-inside: avoid;
+  }
+
+  /* Renk basmayan yazıcılarda da şahıs işareti ayırt edilsin */
+  .verb-mark {
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1.5px;
+  }
+
+  .verb-print-table td[data-tense="muzari"] {
+    text-decoration: underline dotted;
+    text-underline-offset: 5px;
+  }
+
+  .word-map,
+  .word-breakdown__note {
+    break-inside: avoid;
+  }
+
+  /* Izgara sayfa sonunda blok halinde atlamasin: satir satir aksin */
+  .pronoun-grid {
+    display: block;
+    break-inside: auto;
+  }
+
+  .pronoun-grid__head {
+    display: none;
+  }
+
+  .pronoun-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) 34mm;
+    gap: 2mm;
+    margin-bottom: 2.5mm;
+    break-inside: avoid;
+  }
+
+  .pronoun-cell__form {
+    display: block;
+  }
+
+  .pronoun-cell--wide {
+    grid-column: span 2;
+  }
+}
+
+/* Koyu zeminli kalıp kutusu kâğıtta çok mürekkep yiyordu */
+@media print {
+  .formula-box {
+    background: #fff !important;
+    color: #111 !important;
+    border: 0.8pt solid #666 !important;
+    box-shadow: none !important;
+  }
+
+  .formula-box span:not(.arabic),
+  .formula-box b {
+    color: #111 !important;
+  }
+}
+
+/* Küçük koyu rozetler de kâğıtta gereksiz mürekkep yiyordu */
+@media print {
+  .term-gloss__badge,
+  .english-bridge__title span,
+  .new-concepts__heading::before {
+    background: #fff !important;
+    color: #111 !important;
+    border: 0.6pt solid #666 !important;
+    box-shadow: none !important;
+  }
+}
+
+/* --- Şahıs zamirleri ızgarası --- */
+.pronoun-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) minmax(120px, 150px);
+  gap: 0.5rem;
+  margin-top: 1rem;
+  align-items: stretch;
+}
+
+.pronoun-grid__head {
+  display: grid;
+  gap: 0.1rem;
+  justify-items: center;
+  padding: 0.5rem 0.4rem;
+  border-bottom: 2px solid var(--border);
+  text-align: center;
+}
+
+.pronoun-grid__head strong {
+  font-size: 1rem;
+}
+
+.pronoun-grid__head small {
+  color: var(--muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+.pronoun-grid__head--empty {
+  border-bottom-color: transparent;
+}
+
+.pronoun-cell {
+  display: grid;
+  gap: 0.15rem;
+  justify-items: center;
+  align-content: center;
+  padding: 0.7rem 0.5rem;
+  border: 1px solid var(--pronoun-border, var(--border));
+  border-radius: 14px;
+  background: var(--pronoun-bg, var(--surface));
+  cursor: pointer;
+  font: inherit;
+  color: var(--text);
+  transition: transform 0.12s ease, border-color 0.12s ease;
+}
+
+.pronoun-cell:hover,
+.pronoun-cell:focus-visible {
+  transform: translateY(-1px);
+  border-color: var(--pronoun-strong, var(--teal));
+}
+
+.pronoun-cell[data-gender="eril"] {
+  --pronoun-bg: color-mix(in srgb, var(--role-soru) 11%, var(--surface));
+  --pronoun-border: color-mix(in srgb, var(--role-soru) 32%, transparent);
+  --pronoun-strong: var(--role-soru);
+}
+
+.pronoun-cell[data-gender="disil"] {
+  --pronoun-bg: color-mix(in srgb, var(--role-ek) 11%, var(--surface));
+  --pronoun-border: color-mix(in srgb, var(--role-ek) 32%, transparent);
+  --pronoun-strong: var(--role-ek);
+}
+
+.pronoun-cell[data-gender="ortak"] {
+  --pronoun-bg: color-mix(in srgb, var(--role-isim) 11%, var(--surface));
+  --pronoun-border: color-mix(in srgb, var(--role-isim) 32%, transparent);
+  --pronoun-strong: var(--role-isim);
+}
+
+.pronoun-cell__ar {
+  font-family: var(--arabic-font);
+  font-size: calc(1.75rem * var(--arabic-scale, 1));
+  line-height: 1.8;
+  color: var(--pronoun-strong);
+}
+
+.pronoun-cell__lat {
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
+.pronoun-cell__tr {
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.pronoun-cell__form {
+  display: none;
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.pronoun-grid__label {
+  display: grid;
+  gap: 0.1rem;
+  align-content: center;
+  padding: 0.5rem 0.6rem;
+  border-inline-start: 3px solid var(--pronoun-strong, var(--border));
+  border-radius: 0 10px 10px 0;
+  background: var(--surface-soft);
+}
+
+.pronoun-grid__label[data-gender="eril"] { --pronoun-strong: var(--role-soru); }
+.pronoun-grid__label[data-gender="disil"] { --pronoun-strong: var(--role-ek); }
+.pronoun-grid__label[data-gender="ortak"] { --pronoun-strong: var(--role-isim); }
+
+.pronoun-grid__label strong {
+  font-size: 0.95rem;
+  color: var(--pronoun-strong);
+}
+
+.pronoun-grid__label small {
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.35;
+}
+
+.pronoun-grid__person {
+  margin-top: 0.15rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.pronoun-grid__legend {
+  margin: 0.8rem 0 0;
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 720px) {
+  .pronoun-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .pronoun-grid__head {
+    display: none;
+  }
+
+  .pronoun-cell__form {
+    display: block;
+  }
+
+  .pronoun-grid__label {
+    grid-column: 1 / -1;
+    border-inline-start: 0;
+    border-block-start: 3px solid var(--pronoun-strong, var(--border));
+    border-radius: 0 0 10px 10px;
+    order: 0;
+  }
+
+  .pronoun-cell--wide {
+    grid-column: auto;
+  }
+}
+
+@media print {
+  .pronoun-cell,
+  .pronoun-grid__label {
+    background: none !important;
+    border-color: #999 !important;
+  }
+
+  .pronoun-grid {
+    break-inside: avoid;
+  }
+}
+
+.pronoun-row {
+  display: contents;
+}
+
+.pronoun-cell--wide {
+  grid-column: span 2;
+}
+
+@media (max-width: 720px) {
+  .pronoun-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.9rem;
+  }
+
+  .pronoun-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.4rem;
+  }
+
+  .pronoun-row .pronoun-grid__label {
+    order: 0;
+    grid-column: auto;
+    border-block-start: 0;
+    border-inline-start: 3px solid var(--pronoun-strong, var(--border));
+    border-radius: 0 10px 10px 0;
+  }
+
+  .pronoun-cell[data-form="tekil"] { order: 1; }
+  .pronoun-cell[data-form="ikil"] { order: 2; }
+  .pronoun-cell[data-form="cogul"] { order: 3; }
+  .pronoun-cell[data-form="ikilvecogul"] { order: 2; }
+
+  .pronoun-cell {
+    grid-template-columns: auto 1fr auto;
+    justify-items: start;
+    align-items: center;
+    gap: 0.1rem 0.7rem;
+    text-align: start;
+  }
+
+  .pronoun-cell__form {
+    grid-row: 1 / span 2;
+    align-self: center;
+  }
+
+  .pronoun-cell__ar {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .pronoun-cell__lat {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  .pronoun-cell__tr {
+    grid-column: 3;
+    grid-row: 2;
+    justify-self: end;
+  }
+}
+
+/* --- Fiil çekim çalışma aracı --- */
+.conjugation-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.8rem;
+  margin-bottom: 0.9rem;
+}
+
+.conjugation-toolbar__field {
+  display: grid;
+  gap: 0.3rem;
+  flex: 1 1 260px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.conjugation-toolbar__field select {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--arabic-font), inherit;
+  font-size: 1rem;
+}
+
+.conjugation-tabs {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.conjugation-tab {
+  display: grid;
+  gap: 0.05rem;
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  text-align: center;
+}
+
+.conjugation-tab small {
+  color: var(--muted);
+  font-size: 0.74rem;
+}
+
+.conjugation-tab.is-active {
+  border-color: var(--teal);
+  background: color-mix(in srgb, var(--teal) 14%, transparent);
+}
+
+.conjugation-tab.is-active small {
+  color: var(--teal-dark);
+}
+
+.conjugation-summary {
+  margin: 0 0 0.9rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  background: var(--surface-soft);
+  font-size: 0.95rem;
+}
+
+.conjugation-summary b {
+  font-family: var(--arabic-font);
+  font-size: calc(1.3rem * var(--arabic-scale, 1));
+  line-height: 1.9;
+}
+
+.conjugation-cell__pron {
+  font-family: var(--arabic-font);
+  font-style: normal;
+  font-size: calc(0.95rem * var(--arabic-scale, 1));
+  opacity: 0.75;
+}
+
+body[data-theme="dark"] .conjugation-tab.is-active small {
+  color: var(--amber);
+}
+
+@media print {
+  .conjugation-toolbar {
+    display: none !important;
+  }
+
+  .conjugation-summary {
+    background: none !important;
+    border: 0.8pt solid #666;
+  }
+
+}
+
+/* Izgara baskida satir satir aksin (dosyanin sonunda: onceki kurallari ezer) */
+@media print {
+  .pronoun-grid {
+    display: block !important;
+    break-inside: auto !important;
+  }
+
+  .pronoun-grid__head {
+    display: none !important;
+  }
+
+  .pronoun-row {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) 34mm;
+    gap: 2mm;
+    margin-bottom: 2.5mm;
+    break-inside: avoid;
+  }
+
+  .pronoun-cell__form {
+    display: block !important;
+  }
+
+  .pronoun-cell--wide {
+    grid-column: span 2;
+  }
+}
+
+/* Baskı genişliği 720px'in altında kaldığı için mobil kuralları devralıyordu;
+   kâğıtta masaüstü düzeni ve Arapça okuma sırası geçerli olmalı. */
+@media print {
+  .pronoun-cell,
+  .pronoun-grid__label {
+    order: 0 !important;
+  }
+
+  .pronoun-cell {
+    grid-template-columns: minmax(0, 1fr) !important;
+    justify-items: center !important;
+    text-align: center !important;
+    padding: 2mm 1.5mm !important;
+    font-size: 8pt;
+  }
+
+  .pronoun-cell__form,
+  .pronoun-cell__ar,
+  .pronoun-cell__lat,
+  .pronoun-cell__tr {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    justify-self: center !important;
+  }
+
+  .pronoun-cell__ar {
+    font-size: 15pt;
+    line-height: 1.7;
+  }
+
+  .pronoun-cell__tr {
+    font-size: 7.5pt;
+    overflow-wrap: anywhere;
+  }
+
+  .pronoun-cell__form {
+    font-size: 6.5pt;
+  }
+
+  .pronoun-grid__label {
+    border-inline-start: 2pt solid #666 !important;
+    border-block-start: 0 !important;
+    border-radius: 0 !important;
+    padding: 1.5mm 2mm !important;
+    font-size: 7.5pt;
+  }
+
+  .pronoun-grid__label small,
+  .pronoun-grid__person {
+    font-size: 6.5pt;
+  }
+}

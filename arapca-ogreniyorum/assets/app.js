@@ -158,6 +158,140 @@
     "ders-07:alistirma-2": "Muzari şimdiki veya geniş zaman olabilir; الآنَ ve كُلَّ يَوْمٍ gibi bağlam kelimelerini ara."
   };
 
+  const BREAKDOWN_LESSONS = new Set(["ders-01", "ders-02", "ders-03", "ders-04", "ders-05", "ders-06", "ders-07"]);
+
+  const WORD_ROLES = {
+    isim: "İsim",
+    fiil: "Fiil",
+    zamir: "Zamir / işaret",
+    harf: "Harf (edat)",
+    soru: "Soru kelimesi",
+    ek: "Şahıs eki"
+  };
+
+  // Tek baslarina kelime olmayan, fiilin sonuna eklenen sahis ekleri.
+  // Harekeleri anlami degistirdigi icin bunlar harekesiyle birlikte eslenir.
+  const WORD_EXTRAS = {
+    "تُ": { r: "ek", t: "ben", n: "Mâzi fiilin sonunda özneyi “ben” yapan şahıs eki." },
+    "تَ": { r: "ek", t: "sen (erkek)", n: "Mâzi fiilin sonunda özneyi “sen (erkek)” yapan şahıs eki." },
+    "تِ": { r: "ek", t: "sen (kadın)", n: "Mâzi fiilin sonunda özneyi “sen (kadın)” yapan şahıs eki; erkekten tek farkı harekedir." },
+    "نَا": { r: "ek", t: "biz", n: "Mâzi fiilin sonunda özneyi “biz” yapan şahıs eki." },
+    "تُمْ": { r: "ek", t: "siz (erkek/karma)", n: "Mâzi fiilin sonunda 2. çoğul eril ekidir." },
+    "تُنَّ": { r: "ek", t: "siz (kadınlar)", n: "Mâzi fiilin sonunda 2. çoğul dişil ekidir." },
+    "وا": { r: "ek", t: "onlar (erkek/karma)", n: "Mâzi fiilin sonunda 3. çoğul eril ekidir; yanındaki elif okunmaz." },
+    "نَ": { r: "ek", t: "onlar (kadınlar)", n: "Mâzi fiilin sonunda 3. çoğul dişil ekidir." },
+    "جَوْدَت": { r: "isim", t: "Cevdet", n: "Özel isim." }
+  };
+
+  const SENTENCE_BREAKDOWNS = {
+    "هَذَا كِتَابٌ.": [{"w": "هَذَا", "t": "bu (eril)", "r": "zamir", "n": "Eril isimler için “bu”. Dişilde “hâzihî” kullanılır."}, {"w": "كِتَابٌ", "t": "bir kitap", "r": "isim", "n": "Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}],
+    "هَذَا قَلَمٌ.": [{"w": "هَذَا", "t": "bu (eril)", "r": "zamir", "n": "Eril isimler için “bu”. Dişilde “hâzihî” kullanılır."}, {"w": "قَلَمٌ", "t": "bir kalem", "r": "isim", "n": "Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}],
+    "هَذَا بَابٌ.": [{"w": "هَذَا", "t": "bu (eril)", "r": "zamir", "n": "Eril isimler için “bu”. Dişilde “hâzihî” kullanılır."}, {"w": "بَابٌ", "t": "bir kapı", "r": "isim", "n": "Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}],
+    "مُحَمَّدٌ فِي الْبَيْتِ.": [{"w": "مُحَمَّدٌ", "t": "Muhammed", "r": "isim", "n": "Özel isim; burada özne."}, {"w": "فِي", "t": "-de / içinde", "r": "harf", "n": "Yer bildiren edat. Kendinden sonraki ismin sonu esre olur."}, {"w": "الْبَيْتِ", "t": "ev", "r": "isim", "n": "Başındaki “el-” onu belirli yapar. Edattan sonra geldiği için sonu esre."}],
+    "أَحْمَدُ فِي الْمَسْجِدِ.": [{"w": "أَحْمَدُ", "t": "Ahmed", "r": "isim", "n": "Özel isim; burada özne."}, {"w": "فِي", "t": "-de / içinde", "r": "harf", "n": "Yer bildiren edat. Kendinden sonraki ismin sonu esre olur."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Başındaki “el-” onu belirli yapar. Edattan sonra geldiği için sonu esre."}],
+    "الْكِتَابُ فِي الْحَقِيبَةِ.": [{"w": "الْكِتَابُ", "t": "kitap", "r": "isim", "n": "Başındaki “el-” onu belirli yapar. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "فِي", "t": "-de / içinde", "r": "harf", "n": "Yer bildiren edat. Kendinden sonraki ismin sonu esre olur."}, {"w": "الْحَقِيبَةِ", "t": "çanta", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "الْقَلَمُ عَلَى الْمَكْتَبِ.": [{"w": "الْقَلَمُ", "t": "kalem", "r": "isim", "n": "Başındaki “el-” onu belirli yapar. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "عَلَى", "t": "üzerinde", "r": "harf", "n": "Üstünde olmayı bildiren edat. Sonraki ismin sonu esre olur."}, {"w": "الْمَكْتَبِ", "t": "masa", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "يَقْرَأُ مُحَمَّدٌ الْقُرْآنَ.": [{"w": "يَقْرَأُ", "t": "okuyor", "r": "fiil", "n": "Muzari (şimdiki/geniş zaman). Baştaki “ye” harfi öznenin “o (erkek)” olduğunu gösterir."}, {"w": "مُحَمَّدٌ", "t": "Muhammed", "r": "isim", "n": "İşi yapan; sonu ötre."}, {"w": "الْقُرْآنَ", "t": "Kur’an’ı", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "يَقْرَأُ الطَّالِبُ كِتَابًا.": [{"w": "يَقْرَأُ", "t": "okuyor", "r": "fiil", "n": "Muzari; baştaki “ye” harfi “o (erkek)” demek."}, {"w": "الطَّالِبُ", "t": "öğrenci", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. “et-tâlibu” okunur. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "كِتَابًا", "t": "bir kitap(ı)", "r": "isim", "n": "Nesne olduğu için üstün, belirsiz olduğu için tenvin: “kitâben”."}],
+    "ذَهَبَ أَحْمَدُ إِلَى الْمَدْرَسَةِ.": [{"w": "ذَهَبَ", "t": "gitti", "r": "fiil", "n": "Mâzi (geçmiş zaman). Üç harfin de üstünlü olması (ze-he-be) ve hiç ek almaması “o gitti” demektir."}, {"w": "أَحْمَدُ", "t": "Ahmed", "r": "isim", "n": "İşi yapan."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "الْمَدْرَسَةِ", "t": "okul", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "خَرَجَ الطَّالِبُ مِنَ الْبَيْتِ.": [{"w": "خَرَجَ", "t": "çıktı", "r": "fiil", "n": "Mâzi (geçmiş zaman): ha-ra-ce. Sonuna ek gelmediği için özne “o”dur; öznesi ayrıca yazıldığı için “öğrenci çıktı” olur."}, {"w": "الطَّالِبُ", "t": "öğrenci", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. “et-tâlibu” okunur. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "مِنَ", "t": "-den / -dan", "r": "harf", "n": "Ayrılma bildiren edat. Aslı sakin nûn iledir; “el-” ile başlayan kelimeden önce sonu üstün okunur: “mine”."}, {"w": "الْبَيْتِ", "t": "ev", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "الْمُعَلِّمُ فِي الْفَصْلِ.": [{"w": "الْمُعَلِّمُ", "t": "öğretmen", "r": "isim", "n": "Başındaki “el-” onu belirli yapar. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "فِي", "t": "-de / içinde", "r": "harf", "n": "Yer bildiren edat. Kendinden sonraki ismin sonu esre olur."}, {"w": "الْفَصْلِ", "t": "sınıf", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "الْمَاءُ فِي الْكُوبِ.": [{"w": "الْمَاءُ", "t": "su", "r": "isim", "n": "Başındaki “el-” onu belirli yapar. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "فِي", "t": "-de / içinde", "r": "harf", "n": "Yer bildiren edat. Kendinden sonraki ismin sonu esre olur."}, {"w": "الْكُوبِ", "t": "bardak", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "أَنَا فِي الْمَكْتَبَةِ.": [{"w": "أَنَا", "t": "ben", "r": "zamir", "n": "1. tekil şahıs zamiri."}, {"w": "فِي", "t": "-de / içinde", "r": "harf", "n": "Yer bildiren edat. Kendinden sonraki ismin sonu esre olur."}, {"w": "الْمَكْتَبَةِ", "t": "kütüphane", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "نَحْنُ فِي الْمَدْرَسَةِ.": [{"w": "نَحْنُ", "t": "biz", "r": "zamir", "n": "1. çoğul şahıs zamiri."}, {"w": "فِي", "t": "-de / içinde", "r": "harf", "n": "Yer bildiren edat. Kendinden sonraki ismin sonu esre olur."}, {"w": "الْمَدْرَسَةِ", "t": "okul", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "الطَّالِبُ مِنْ تُرْكِيَا.": [{"w": "الطَّالِبُ", "t": "öğrenci", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "مِنْ", "t": "-den / -dan", "r": "harf", "n": "Burada köken bildirir: “Türkiye’den, Türkiyeli”."}, {"w": "تُرْكِيَا", "t": "Türkiye", "r": "isim", "n": "Yabancı özel isim; hareke almaz."}],
+    "هَذِهِ مَجَلَّةٌ.": [{"w": "هَذِهِ", "t": "bu (dişil)", "r": "zamir", "n": "Dişil isimler için “bu”. Erilde “hâzâ” kullanılır."}, {"w": "مَجَلَّةٌ", "t": "bir dergi", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar. Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}],
+    "هَذِهِ حَقِيبَةٌ.": [{"w": "هَذِهِ", "t": "bu (dişil)", "r": "zamir", "n": "Dişil isimler için “bu”. Erilde “hâzâ” kullanılır."}, {"w": "حَقِيبَةٌ", "t": "bir çanta", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar. Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}],
+    "هَذَا الْبَيْتُ كَبِيرٌ.": [{"w": "هَذَا", "t": "bu (eril)", "r": "zamir", "n": "Eril isimler için “bu”. Dişilde “hâzihî” kullanılır."}, {"w": "الْبَيْتُ", "t": "ev", "r": "isim", "n": "Başındaki “el-” onu belirli yapar. Burada “bu ev” tamlamasının parçası."}, {"w": "كَبِيرٌ", "t": "büyüktür", "r": "isim", "n": "Sıfat; yüklem olduğu için belirsiz kalır ve tenvin alır."}],
+    "هَذِهِ الْمَدْرَسَةُ جَدِيدَةٌ.": [{"w": "هَذِهِ", "t": "bu (dişil)", "r": "zamir", "n": "Dişil isimler için “bu”. Erilde “hâzâ” kullanılır."}, {"w": "الْمَدْرَسَةُ", "t": "okul", "r": "isim", "n": "Başındaki “el-” onu belirli yapar. Dişil bir isim."}, {"w": "جَدِيدَةٌ", "t": "yenidir", "r": "isim", "n": "Sıfat dişil isimle uyumlu olsun diye sonuna yuvarlak tê alır."}],
+    "الْبَابُ مَفْتُوحٌ.": [{"w": "الْبَابُ", "t": "kapı", "r": "isim", "n": "Başındaki “el-” onu belirli yapar. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "مَفْتُوحٌ", "t": "açıktır", "r": "isim", "n": "Yüklem olduğu için belirsiz kalır."}],
+    "النَّافِذَةُ مُغْلَقَةٌ.": [{"w": "النَّافِذَةُ", "t": "pencere", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. “en-nâfizetu” okunur."}, {"w": "مُغْلَقَةٌ", "t": "kapalıdır", "r": "isim", "n": "Dişil yüklem; sonunda yuvarlak tê var."}],
+    "مَا هَذَا؟ هَذَا مِفْتَاحٌ.": [{"w": "مَا", "t": "ne?", "r": "soru", "n": "Eşya için “bu nedir?” sorusunu kurar."}, {"w": "هَذَا", "t": "bu (eril)", "r": "zamir", "n": "Eril isimler için “bu”. Dişilde “hâzihî” kullanılır."}, {"w": "هَذَا", "t": "bu (eril)", "r": "zamir", "n": "Eril isimler için “bu”. Dişilde “hâzihî” kullanılır."}, {"w": "مِفْتَاحٌ", "t": "bir anahtar", "r": "isim", "n": "Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}],
+    "مَا هَذِهِ؟ هَذِهِ سَاعَةٌ.": [{"w": "مَا", "t": "ne?", "r": "soru", "n": "Eşya için “bu nedir?” sorusunu kurar."}, {"w": "هَذِهِ", "t": "bu (dişil)", "r": "zamir", "n": "Dişil isimler için “bu”. Erilde “hâzâ” kullanılır."}, {"w": "هَذِهِ", "t": "bu (dişil)", "r": "zamir", "n": "Dişil isimler için “bu”. Erilde “hâzâ” kullanılır."}, {"w": "سَاعَةٌ", "t": "bir saat", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar. Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}],
+    "أَيْنَ الْكِتَابُ؟ الْكِتَابُ فِي الْغُرْفَةِ.": [{"w": "أَيْنَ", "t": "nerede?", "r": "soru", "n": "Yer sorusu kurar."}, {"w": "الْكِتَابُ", "t": "kitap", "r": "isim", "n": "Başındaki “el-” onu belirli yapar. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "الْكِتَابُ", "t": "kitap", "r": "isim", "n": "Cevapta özne tekrar edilir."}, {"w": "فِي", "t": "-de / içinde", "r": "harf", "n": "Yer bildiren edat. Kendinden sonraki ismin sonu esre olur."}, {"w": "الْغُرْفَةِ", "t": "oda", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "هَذَا مَسْجِدٌ.": [{"w": "هَذَا", "t": "bu (eril)", "r": "zamir", "n": "Eril isimler için “bu”. Dişilde “hâzihî” kullanılır."}, {"w": "مَسْجِدٌ", "t": "bir mescit", "r": "isim", "n": "Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}],
+    "هَذِهِ مَكْتَبَةٌ.": [{"w": "هَذِهِ", "t": "bu (dişil)", "r": "zamir", "n": "Dişil isimler için “bu”. Erilde “hâzâ” kullanılır."}, {"w": "مَكْتَبَةٌ", "t": "bir kütüphane", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar. Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}],
+    "الْحَمْدُ لِلَّهِ.": [{"w": "الْحَمْدُ", "t": "hamd / övgü", "r": "isim", "n": "Başındaki “el-” onu belirli yapar. “O övgü” anlamında."}, {"w": "لِلَّهِ", "t": "Allah’a aittir", "r": "harf", "n": "“-e ait” anlamındaki lâm edatı ile Allah isminin birleşimi: “lillâhi”."}],
+    "أَنَا طَالِبٌ.": [{"w": "أَنَا", "t": "ben", "r": "zamir", "n": "1. tekil şahıs zamiri; erkek de kadın da kullanır."}, {"w": "طَالِبٌ", "t": "öğrenciyim (erkek)", "r": "isim", "n": "Eril biçim; yüklem olduğu için belirsiz."}],
+    "أَنَا طَالِبَةٌ.": [{"w": "أَنَا", "t": "ben", "r": "zamir", "n": "1. tekil şahıs zamiri; erkek de kadın da kullanır."}, {"w": "طَالِبَةٌ", "t": "öğrenciyim (kadın)", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar."}],
+    "أَنْتَ مُعَلِّمٌ.": [{"w": "أَنْتَ", "t": "sen (erkek)", "r": "zamir", "n": "2. tekil eril; sonu üstün okunur: “ente”."}, {"w": "مُعَلِّمٌ", "t": "öğretmensin (erkek)", "r": "isim", "n": "Eril biçim."}],
+    "أَنْتِ مُعَلِّمَةٌ.": [{"w": "أَنْتِ", "t": "sen (kadın)", "r": "zamir", "n": "2. tekil dişil; sonu esre okunur: “enti”."}, {"w": "مُعَلِّمَةٌ", "t": "öğretmensin (kadın)", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar."}],
+    "هُوَ طَبِيبٌ.": [{"w": "هُوَ", "t": "o (erkek)", "r": "zamir", "n": "3. tekil eril."}, {"w": "طَبِيبٌ", "t": "doktordur (erkek)", "r": "isim", "n": "Eril biçim."}],
+    "هِيَ طَبِيبَةٌ.": [{"w": "هِيَ", "t": "o (kadın)", "r": "zamir", "n": "3. tekil dişil."}, {"w": "طَبِيبَةٌ", "t": "doktordur (kadın)", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar."}],
+    "أَنْتُمْ فِي الْفَصْلِ.": [{"w": "أَنْتُمْ", "t": "siz (erkek/karma)", "r": "zamir", "n": "2. çoğul; karma gruplarda da bu kullanılır."}, {"w": "فِي", "t": "-de / içinde", "r": "harf", "n": "Yer bildiren edat. Kendinden sonraki ismin sonu esre olur."}, {"w": "الْفَصْلِ", "t": "sınıf", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "هُمْ فِي الْمَسْجِدِ.": [{"w": "هُمْ", "t": "onlar (erkek/karma)", "r": "zamir", "n": "3. çoğul eril."}, {"w": "فِي", "t": "-de / içinde", "r": "harf", "n": "Yer bildiren edat. Kendinden sonraki ismin sonu esre olur."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "هُنَّ فِي الْمَكْتَبَةِ.": [{"w": "هُنَّ", "t": "onlar (kadınlar)", "r": "zamir", "n": "3. çoğul dişil; yalnız kadınlar için."}, {"w": "فِي", "t": "-de / içinde", "r": "harf", "n": "Yer bildiren edat. Kendinden sonraki ismin sonu esre olur."}, {"w": "الْمَكْتَبَةِ", "t": "kütüphane", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "أَنَا أَقْرَأُ الْكِتَابَ.": [{"w": "أَنَا", "t": "ben", "r": "zamir", "n": "1. tekil şahıs zamiri; erkek de kadın da kullanır."}, {"w": "أَقْرَأُ", "t": "okuyorum", "r": "fiil", "n": "Muzari. Baştaki hemze “ben” demek; zamir yazılmasa da özne bellidir."}, {"w": "الْكِتَابَ", "t": "kitabı", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "نَحْنُ نَقْرَأُ الْقُرْآنَ.": [{"w": "نَحْنُ", "t": "biz", "r": "zamir", "n": "1. çoğul şahıs zamiri."}, {"w": "نَقْرَأُ", "t": "okuyoruz", "r": "fiil", "n": "Muzari. Baştaki nûn “biz” demek."}, {"w": "الْقُرْآنَ", "t": "Kur’an’ı", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "أَنْتَ تَكْتُبُ الدَّرْسَ.": [{"w": "أَنْتَ", "t": "sen (erkek)", "r": "zamir", "n": "2. tekil eril."}, {"w": "تَكْتُبُ", "t": "yazıyorsun", "r": "fiil", "n": "Muzari. Baştaki tê burada “sen (erkek)” demek."}, {"w": "الدَّرْسَ", "t": "dersi", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. “ed-derse” okunur. İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "هُوَ يَقْرَأُ الْمَجَلَّةَ.": [{"w": "هُوَ", "t": "o (erkek)", "r": "zamir", "n": "3. tekil eril."}, {"w": "يَقْرَأُ", "t": "okuyor", "r": "fiil", "n": "Muzari. Baştaki ye “o (erkek)” demek."}, {"w": "الْمَجَلَّةَ", "t": "dergiyi", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "هِيَ تَكْتُبُ الرِّسَالَةَ.": [{"w": "هِيَ", "t": "o (kadın)", "r": "zamir", "n": "3. tekil dişil."}, {"w": "تَكْتُبُ", "t": "yazıyor", "r": "fiil", "n": "Muzari. Baştaki tê burada “o (kadın)” demek: aynı harf hem “sen” hem “o kadın” olabilir, ayrımı zamir veya bağlam yapar."}, {"w": "الرِّسَالَةَ", "t": "mektubu", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. “er-risâlete” okunur. İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "هُمْ يَقْرَؤُونَ الْكِتَابَ.": [{"w": "هُمْ", "t": "onlar (erkek/karma)", "r": "zamir", "n": "3. çoğul."}, {"w": "يَقْرَؤُونَ", "t": "okuyorlar", "r": "fiil", "n": "Muzari. Baştaki ye “o/onlar”, sondaki “-ûne” eki çoğul yapar."}, {"w": "الْكِتَابَ", "t": "kitabı", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "كِتَابٌ جَدِيدٌ.": [{"w": "كِتَابٌ", "t": "bir kitap", "r": "isim", "n": "Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}, {"w": "جَدِيدٌ", "t": "yeni", "r": "isim", "n": "Nitelediği isim eril olduğu için sıfat da eril; ikisi de belirsiz (tenvinli)."}],
+    "سَيَّارَةٌ جَدِيدَةٌ.": [{"w": "سَيَّارَةٌ", "t": "bir araba", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar. Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}, {"w": "جَدِيدَةٌ", "t": "yeni", "r": "isim", "n": "Nitelediği isim dişil olduğu için sıfat sonuna yuvarlak tê alır."}],
+    "بَيْتٌ كَبِيرٌ.": [{"w": "بَيْتٌ", "t": "bir ev", "r": "isim", "n": "Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}, {"w": "كَبِيرٌ", "t": "büyük", "r": "isim", "n": "Nitelediği isim eril olduğu için sıfat da eril; ikisi de belirsiz (tenvinli)."}],
+    "مَدْرَسَةٌ كَبِيرَةٌ.": [{"w": "مَدْرَسَةٌ", "t": "bir okul", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar."}, {"w": "كَبِيرَةٌ", "t": "büyük", "r": "isim", "n": "Nitelediği isim dişil olduğu için sıfat sonuna yuvarlak tê alır."}],
+    "قَلَمٌ صَغِيرٌ.": [{"w": "قَلَمٌ", "t": "bir kalem", "r": "isim", "n": "Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}, {"w": "صَغِيرٌ", "t": "küçük", "r": "isim", "n": "Nitelediği isim eril olduğu için sıfat da eril; ikisi de belirsiz (tenvinli)."}],
+    "حَقِيبَةٌ صَغِيرَةٌ.": [{"w": "حَقِيبَةٌ", "t": "bir çanta", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar."}, {"w": "صَغِيرَةٌ", "t": "küçük", "r": "isim", "n": "Nitelediği isim dişil olduğu için sıfat sonuna yuvarlak tê alır."}],
+    "رَجُلٌ طَوِيلٌ.": [{"w": "رَجُلٌ", "t": "bir adam", "r": "isim", "n": "Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}, {"w": "طَوِيلٌ", "t": "uzun boylu", "r": "isim", "n": "Nitelediği isim eril olduğu için sıfat da eril; ikisi de belirsiz (tenvinli)."}],
+    "اِمْرَأَةٌ طَوِيلَةٌ.": [{"w": "اِمْرَأَةٌ", "t": "bir kadın", "r": "isim", "n": "Yuvarlak tê’si olmasa da anlamca dişildir; sıfatı dişil gelir."}, {"w": "طَوِيلَةٌ", "t": "uzun boylu", "r": "isim", "n": "Nitelediği isim dişil olduğu için sıfat sonuna yuvarlak tê alır."}],
+    "مَسْجِدٌ جَمِيلٌ.": [{"w": "مَسْجِدٌ", "t": "bir mescit", "r": "isim", "n": "Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}, {"w": "جَمِيلٌ", "t": "güzel", "r": "isim", "n": "Nitelediği isim eril olduğu için sıfat da eril; ikisi de belirsiz (tenvinli)."}],
+    "حَدِيقَةٌ جَمِيلَةٌ.": [{"w": "حَدِيقَةٌ", "t": "bir bahçe", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar."}, {"w": "جَمِيلَةٌ", "t": "güzel", "r": "isim", "n": "Nitelediği isim dişil olduğu için sıfat sonuna yuvarlak tê alır."}],
+    "فَصْلٌ نَظِيفٌ.": [{"w": "فَصْلٌ", "t": "bir sınıf", "r": "isim", "n": "Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}, {"w": "نَظِيفٌ", "t": "temiz", "r": "isim", "n": "Nitelediği isim eril olduğu için sıfat da eril; ikisi de belirsiz (tenvinli)."}],
+    "غُرْفَةٌ نَظِيفَةٌ.": [{"w": "غُرْفَةٌ", "t": "bir oda", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar."}, {"w": "نَظِيفَةٌ", "t": "temiz", "r": "isim", "n": "Nitelediği isim dişil olduğu için sıfat sonuna yuvarlak tê alır."}],
+    "الْكِتَابُ الْجَدِيدُ مُفِيدٌ.": [{"w": "الْكِتَابُ", "t": "kitap", "r": "isim", "n": "Başındaki “el-” onu belirli yapar. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "الْجَدِيدُ", "t": "yeni (olan)", "r": "isim", "n": "İsim belirli olduğu için sıfat da “el-” alır: “yeni kitap”."}, {"w": "مُفِيدٌ", "t": "faydalıdır", "r": "isim", "n": "Yüklem olduğu için belirsiz kalır; cümleyi “…dır” diye bitirir."}],
+    "السَّيَّارَةُ الْجَدِيدَةُ سَرِيعَةٌ.": [{"w": "السَّيَّارَةُ", "t": "araba", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. “es-seyyâratu” okunur."}, {"w": "الْجَدِيدَةُ", "t": "yeni (olan)", "r": "isim", "n": "Hem belirli hem dişil: isimle iki yönden uyumlu."}, {"w": "سَرِيعَةٌ", "t": "hızlıdır", "r": "isim", "n": "Dişil yüklem; belirsiz kalır."}],
+    "هَذَا كِتَابٌ مُفِيدٌ.": [{"w": "هَذَا", "t": "bu (eril)", "r": "zamir", "n": "Eril isimler için “bu”. Dişilde “hâzihî” kullanılır."}, {"w": "كِتَابٌ", "t": "bir kitap", "r": "isim", "n": "Sonundaki tenvin (çift hareke) “bir” anlamı verir: belirsiz."}, {"w": "مُفِيدٌ", "t": "faydalı", "r": "isim", "n": "Nitelediği isim eril olduğu için sıfat da eril; ikisi de belirsiz (tenvinli)."}],
+    "هَذِهِ قِصَّةٌ قَصِيرَةٌ.": [{"w": "هَذِهِ", "t": "bu (dişil)", "r": "zamir", "n": "Dişil isimler için “bu”. Erilde “hâzâ” kullanılır."}, {"w": "قِصَّةٌ", "t": "bir hikâye", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar."}, {"w": "قَصِيرَةٌ", "t": "kısa", "r": "isim", "n": "Nitelediği isim dişil olduğu için sıfat sonuna yuvarlak tê alır."}],
+    "كَتَبَ الطَّالِبُ الدَّرْسَ.": [{"w": "كَتَبَ", "t": "yazdı", "r": "fiil", "n": "Mâzi (geçmiş zaman). Sonuna ek gelmediği için özne “o (erkek)”."}, {"w": "الطَّالِبُ", "t": "öğrenci (erkek)", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "الدَّرْسَ", "t": "dersi", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "كَتَبَتْ الطَّالِبَةُ الرِّسَالَةَ.": [{"w": "كَتَبَتْ", "t": "yazdı (o kadın)", "r": "fiil", "n": "Mâzi. Sondaki sakin tê özneyi “o (kadın)” yapar."}, {"w": "الطَّالِبَةُ", "t": "öğrenci (kadın)", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "الرِّسَالَةَ", "t": "mektubu", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "كَتَبُوا الْوَاجِبَ.": [{"w": "كَتَبُوا", "t": "yazdılar", "r": "fiil", "n": "Mâzi. Sondaki vâv 3. çoğul eril/karma ekidir; yanındaki elif okunmaz."}, {"w": "الْوَاجِبَ", "t": "ödevi", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "قَرَأَ مُحَمَّدٌ الْكِتَابَ.": [{"w": "قَرَأَ", "t": "okudu", "r": "fiil", "n": "Mâzi (geçmiş zaman). Sonuna ek gelmediği için özne “o (erkek)”."}, {"w": "مُحَمَّدٌ", "t": "Muhammed", "r": "isim", "n": "İşi yapan; sonu ötre."}, {"w": "الْكِتَابَ", "t": "kitabı", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "قَرَأَتْ مَرْيَمُ الْقِصَّةَ.": [{"w": "قَرَأَتْ", "t": "okudu (o kadın)", "r": "fiil", "n": "Mâzi. Sondaki sakin tê özneyi “o (kadın)” yapar."}, {"w": "مَرْيَمُ", "t": "Meryem", "r": "isim", "n": "Yabancı kökenli dişil özel isim; tenvin almaz."}, {"w": "الْقِصَّةَ", "t": "hikâyeyi", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "قَرَؤُوا الْقُرْآنَ.": [{"w": "قَرَؤُوا", "t": "okudular", "r": "fiil", "n": "Mâzi. Sondaki vâv 3. çoğul eril/karma ekidir; yanındaki elif okunmaz."}, {"w": "الْقُرْآنَ", "t": "Kur’an’ı", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "ذَهَبَ أَحْمَدُ إِلَى الْمَسْجِدِ.": [{"w": "ذَهَبَ", "t": "gitti", "r": "fiil", "n": "Mâzi (geçmiş zaman). Sonuna ek gelmediği için özne “o (erkek)”."}, {"w": "أَحْمَدُ", "t": "Ahmed", "r": "isim", "n": "Özel isim; tenvin almaz."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "ذَهَبَتْ فَاطِمَةُ إِلَى الْمَدْرَسَةِ.": [{"w": "ذَهَبَتْ", "t": "gitti (o kadın)", "r": "fiil", "n": "Mâzi. Sondaki sakin tê özneyi “o (kadın)” yapar."}, {"w": "فَاطِمَةُ", "t": "Fatıma", "r": "isim", "n": "Dişil özel isim; tenvin almaz."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "الْمَدْرَسَةِ", "t": "okul", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "ذَهَبُوا إِلَى السُّوقِ.": [{"w": "ذَهَبُوا", "t": "gittiler", "r": "fiil", "n": "Mâzi. Sondaki vâv 3. çoğul eril/karma ekidir; yanındaki elif okunmaz."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "السُّوقِ", "t": "pazar / çarşı", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. “es-sûki” okunur."}],
+    "فَتَحَ الْمُعَلِّمُ الْبَابَ.": [{"w": "فَتَحَ", "t": "açtı", "r": "fiil", "n": "Mâzi (geçmiş zaman). Sonuna ek gelmediği için özne “o (erkek)”."}, {"w": "الْمُعَلِّمُ", "t": "öğretmen", "r": "isim", "n": "Cümlenin öznesi olduğu için sonu ötre."}, {"w": "الْبَابَ", "t": "kapıyı", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "فَتَحَتِ الْمُعَلِّمَةُ النَّافِذَةَ.": [{"w": "فَتَحَتِ", "t": "açtı (o kadın)", "r": "fiil", "n": "Mâzi + dişil tê. Sonraki kelime sâkin harfle başladığı için tê esre okunur: “fetehati”."}, {"w": "الْمُعَلِّمَةُ", "t": "öğretmen (kadın)", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "النَّافِذَةَ", "t": "pencereyi", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "شَرِبَ الطِّفْلُ الْمَاءَ.": [{"w": "شَرِبَ", "t": "içti", "r": "fiil", "n": "Mâzi (geçmiş zaman). Sonuna ek gelmediği için özne “o (erkek)”."}, {"w": "الطِّفْلُ", "t": "çocuk", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "الْمَاءَ", "t": "suyu", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "شَرِبَتِ الْبِنْتُ الْحَلِيبَ.": [{"w": "شَرِبَتِ", "t": "içti (o kadın)", "r": "fiil", "n": "Mâzi + dişil tê; sonraki kelime yüzünden esre okunur: “şeribeti”."}, {"w": "الْبِنْتُ", "t": "kız çocuğu", "r": "isim", "n": "Cümlenin öznesi olduğu için sonu ötre."}, {"w": "الْحَلِيبَ", "t": "sütü", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "أَكَلَ الرَّجُلُ الْخُبْزَ.": [{"w": "أَكَلَ", "t": "yedi", "r": "fiil", "n": "Mâzi (geçmiş zaman). Sonuna ek gelmediği için özne “o (erkek)”."}, {"w": "الرَّجُلُ", "t": "adam", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. “er-raculu” okunur."}, {"w": "الْخُبْزَ", "t": "ekmeği", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "جَلَسَتِ الْمَرْأَةُ فِي الْغُرْفَةِ.": [{"w": "جَلَسَتِ", "t": "oturdu (o kadın)", "r": "fiil", "n": "Mâzi + dişil tê; bağlantı yüzünden esre okunur."}, {"w": "الْمَرْأَةُ", "t": "kadın", "r": "isim", "n": "Cümlenin öznesi olduğu için sonu ötre."}, {"w": "فِي", "t": "-de / içinde", "r": "harf", "n": "Yer bildiren edat. Kendinden sonraki ismin sonu esre olur."}, {"w": "الْغُرْفَةِ", "t": "oda", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "خَرَجَ الطُّلَّابُ مِنَ الْفَصْلِ.": [{"w": "خَرَجَ", "t": "çıktı(lar)", "r": "fiil", "n": "Mâzi. Fiil önce gelince tekil kalır; çoğulluğu özne gösterir."}, {"w": "الطُّلَّابُ", "t": "öğrenciler", "r": "isim", "n": "“Tâlib”in kırık çoğulu. Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir."}, {"w": "مِنَ", "t": "-den / -dan", "r": "harf", "n": "Ayrılma bildiren edat. “el-” ile başlayan kelimeden önce sonu üstün okunur: “mine”."}, {"w": "الْفَصْلِ", "t": "sınıf", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "كَتَبْتُ رِسَالَةً.": [{"w": "كَتَبْتُ", "t": "yazdım", "r": "fiil", "n": "Mâzi. Sondaki ötreli tê “ben” demektir."}, {"w": "رِسَالَةً", "t": "bir mektup", "r": "isim", "n": "Nesne olduğu için üstün, belirsiz olduğu için tenvin."}],
+    "قَرَأْتُ كِتَابًا.": [{"w": "قَرَأْتُ", "t": "okudum", "r": "fiil", "n": "Sondaki ötreli tê “ben”."}, {"w": "كِتَابًا", "t": "bir kitap", "r": "isim", "n": "Nesne + tenvin: “kitâben”."}],
+    "كَتَبْتَ الدَّرْسَ.": [{"w": "كَتَبْتَ", "t": "yazdın (erkek)", "r": "fiil", "n": "Sondaki üstünlü tê “sen (erkek)” demektir."}, {"w": "الدَّرْسَ", "t": "dersi", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "قَرَأْتِ الْقِصَّةَ.": [{"w": "قَرَأْتِ", "t": "okudun (kadın)", "r": "fiil", "n": "Sondaki esreli tê “sen (kadın)” demektir; erkekten tek farkı harekedir."}, {"w": "الْقِصَّةَ", "t": "hikâyeyi", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "ذَهَبَ إِلَى الْمَسْجِدِ.": [{"w": "ذَهَبَ", "t": "gitti (erkek)", "r": "fiil", "n": "Hiç ek almayan mâzi: 3. tekil eril."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "ذَهَبَتْ إِلَى الْمَدْرَسَةِ.": [{"w": "ذَهَبَتْ", "t": "gitti (kadın)", "r": "fiil", "n": "Sondaki sakin tê: 3. tekil dişil."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "الْمَدْرَسَةِ", "t": "okul", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "كَتَبْنَا الْوَاجِبَ.": [{"w": "كَتَبْنَا", "t": "yazdık", "r": "fiil", "n": "Sondaki “nâ” eki “biz” demektir."}, {"w": "الْوَاجِبَ", "t": "ödevi", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "ذَهَبْنَا إِلَى السُّوقِ.": [{"w": "ذَهَبْنَا", "t": "gittik", "r": "fiil", "n": "Sondaki “nâ” eki “biz”."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "السُّوقِ", "t": "pazar / çarşı", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir."}],
+    "قَرَأْتُمْ الْكِتَابَ.": [{"w": "قَرَأْتُمْ", "t": "okudunuz (erkek/karma)", "r": "fiil", "n": "Sondaki “tum” eki 2. çoğul eril."}, {"w": "الْكِتَابَ", "t": "kitabı", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "كَتَبْتُنَّ الرَّسَائِلَ.": [{"w": "كَتَبْتُنَّ", "t": "yazdınız (kadınlar)", "r": "fiil", "n": "Sondaki şeddeli nûn 2. çoğul dişil ekidir."}, {"w": "الرَّسَائِلَ", "t": "mektupları", "r": "isim", "n": "“Risâle”nin kırık çoğulu. Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir."}],
+    "شَرِبُوا الْمَاءَ.": [{"w": "شَرِبُوا", "t": "içtiler (erkek/karma)", "r": "fiil", "n": "Sondaki vâv 3. çoğul eril ekidir; elif okunmaz."}, {"w": "الْمَاءَ", "t": "suyu", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "قَرَأْنَ الْقِصَّةَ.": [{"w": "قَرَأْنَ", "t": "okudular (kadınlar)", "r": "fiil", "n": "Sondaki sakin nûn 3. çoğul dişil ekidir."}, {"w": "الْقِصَّةَ", "t": "hikâyeyi", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "ذَهَبْتُمَا إِلَى الْمَدْرَسَةِ.": [{"w": "ذَهَبْتُمَا", "t": "ikiniz gittiniz", "r": "fiil", "n": "“tumâ” eki ikil: tam iki kişiye hitap eder."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "الْمَدْرَسَةِ", "t": "okul", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "كَتَبَا الدَّرْسَ.": [{"w": "كَتَبَا", "t": "ikisi yazdı (erkek)", "r": "fiil", "n": "Sondaki elif ikil eril ekidir: tam iki kişi."}, {"w": "الدَّرْسَ", "t": "dersi", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "كَتَبَتَا الرِّسَالَةَ.": [{"w": "كَتَبَتَا", "t": "ikisi yazdı (kadın)", "r": "fiil", "n": "Dişil tê + ikil elif: iki kadın."}, {"w": "الرِّسَالَةَ", "t": "mektubu", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "قَرَأْنَا الدَّرْسَ.": [{"w": "قَرَأْنَا", "t": "okuduk", "r": "fiil", "n": "Sondaki “nâ” eki “biz”; dişil çoğul ekiyle karıştırma, o sakin nûndur."}, {"w": "الدَّرْسَ", "t": "dersi", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "أَنَا أَكْتُبُ دَرْسًا.": [{"w": "أَنَا", "t": "ben", "r": "zamir", "n": "1. tekil şahıs."}, {"w": "أَكْتُبُ", "t": "yazıyorum", "r": "fiil", "n": "Muzari. Baştaki hemze “ben” demektir; zamir yazılmasa da özne bellidir."}, {"w": "دَرْسًا", "t": "bir ders", "r": "isim", "n": "Nesne + tenvin: “dersen”."}],
+    "أَنْتَ تَذْهَبُ إِلَى الْمَدْرَسَةِ.": [{"w": "أَنْتَ", "t": "sen (erkek)", "r": "zamir", "n": "2. tekil eril."}, {"w": "تَذْهَبُ", "t": "gidiyorsun", "r": "fiil", "n": "Muzari. Baştaki tê burada “sen (erkek)”."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "الْمَدْرَسَةِ", "t": "okul", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "أَنْتِ تَكْتُبِينَ رِسَالَةً.": [{"w": "أَنْتِ", "t": "sen (kadın)", "r": "zamir", "n": "2. tekil dişil."}, {"w": "تَكْتُبِينَ", "t": "yazıyorsun (kadın)", "r": "fiil", "n": "Baştaki tê + sondaki “-îne” birlikte 2. tekil dişili gösterir."}, {"w": "رِسَالَةً", "t": "bir mektup", "r": "isim", "n": "Nesne + tenvin."}],
+    "هُوَ يَكْتُبُ الْوَاجِبَ.": [{"w": "هُوَ", "t": "o (erkek)", "r": "zamir", "n": "3. tekil eril."}, {"w": "يَكْتُبُ", "t": "yazıyor", "r": "fiil", "n": "Muzari. Baştaki ye “o (erkek)”."}, {"w": "الْوَاجِبَ", "t": "ödevi", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "هِيَ تَقْرَأُ الْقِصَّةَ.": [{"w": "هِيَ", "t": "o (kadın)", "r": "zamir", "n": "3. tekil dişil."}, {"w": "تَقْرَأُ", "t": "okuyor (o kadın)", "r": "fiil", "n": "Baştaki tê burada “o kadın”; aynı harf “sen (erkek)” de olabilir, ayrımı bağlam yapar."}, {"w": "الْقِصَّةَ", "t": "hikâyeyi", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "أَنْتُمْ تَقْرَؤُونَ الْكِتَابَ.": [{"w": "أَنْتُمْ", "t": "siz (erkek/karma)", "r": "zamir", "n": "2. çoğul."}, {"w": "تَقْرَؤُونَ", "t": "okuyorsunuz", "r": "fiil", "n": "Baştaki tê + sondaki “-ûne”: 2. çoğul eril."}, {"w": "الْكِتَابَ", "t": "kitabı", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "هُمْ يَذْهَبُونَ إِلَى الْمَسْجِدِ.": [{"w": "هُمْ", "t": "onlar (erkek/karma)", "r": "zamir", "n": "3. çoğul eril."}, {"w": "يَذْهَبُونَ", "t": "gidiyorlar", "r": "fiil", "n": "Baştaki ye + sondaki “-ûne”: 3. çoğul eril."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "أَقْرَأُ كِتَابًا كُلَّ يَوْمٍ.": [{"w": "أَقْرَأُ", "t": "okurum", "r": "fiil", "n": "Muzari geniş zaman da olabilir; “her gün” ifadesi onu alışkanlığa çeker."}, {"w": "كِتَابًا", "t": "bir kitap", "r": "isim", "n": "Nesne + tenvin."}, {"w": "كُلَّ", "t": "her", "r": "isim", "n": "Sonraki isimle tamlama kurar: “her gün”."}, {"w": "يَوْمٍ", "t": "gün", "r": "isim", "n": "Tamlamanın ikinci parçası olduğu için sonu esre-tenvin."}],
+    "نَشْرَبُ الْمَاءَ الآنَ.": [{"w": "نَشْرَبُ", "t": "içiyoruz", "r": "fiil", "n": "Baştaki nûn “biz”."}, {"w": "الْمَاءَ", "t": "suyu", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}, {"w": "الآنَ", "t": "şimdi", "r": "isim", "n": "Zaman zarfı; muzariyi şimdiki zamana çeker."}],
+    "يَأْكُلُ الطِّفْلُ الْخُبْزَ.": [{"w": "يَأْكُلُ", "t": "yiyor", "r": "fiil", "n": "Muzari; baştaki ye “o (erkek)”."}, {"w": "الطِّفْلُ", "t": "çocuk", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "الْخُبْزَ", "t": "ekmeği", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "تَفْتَحُ الْمُعَلِّمَةُ الْبَابَ.": [{"w": "تَفْتَحُ", "t": "açıyor (o kadın)", "r": "fiil", "n": "Baştaki tê burada “o kadın”; öznesi yazılı olduğu için karışmaz."}, {"w": "الْمُعَلِّمَةُ", "t": "öğretmen (kadın)", "r": "isim", "n": "Sonundaki yuvarlak tê dişil yapar. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "الْبَابَ", "t": "kapıyı", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}],
+    "يَجْلِسُ الرَّجُلُ فِي الْغُرْفَةِ.": [{"w": "يَجْلِسُ", "t": "oturuyor", "r": "fiil", "n": "Muzari; baştaki ye “o (erkek)”."}, {"w": "الرَّجُلُ", "t": "adam", "r": "isim", "n": "Şemsî harfle başladığı için “el-”deki lâm okunmaz, harf şeddelenir. Cümlenin öznesi olduğu için sonu ötre."}, {"w": "فِي", "t": "-de / içinde", "r": "harf", "n": "Yer bildiren edat. Kendinden sonraki ismin sonu esre olur."}, {"w": "الْغُرْفَةِ", "t": "oda", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "تَخْرُجُ الْمَرْأَةُ مِنَ الْبَيْتِ.": [{"w": "تَخْرُجُ", "t": "çıkıyor (o kadın)", "r": "fiil", "n": "Baştaki tê burada “o kadın”."}, {"w": "الْمَرْأَةُ", "t": "kadın", "r": "isim", "n": "Cümlenin öznesi olduğu için sonu ötre."}, {"w": "مِنَ", "t": "-den / -dan", "r": "harf", "n": "Ayrılma bildiren edat. “el-” ile başlayan kelimeden önce sonu üstün okunur: “mine”."}, {"w": "الْبَيْتِ", "t": "ev", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "نَذْهَبُ إِلَى الْمَسْجِدِ كُلَّ يَوْمٍ.": [{"w": "نَذْهَبُ", "t": "gideriz", "r": "fiil", "n": "Baştaki nûn “biz”; “her gün” ile geniş zaman anlamı."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}, {"w": "كُلَّ", "t": "her", "r": "isim", "n": "Sonraki isimle tamlama kurar."}, {"w": "يَوْمٍ", "t": "gün", "r": "isim", "n": "Tamlamanın ikinci parçası; sonu esre-tenvin."}],
+    "هَلْ تَقْرَأُ الْمَجَلَّةَ؟": [{"w": "هَلْ", "t": "…mı? / …mi?", "r": "soru", "n": "Cevabı evet-hayır olan soruyu kurar; cümlenin başına gelir."}, {"w": "تَقْرَأُ", "t": "okuyorsun", "r": "fiil", "n": "Baştaki tê “sen (erkek)”."}, {"w": "الْمَجَلَّةَ", "t": "dergiyi", "r": "isim", "n": "İşten etkilenen (nesne) olduğu için sonu üstün."}]
+  };
+
   const LESSON_EXAMPLE_SENTENCES = {
     "ders-01": [
       { ar: "هَذَا كِتَابٌ.", tr: "Bu bir kitaptır." },
@@ -317,7 +451,10 @@
     initLesson();
   }
 
+  setupPronounGrid();
   setupUniversalArabicTools();
+  colorizeLessonWordBreakdowns();
+  setupVerbTables();
   setupReadingProgress();
 
 
@@ -937,6 +1074,8 @@
       copy.innerHTML = `<p class="section-kicker">Ders sonrası pekiştirme</p><h2>Okuma ve kelime haznesi örnekleri</h2><p>Her cümleyi önce dinle, ardından sesli oku ve Türkçesini kapatarak anlamını hatırlamaya çalış. Bu bölüm yazdırıldığında en az bir A4 çalışma sayfası oluşturacak biçimde düzenlenir.</p>`;
       const printButton = createPrintButton("Dersi yazdır");
       header.append(copy, printButton);
+      const legend = buildWordMapLegend();
+      if (legend) copy.appendChild(legend);
 
       const grid = document.createElement("div");
       grid.className = "practice-sentence-grid";
@@ -955,11 +1094,132 @@
         translation.className = "practice-sentence__translation";
         translation.textContent = sentence.tr;
         card.append(number, arabic, translation);
+        const wordMap = buildWordMap(sentence.ar);
+        if (wordMap) card.appendChild(wordMap);
         grid.appendChild(card);
       });
 
       section.append(header, grid);
       bottomNav.insertAdjacentElement("beforebegin", section);
+    }
+
+    function wordMapKey() {
+      return `${STORAGE_PREFIX}:word-map`;
+    }
+
+    function wordMapEnabled() {
+      return localStorage.getItem(wordMapKey()) !== "hidden";
+    }
+
+    function buildWordMapLegend() {
+      if (!BREAKDOWN_LESSONS.has(lessonId)) return null;
+
+      const wrap = document.createElement("div");
+      wrap.className = "word-map-legend";
+
+      const toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "secondary-button word-map-toggle";
+      const renderToggle = () => {
+        const on = wordMapEnabled();
+        document.body.dataset.wordMap = on ? "shown" : "hidden";
+        toggle.textContent = on ? "Kelime kelime: Açık" : "Kelime kelime: Kapalı";
+        toggle.setAttribute("aria-pressed", String(on));
+      };
+      toggle.addEventListener("click", () => {
+        localStorage.setItem(wordMapKey(), wordMapEnabled() ? "hidden" : "shown");
+        renderToggle();
+      });
+      renderToggle();
+
+      const keys = document.createElement("div");
+      keys.className = "word-map-legend__keys";
+      Object.entries(WORD_ROLES).forEach(([role, label]) => {
+        const item = document.createElement("span");
+        item.className = "word-map-legend__item";
+        item.dataset.role = role;
+        item.textContent = label;
+        keys.appendChild(item);
+      });
+
+      const hint = document.createElement("p");
+      hint.className = "word-map-legend__hint";
+      hint.textContent = "Renk kelimenin görevini, altındaki yazı Türkçesini gösterir. Bir kelimeye dokununca dilbilgisi notu açılır.";
+
+      wrap.append(toggle, keys, hint);
+      return wrap;
+    }
+
+    function buildWordMap(arabicSentence) {
+      if (!BREAKDOWN_LESSONS.has(lessonId)) return null;
+      const words = SENTENCE_BREAKDOWNS[arabicSentence];
+      if (!words || !words.length) return null;
+
+      const wrap = document.createElement("div");
+      wrap.className = "word-map";
+
+      const row = document.createElement("div");
+      row.className = "word-map__row";
+      row.dir = "rtl";
+      row.lang = "ar";
+
+      const note = document.createElement("div");
+      note.className = "word-map__note";
+      note.hidden = true;
+      const noteText = document.createElement("p");
+      noteText.className = "word-map__note-text";
+      const noteSpeak = document.createElement("button");
+      noteSpeak.type = "button";
+      noteSpeak.className = "flashcard-action flashcard-action--speak word-map__note-speak";
+      noteSpeak.title = "Bu kelimeyi sesli oku";
+      noteSpeak.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6.8 8.5H3.5v7h3.3L11 19V5Zm4.2 4a4.5 4.5 0 0 1 0 6M18 6.5a8 8 0 0 1 0 11"/></svg>';
+      note.append(noteText, noteSpeak);
+
+      words.forEach((item) => {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "word-chip";
+        chip.dataset.role = item.r;
+        chip.setAttribute("aria-label", `${item.w} — ${item.t}${item.n ? ". " + item.n : ""}`);
+
+        const ar = document.createElement("span");
+        ar.className = "word-chip__ar";
+        ar.lang = "ar";
+        ar.dir = "rtl";
+        ar.textContent = item.w;
+
+        const tr = document.createElement("span");
+        tr.className = "word-chip__tr";
+        tr.lang = "tr";
+        tr.dir = "ltr";
+        tr.textContent = item.t;
+
+        chip.append(ar, tr);
+
+        chip.addEventListener("click", () => {
+          const wasOpen = chip.classList.contains("is-open");
+          row.querySelectorAll(".word-chip.is-open").forEach((other) => other.classList.remove("is-open"));
+          if (wasOpen) {
+            note.hidden = true;
+            return;
+          }
+          chip.classList.add("is-open");
+          note.dataset.role = item.r;
+          noteText.textContent = "";
+          appendMixedArabicText(noteText, item.n ? `${item.w} — ${item.t}. ${item.n}` : `${item.w} — ${item.t}`);
+          noteSpeak.setAttribute("aria-label", `${item.w} kelimesini sesli oku`);
+          noteSpeak.onclick = (event) => {
+            event.stopPropagation();
+            speakArabic(item.w, noteSpeak);
+          };
+          note.hidden = false;
+        });
+
+        row.appendChild(chip);
+      });
+
+      wrap.append(row, note);
+      return wrap;
     }
 
     function setupPrintControls() {
@@ -1171,7 +1431,7 @@
       const reference = document.createElement("section");
       reference.className = "print-handout__reference";
       reference.innerHTML = "<h2>Başvuru tabloları ve kalıplar</h2>";
-      [...document.querySelectorAll(".lesson-content .lesson-section .pronoun-table-wrap, .lesson-content .lesson-section .formula-box")].forEach((source) => {
+      [...document.querySelectorAll(".lesson-content .lesson-section .pronoun-table-wrap, .lesson-content .lesson-section .formula-box, .lesson-content .lesson-section .pronoun-grid")].forEach((source) => {
         const block = document.createElement("div");
         block.className = "print-handout__reference-block";
         const sourceHeading = source.closest(".lesson-section")?.querySelector(":scope > h2")?.textContent.trim();
@@ -1850,9 +2110,687 @@
     }
   }
 
+  // Cumle cozumlerinden kelime sozlugu: ders govdesindeki hazir
+  // .word-breakdown bloklarini ayni renk sistemine baglamak icin kullanilir.
+  var wordIndexCache = null;
+
+  function normalizeArabicWord(text) {
+    return String(text || "")
+      .replace(/[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]/g, "")
+      .replace(/[\u0622\u0623\u0625]/g, "\u0627")
+      .replace(/[^\u0600-\u06FF]/g, "")
+      .trim();
+  }
+
+  function getWordIndex() {
+    if (wordIndexCache) return wordIndexCache;
+    wordIndexCache = new Map();
+    Object.values(SENTENCE_BREAKDOWNS).forEach((words) => {
+      words.forEach((item) => {
+        const key = normalizeArabicWord(item.w);
+        if (!key) return;
+        let entry = wordIndexCache.get(key);
+        if (!entry) {
+          entry = { role: item.r, notes: new Set(), glosses: new Set(), word: item.w };
+          wordIndexCache.set(key, entry);
+        }
+        if (entry.role !== item.r) entry.role = null;
+        if (item.n) entry.notes.add(item.n);
+        if (item.t) entry.glosses.add(item.t);
+      });
+    });
+    return wordIndexCache;
+  }
+
+  function colorizeLessonWordBreakdowns() {
+    const index = getWordIndex();
+    document.querySelectorAll(".word-breakdown > span").forEach((cell) => {
+      if (cell.dataset.role) return;
+      const arabic = cell.querySelector(".arabic");
+      const raw = (arabic?.textContent || "").trim();
+      const extra = WORD_EXTRAS[raw];
+      const entry = extra
+        ? { role: extra.r, notes: new Set(extra.n ? [extra.n] : []), glosses: new Set([extra.t]), word: raw }
+        : index.get(normalizeArabicWord(raw));
+      if (!entry || !entry.role) return;
+      cell.dataset.role = entry.role;
+      if (entry.notes.size !== 1) return;
+
+      const note = [...entry.notes][0];
+      cell.classList.add("has-note");
+      cell.setAttribute("role", "button");
+      cell.setAttribute("tabindex", "0");
+      cell.title = note;
+      const open = () => {
+        const parent = cell.parentElement;
+        let line = parent.querySelector(":scope > .word-breakdown__note");
+        const already = cell.classList.contains("is-open");
+        parent.querySelectorAll(":scope > span.is-open").forEach((other) => other.classList.remove("is-open"));
+        if (already) {
+          if (line) line.hidden = true;
+          return;
+        }
+        if (!line) {
+          line = document.createElement("p");
+          line.className = "word-breakdown__note";
+          parent.appendChild(line);
+        }
+        cell.classList.add("is-open");
+        line.dataset.role = entry.role;
+        line.textContent = "";
+        appendMixedArabicText(line, `${entry.word} — ${[...entry.glosses][0]}. ${note}`);
+        line.hidden = false;
+      };
+      cell.addEventListener("click", open);
+      cell.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        open();
+      });
+    });
+  }
+
+  // --- Fiil tablolarinda sahis isaretlerini boyama ---
+  function arabicClusters(text) {
+    const mark = /[\u064B-\u0655\u0670]/;
+    const out = [];
+    for (const ch of String(text || "")) {
+      if (mark.test(ch) && out.length) out[out.length - 1] += ch;
+      else out.push(ch);
+    }
+    return out;
+  }
+
+  function paintVerbCell(cell, mode) {
+    if (!cell || cell.dataset.verbMarked === "true") return;
+    const raw = cell.textContent.trim();
+    if (!raw) return;
+    const parts = arabicClusters(raw);
+    if (parts.length < 2) return;
+
+    let headCount = 0;
+    let tailCount = 0;
+
+    if (mode === "muzari-prefix") {
+      if (!/^[\u064A\u062A\u0623\u0622\u0646\u0627]/.test(parts[0])) return;
+      headCount = 1;
+    } else if (mode === "mazi-suffix") {
+      if (!/^\u062A/.test(parts[parts.length - 1])) return;
+      tailCount = 1;
+    } else if (mode === "template-mazi") {
+      // Sablon tablosunda kok her zaman ك-ت-ب: ilk uc harften sonrasi sahis ekidir.
+      if (parts.length <= 3) return;
+      tailCount = parts.length - 3;
+    } else if (mode === "template-muzari") {
+      if (parts.length <= 4) {
+        headCount = 1;
+      } else {
+        headCount = 1;
+        tailCount = parts.length - 4;
+      }
+    } else {
+      return;
+    }
+
+    cell.textContent = "";
+    const frag = document.createDocumentFragment();
+    parts.forEach((part, index) => {
+      const isMark = index < headCount || index >= parts.length - tailCount;
+      if (isMark) {
+        const span = document.createElement("span");
+        span.className = "verb-mark";
+        span.textContent = part;
+        frag.appendChild(span);
+      } else {
+        frag.appendChild(document.createTextNode(part));
+      }
+    });
+    cell.appendChild(frag);
+    cell.dataset.verbMarked = "true";
+  }
+
+  function paintVerbTables() {
+    document.querySelectorAll(".conjugation-template tbody tr").forEach((row) => {
+      const cells = row.querySelectorAll("td");
+      if (cells.length < 4) return;
+      cells[2].dataset.tense = "mazi";
+      cells[3].dataset.tense = "muzari";
+      paintVerbCell(cells[2], "template-mazi");
+      paintVerbCell(cells[3], "template-muzari");
+    });
+
+    const modes = ["", "muzari-prefix", "mazi-suffix", "muzari-prefix"];
+    const tenses = ["mazi", "muzari", "mazi", "muzari"];
+
+    document.querySelectorAll(".verb-table tbody tr").forEach((row) => {
+      const cells = row.querySelectorAll("td.arabic-cell");
+      if (cells.length < 4) return;
+      cells.forEach((cell, index) => {
+        cell.dataset.tense = tenses[index];
+        if (modes[index]) paintVerbCell(cell, modes[index]);
+      });
+    });
+
+    // Yazdirma izgarasi ayri bir DOM olarak uretiliyor; o da isaretlenmeli.
+    document.querySelectorAll(".verb-print-grid tbody tr").forEach((row) => {
+      const cells = row.querySelectorAll("td.pr-ar");
+      if (cells.length < 4) return;
+      cells.forEach((cell, index) => {
+        cell.dataset.tense = tenses[index];
+        if (modes[index]) paintVerbCell(cell, modes[index]);
+      });
+    });
+  }
+
+  function buildVerbLegend() {
+    if (document.querySelector(".verb-legend")) return null;
+    const legend = document.createElement("div");
+    legend.className = "verb-legend";
+    legend.innerHTML = '<span class="verb-legend__item" data-tense="mazi">Mâzi · geçmiş</span>'
+      + '<span class="verb-legend__item" data-tense="muzari">Muzari · şimdiki/geniş</span>'
+      + '<span class="verb-legend__item verb-legend__item--mark">Şahıs işareti</span>'
+      + '<p class="verb-legend__hint">Fiiller kırmızı, şahsı belirleyen ek veya ön harf pembedir. Muzari sütunları noktalı çizgiyle işaretlidir: şahsı gösteren harf kelimenin <strong>başında</strong>, mâzide ise <strong>sonundadır</strong>.</p>';
+    return legend;
+  }
+
+  function setupVerbTables() {
+    if (!document.querySelector(".verb-table, .conjugation-template")) return;
+
+    const template = document.querySelector(".conjugation-template");
+    const workspace = document.querySelector(".verb-toolbar");
+    const legend = buildVerbLegend();
+    if (legend) {
+      const anchor = template?.closest(".table-scroll") || workspace;
+      anchor?.insertAdjacentElement("beforebegin", legend);
+    }
+    if (workspace) {
+      const second = buildVerbLegendClone();
+      if (second) workspace.insertAdjacentElement("afterend", second);
+    }
+
+    paintVerbTables();
+
+    if ("MutationObserver" in window) {
+      [document.getElementById("verb-rows"), document.getElementById("verb-print-grid")]
+        .filter(Boolean)
+        .forEach((node) => {
+          new MutationObserver(() => paintVerbTables()).observe(node, { childList: true, subtree: true });
+        });
+    }
+  }
+
+  function buildVerbLegendClone() {
+    const first = document.querySelector(".verb-legend");
+    if (!first) return null;
+    const clone = first.cloneNode(true);
+    clone.classList.add("verb-legend--repeat");
+    return clone;
+  }
+
+  // --- Sahis zamirleri izgarasi (gelenekse sarf duzeni) ---
+
+
+  function buildPronounGrid() {
+    const PRONOUN_GRID_ROWS = [
+      {
+        person: "3. şahıs", term: "Gâib", termNote: "Hakkında konuşulan · eril", gender: "eril",
+        cells: [
+          { ar: "هُمْ", tr: "onlar", lat: "hüm", form: "Çoğul" },
+          { ar: "هُمَا", tr: "o ikisi", lat: "hümâ", form: "İkil" },
+          { ar: "هُوَ", tr: "o", lat: "hüve", form: "Tekil" }
+        ]
+      },
+      {
+        person: "3. şahıs", term: "Gâibe", termNote: "Hakkında konuşulan · dişil", gender: "disil",
+        cells: [
+          { ar: "هُنَّ", tr: "onlar", lat: "hünne", form: "Çoğul" },
+          { ar: "هُمَا", tr: "o ikisi", lat: "hümâ", form: "İkil" },
+          { ar: "هِيَ", tr: "o", lat: "hiye", form: "Tekil" }
+        ]
+      },
+      {
+        person: "2. şahıs", term: "Muhâtab", termNote: "Karşımızdaki · eril", gender: "eril",
+        cells: [
+          { ar: "أَنْتُمْ", tr: "siz", lat: "entüm", form: "Çoğul" },
+          { ar: "أَنْتُمَا", tr: "siz ikiniz", lat: "entümâ", form: "İkil" },
+          { ar: "أَنْتَ", tr: "sen", lat: "ente", form: "Tekil" }
+        ]
+      },
+      {
+        person: "2. şahıs", term: "Muhâtaba", termNote: "Karşımızdaki · dişil", gender: "disil",
+        cells: [
+          { ar: "أَنْتُنَّ", tr: "siz", lat: "entünne", form: "Çoğul" },
+          { ar: "أَنْتُمَا", tr: "siz ikiniz", lat: "entümâ", form: "İkil" },
+          { ar: "أَنْتِ", tr: "sen", lat: "enti", form: "Tekil" }
+        ]
+      },
+      {
+        person: "1. şahıs", term: "Mütekellim", termNote: "Konuşan · ortak", gender: "ortak",
+        cells: [
+          { ar: "نَحْنُ", tr: "biz", lat: "nahnu", form: "İkil ve çoğul", span: 2 },
+          { ar: "أَنَا", tr: "ben", lat: "ene", form: "Tekil" }
+        ]
+      }
+    ];
+
+    const grid = document.createElement("div");
+    grid.className = "pronoun-grid";
+
+    ["Çoğul", "İkil", "Tekil"].forEach((label, index) => {
+      const head = document.createElement("div");
+      head.className = "pronoun-grid__head";
+      head.innerHTML = `<strong>${label}</strong><small>${["Cemi", "Müsennâ", "Müfred"][index]}</small>`;
+      grid.appendChild(head);
+    });
+    const headSpacer = document.createElement("div");
+    headSpacer.className = "pronoun-grid__head pronoun-grid__head--empty";
+    grid.appendChild(headSpacer);
+
+    const FORM_KEYS = {
+      "Tekil": "tekil",
+      "İkil": "ikil",
+      "Çoğul": "cogul",
+      "İkil ve çoğul": "ikilvecogul"
+    };
+    const slug = (value) => FORM_KEYS[value] || "tekil";
+
+    PRONOUN_GRID_ROWS.forEach((row) => {
+      const rowEl = document.createElement("div");
+      rowEl.className = "pronoun-row";
+      rowEl.dataset.gender = row.gender;
+
+      row.cells.forEach((cell) => {
+        const box = document.createElement("button");
+        box.type = "button";
+        box.className = "pronoun-cell";
+        box.dataset.gender = row.gender;
+        box.dataset.form = slug(cell.form);
+        if (cell.span) box.classList.add("pronoun-cell--wide");
+        box.setAttribute("aria-label", `${cell.ar} — ${cell.tr}, ${row.term}, ${cell.form}. Sesli oku.`);
+        box.innerHTML = `<span class="pronoun-cell__form">${cell.form}</span>`
+          + `<span class="pronoun-cell__ar" lang="ar" dir="rtl">${cell.ar}</span>`
+          + `<span class="pronoun-cell__lat">${cell.lat}</span>`
+          + `<span class="pronoun-cell__tr">${cell.tr}</span>`;
+        box.addEventListener("click", () => speakArabic(cell.ar, box));
+        rowEl.appendChild(box);
+      });
+
+      const label = document.createElement("div");
+      label.className = "pronoun-grid__label";
+      label.dataset.gender = row.gender;
+      label.innerHTML = `<strong>${row.term}</strong><small>${row.termNote}</small><span class="pronoun-grid__person">${row.person}</span>`;
+      rowEl.appendChild(label);
+      grid.appendChild(rowEl);
+    });
+
+    return grid;
+  }
+
+  function setupPronounGrid() {
+    document.querySelectorAll("[data-pronoun-grid]").forEach((host) => {
+      if (host.dataset.pronounGridReady === "true") return;
+      host.dataset.pronounGridReady = "true";
+      host.appendChild(buildPronounGrid());
+
+      const legend = document.createElement("p");
+      legend.className = "pronoun-grid__legend";
+      legend.textContent = "Mavi satırlar eril, pembe satırlar dişil biçimleri gösterir. Sağdaki adlar geleneksel sarf terimleridir: gâib “hakkında konuşulan”, muhâtab “karşımızdaki”, mütekellim “konuşan”. Bir kutuya dokununca zamir sesli okunur.";
+      host.appendChild(legend);
+    });
+  }
+
+  // --- Fiil cekim izgarasi ---
+  // Salim (kuvvetli) uc harfli fiiller icin cekim, verilen 3. tekil eril
+  // bicimden uretiliyor. Zayif harfli fiiller listeye alinmaz.
+  function arabicMarkRe() {
+    return /[\u064B-\u0652\u0670]/;
+  }
+
+  function splitArabicClusters(text) {
+    const mark = arabicMarkRe();
+    const out = [];
+    for (const ch of String(text || "")) {
+      if (mark.test(ch) && out.length) out[out.length - 1] += ch;
+      else out.push(ch);
+    }
+    return out;
+  }
+
+  function withLastVowel(word, vowel) {
+    const parts = splitArabicClusters(word);
+    if (!parts.length) return word;
+    const last = parts[parts.length - 1];
+    const base = last[0];
+    parts[parts.length - 1] = base + vowel;
+    return parts.join("");
+  }
+
+  const FATHA = "\u064E";
+  const DAMMA = "\u064F";
+  const KESRA = "\u0650";
+  const SUKUN = "\u0652";
+
+  function conjugateMazi(mazi3ms) {
+    const open = withLastVowel(mazi3ms, FATHA);
+    const closed = withLastVowel(mazi3ms, SUKUN);
+    const damma = withLastVowel(mazi3ms, DAMMA);
+    return {
+      hu: open,
+      huma_m: open + "\u0627",
+      hum: damma + "\u0648\u0627",
+      hiya: open + "\u062A\u0652",
+      huma_f: open + "\u062A" + FATHA + "\u0627",
+      hunna: closed + "\u0646" + FATHA,
+      ente: closed + "\u062A" + FATHA,
+      entuma: closed + "\u062A" + DAMMA + "\u0645" + FATHA + "\u0627",
+      entum: closed + "\u062A" + DAMMA + "\u0645" + SUKUN,
+      enti: closed + "\u062A" + KESRA,
+      entunne: closed + "\u062A" + DAMMA + "\u0646" + "\u0651" + FATHA,
+      ene: closed + "\u062A" + DAMMA,
+      nahnu: closed + "\u0646" + FATHA + "\u0627"
+    };
+  }
+
+  function conjugateMuzari(muzari3ms, muzari1s) {
+    const parts = splitArabicClusters(muzari3ms);
+    if (parts.length < 2) return null;
+    const prefixMarks = parts[0].slice(1);
+    const body = parts.slice(1).join("");
+    const ta = "\u062A" + prefixMarks;
+    const ya = "\u064A" + prefixMarks;
+    const nun = "\u0646" + prefixMarks;
+    const bodyD = withLastVowel(body, DAMMA);
+    const bodyF = withLastVowel(body, FATHA);
+    const bodyK = withLastVowel(body, KESRA);
+    const bodyS = withLastVowel(body, SUKUN);
+    const dual = bodyF + "\u0627\u0646" + KESRA;
+    const plural = bodyD + "\u0648\u0646" + FATHA;
+    const femSing = bodyK + "\u064A\u0646" + FATHA;
+    const femPlural = bodyS + "\u0646" + FATHA;
+    return {
+      hu: ya + bodyD,
+      huma_m: ya + dual,
+      hum: ya + plural,
+      hiya: ta + bodyD,
+      huma_f: ta + dual,
+      hunna: ya + femPlural,
+      ente: ta + bodyD,
+      entuma: ta + dual,
+      entum: ta + plural,
+      enti: ta + femSing,
+      entunne: ta + femPlural,
+      ene: muzari1s,
+      nahnu: nun + bodyD
+    };
+  }
+
+  function conjugationRows(forms) {
+    const PERSON_LABELS = {
+      hu: "o", huma: "o ikisi", hum: "onlar",
+      hiya: "o (kadın)", hunna: "onlar (kadınlar)",
+      ente: "sen", entuma: "siz ikiniz", entum: "siz",
+      enti: "sen (kadın)", entunne: "siz (kadınlar)",
+      ene: "ben", nahnu: "biz"
+    };
+    const tr = (key) => PERSON_LABELS[key];
+    return [
+      { person: "3. şahıs", term: "Gâib", termNote: "Hakkında konuşulan · eril", gender: "eril",
+        cells: [
+          { ar: forms.hum, pron: "هُمْ", tr: tr("hum"), form: "Çoğul" },
+          { ar: forms.huma_m, pron: "هُمَا", tr: tr("huma"), form: "İkil" },
+          { ar: forms.hu, pron: "هُوَ", tr: tr("hu"), form: "Tekil" }
+        ] },
+      { person: "3. şahıs", term: "Gâibe", termNote: "Hakkında konuşulan · dişil", gender: "disil",
+        cells: [
+          { ar: forms.hunna, pron: "هُنَّ", tr: tr("hunna"), form: "Çoğul" },
+          { ar: forms.huma_f, pron: "هُمَا", tr: tr("huma"), form: "İkil" },
+          { ar: forms.hiya, pron: "هِيَ", tr: tr("hiya"), form: "Tekil" }
+        ] },
+      { person: "2. şahıs", term: "Muhâtab", termNote: "Karşımızdaki · eril", gender: "eril",
+        cells: [
+          { ar: forms.entum, pron: "أَنْتُمْ", tr: tr("entum"), form: "Çoğul" },
+          { ar: forms.entuma, pron: "أَنْتُمَا", tr: tr("entuma"), form: "İkil" },
+          { ar: forms.ente, pron: "أَنْتَ", tr: tr("ente"), form: "Tekil" }
+        ] },
+      { person: "2. şahıs", term: "Muhâtaba", termNote: "Karşımızdaki · dişil", gender: "disil",
+        cells: [
+          { ar: forms.entunne, pron: "أَنْتُنَّ", tr: tr("entunne"), form: "Çoğul" },
+          { ar: forms.entuma, pron: "أَنْتُمَا", tr: tr("entuma"), form: "İkil" },
+          { ar: forms.enti, pron: "أَنْتِ", tr: tr("enti"), form: "Tekil" }
+        ] },
+      { person: "1. şahıs", term: "Mütekellim", termNote: "Konuşan · ortak", gender: "ortak",
+        cells: [
+          { ar: forms.nahnu, pron: "نَحْنُ", tr: tr("nahnu"), form: "İkil ve çoğul", span: 2 },
+          { ar: forms.ene, pron: "أَنَا", tr: tr("ene"), form: "Tekil" }
+        ] }
+    ];
+  }
+
+  function conjugationVerbs() {
+    return [
+    { mazi: "فَهِمَ", muzari: "يَفْهَمُ", muzari1: "أَفْهَمُ", tr: "anlamak" },
+    { mazi: "ذَكَرَ", muzari: "يَذْكُرُ", muzari1: "أَذْكُرُ", tr: "anmak; zikretmek" },
+    { mazi: "بَحَثَ", muzari: "يَبْحَثُ", muzari1: "أَبْحَثُ", tr: "aramak; araştırmak" },
+    { mazi: "فَتَحَ", muzari: "يَفْتَحُ", muzari1: "أَفْتَحُ", tr: "açmak" },
+    { mazi: "نَظَرَ", muzari: "يَنْظُرُ", muzari1: "أَنْظُرُ", tr: "bakmak" },
+    { mazi: "صَرَخَ", muzari: "يَصْرُخُ", muzari1: "أَصْرُخُ", tr: "bağırmak" },
+    { mazi: "عَلِمَ", muzari: "يَعْلَمُ", muzari1: "أَعْلَمُ", tr: "bilmek" },
+    { mazi: "تَرَكَ", muzari: "يَتْرُكُ", muzari1: "أَتْرُكُ", tr: "bırakmak" },
+    { mazi: "دَرَسَ", muzari: "يَدْرُسُ", muzari1: "أَدْرُسُ", tr: "ders çalışmak" },
+    { mazi: "سَمِعَ", muzari: "يَسْمَعُ", muzari1: "أَسْمَعُ", tr: "duymak; dinlemek" },
+    { mazi: "حَفِظَ", muzari: "يَحْفَظُ", muzari1: "أَحْفَظُ", tr: "ezberlemek; korumak" },
+    { mazi: "دَخَلَ", muzari: "يَدْخُلُ", muzari1: "أَدْخُلُ", tr: "girmek" },
+    { mazi: "ذَهَبَ", muzari: "يَذْهَبُ", muzari1: "أَذْهَبُ", tr: "gitmek" },
+    { mazi: "ضَحِكَ", muzari: "يَضْحَكُ", muzari1: "أَضْحَكُ", tr: "gülmek" },
+    { mazi: "شَتَمَ", muzari: "يَشْتِمُ", muzari1: "أَشْتِمُ", tr: "hakaret etmek" },
+    { mazi: "حَمِدَ", muzari: "يَحْمَدُ", muzari1: "أَحْمَدُ", tr: "hamdetmek; övmek" },
+    { mazi: "طَلَبَ", muzari: "يَطْلُبُ", muzari1: "أَطْلُبُ", tr: "istemek" },
+    { mazi: "شَرِبَ", muzari: "يَشْرَبُ", muzari1: "أَشْرَبُ", tr: "içmek" },
+    { mazi: "قَبِلَ", muzari: "يَقْبَلُ", muzari1: "أَقْبَلُ", tr: "kabul etmek" },
+    { mazi: "طَرَقَ", muzari: "يَطْرُقُ", muzari1: "أَطْرُقُ", tr: "kapıyı çalmak; vurmak" },
+    { mazi: "حَضَرَ", muzari: "يَحْضُرُ", muzari1: "أَحْضُرُ", tr: "katılmak; hazır bulunmak" },
+    { mazi: "خَسِرَ", muzari: "يَخْسَرُ", muzari1: "أَخْسَرُ", tr: "kaybetmek" },
+    { mazi: "كَسَبَ", muzari: "يَكْسِبُ", muzari1: "أَكْسِبُ", tr: "kazanmak" },
+    { mazi: "هَرَبَ", muzari: "يَهْرُبُ", muzari1: "أَهْرُبُ", tr: "kaçmak" },
+    { mazi: "قَطَعَ", muzari: "يَقْطَعُ", muzari1: "أَقْطَعُ", tr: "kesmek" },
+    { mazi: "رَكَضَ", muzari: "يَرْكُضُ", muzari1: "أَرْكُضُ", tr: "koşmak" },
+    { mazi: "عَبَدَ", muzari: "يَعْبُدُ", muzari1: "أَعْبُدُ", tr: "kulluk etmek" },
+    { mazi: "جَعَلَ", muzari: "يَجْعَلُ", muzari1: "أَجْعَلُ", tr: "kılmak; yapmak" },
+    { mazi: "كَسَرَ", muzari: "يَكْسِرُ", muzari1: "أَكْسِرُ", tr: "kırmak" },
+    { mazi: "كَرِهَ", muzari: "يَكْرَهُ", muzari1: "أَكْرَهُ", tr: "nefret etmek; sevmemek" },
+    { mazi: "جَلَسَ", muzari: "يَجْلِسُ", muzari1: "أَجْلِسُ", tr: "oturmak" },
+    { mazi: "سَكَنَ", muzari: "يَسْكُنُ", muzari1: "أَسْكُنُ", tr: "oturmak; ikamet etmek" },
+    { mazi: "لَعِبَ", muzari: "يَلْعَبُ", muzari1: "أَلْعَبُ", tr: "oynamak" },
+    { mazi: "رَفَضَ", muzari: "يَرْفُضُ", muzari1: "أَرْفُضُ", tr: "reddetmek" },
+    { mazi: "رَكَعَ", muzari: "يَرْكَعُ", muzari1: "أَرْكَعُ", tr: "rükû etmek" },
+    { mazi: "حَلَمَ", muzari: "يَحْلُمُ", muzari1: "أَحْلُمُ", tr: "rüya görmek" },
+    { mazi: "رَزَقَ", muzari: "يَرْزُقُ", muzari1: "أَرْزُقُ", tr: "rızık vermek" },
+    { mazi: "صَبَرَ", muzari: "يَصْبِرُ", muzari1: "أَصْبِرُ", tr: "sabretmek" },
+    { mazi: "سَجَدَ", muzari: "يَسْجُدُ", muzari1: "أَسْجُدُ", tr: "secde etmek" },
+    { mazi: "حَمَلَ", muzari: "يَحْمِلُ", muzari1: "أَحْمِلُ", tr: "taşımak" },
+    { mazi: "جَمَعَ", muzari: "يَجْمَعُ", muzari1: "أَجْمَعُ", tr: "toplamak" },
+    { mazi: "ضَرَبَ", muzari: "يَضْرِبُ", muzari1: "أَضْرِبُ", tr: "vurmak" },
+    { mazi: "خَلَقَ", muzari: "يَخْلُقُ", muzari1: "أَخْلُقُ", tr: "yaratmak" },
+    { mazi: "نَصَرَ", muzari: "يَنْصُرُ", muzari1: "أَنْصُرُ", tr: "yardım etmek" },
+    { mazi: "كَتَبَ", muzari: "يَكْتُبُ", muzari1: "أَكْتُبُ", tr: "yazmak" },
+    { mazi: "طَبَخَ", muzari: "يَطْبُخُ", muzari1: "أَطْبُخُ", tr: "yemek pişirmek" },
+    { mazi: "غَسَلَ", muzari: "يَغْسِلُ", muzari1: "أَغْسِلُ", tr: "yıkamak" },
+    { mazi: "عَشِقَ", muzari: "يَعْشَقُ", muzari1: "أَعْشَقُ", tr: "âşık olmak; çok sevmek" },
+    { mazi: "عَمِلَ", muzari: "يَعْمَلُ", muzari1: "أَعْمَلُ", tr: "çalışmak; yapmak" },
+    { mazi: "رَسَمَ", muzari: "يَرْسُمُ", muzari1: "أَرْسُمُ", tr: "çizmek" },
+    { mazi: "خَرَجَ", muzari: "يَخْرُجُ", muzari1: "أَخْرُجُ", tr: "çıkmak" },
+    { mazi: "قَتَلَ", muzari: "يَقْتُلُ", muzari1: "أَقْتُلُ", tr: "öldürmek" },
+    { mazi: "شَهِدَ", muzari: "يَشْهَدُ", muzari1: "أَشْهَدُ", tr: "şahit olmak" },
+    { mazi: "شَكَرَ", muzari: "يَشْكُرُ", muzari1: "أَشْكُرُ", tr: "şükretmek" }
+    ];
+  }
+
+  function findVerb(key) {
+    const list = conjugationVerbs();
+    if (!key) return list[0];
+    return list.find((v) => v.mazi === key || v.tr === key) || list[0];
+  }
+
+  function buildConjugationGrid(verb, tense) {
+    const forms = tense === "muzari"
+      ? conjugateMuzari(verb.muzari, verb.muzari1)
+      : conjugateMazi(verb.mazi);
+    if (!forms) return null;
+
+    const grid = document.createElement("div");
+    grid.className = "pronoun-grid conjugation-grid";
+
+    ["Çoğul", "İkil", "Tekil"].forEach((label, index) => {
+      const head = document.createElement("div");
+      head.className = "pronoun-grid__head";
+      head.innerHTML = `<strong>${label}</strong><small>${["Cemi", "Tesniye", "Müfred"][index]}</small>`;
+      grid.appendChild(head);
+    });
+    const spacer = document.createElement("div");
+    spacer.className = "pronoun-grid__head pronoun-grid__head--empty";
+    grid.appendChild(spacer);
+
+    const FORM_KEYS = { "Tekil": "tekil", "İkil": "ikil", "Çoğul": "cogul", "İkil ve çoğul": "ikilvecogul" };
+
+    conjugationRows(forms).forEach((row) => {
+      const rowEl = document.createElement("div");
+      rowEl.className = "pronoun-row";
+      rowEl.dataset.gender = row.gender;
+
+      row.cells.forEach((cell) => {
+        const box = document.createElement("button");
+        box.type = "button";
+        box.className = "pronoun-cell conjugation-cell";
+        box.dataset.gender = row.gender;
+        box.dataset.form = FORM_KEYS[cell.form] || "tekil";
+        if (cell.span) box.classList.add("pronoun-cell--wide");
+        box.setAttribute("aria-label", `${cell.ar} — ${cell.tr}. Sesli oku.`);
+        box.innerHTML = `<span class="pronoun-cell__form">${cell.form}</span>`
+          + `<span class="pronoun-cell__ar" lang="ar" dir="rtl">${cell.ar}</span>`
+          + `<span class="pronoun-cell__lat conjugation-cell__pron" lang="ar" dir="rtl">${cell.pron}</span>`
+          + `<span class="pronoun-cell__tr">${cell.tr}</span>`;
+        box.addEventListener("click", () => speakArabic(cell.ar, box));
+        rowEl.appendChild(box);
+      });
+
+      const label = document.createElement("div");
+      label.className = "pronoun-grid__label";
+      label.dataset.gender = row.gender;
+      label.innerHTML = `<strong>${row.term}</strong><small>${row.termNote}</small><span class="pronoun-grid__person">${row.person}</span>`;
+      rowEl.appendChild(label);
+      grid.appendChild(rowEl);
+    });
+
+    return grid;
+  }
+
+  function setupConjugationGrids() {
+    document.querySelectorAll("[data-conjugation-grid]").forEach((host) => {
+      if (host.dataset.conjugationReady === "true") return;
+      host.dataset.conjugationReady = "true";
+      const verb = findVerb(host.dataset.conjugationGrid);
+      const tense = host.dataset.tense === "muzari" ? "muzari" : "mazi";
+      const grid = buildConjugationGrid(verb, tense);
+      if (grid) host.appendChild(grid);
+    });
+  }
+
+  function setupConjugationWorkbench() {
+    const host = document.querySelector("[data-conjugation-workbench]");
+    if (!host || host.dataset.workbenchReady === "true") return;
+    host.dataset.workbenchReady = "true";
+
+    const verbs = conjugationVerbs();
+    const storeKey = `${STORAGE_PREFIX}:conjugation-choice`;
+    let saved = {};
+    try {
+      saved = JSON.parse(localStorage.getItem(storeKey) || "{}");
+    } catch {
+      saved = {};
+    }
+
+    const toolbar = document.createElement("div");
+    toolbar.className = "conjugation-toolbar";
+
+    const label = document.createElement("label");
+    label.className = "conjugation-toolbar__field";
+    label.innerHTML = '<span>Fiil seç</span>';
+    const select = document.createElement("select");
+    select.id = "conjugation-verb";
+    verbs.forEach((verb) => {
+      const option = document.createElement("option");
+      option.value = verb.mazi;
+      option.textContent = `${verb.mazi} · ${verb.tr}`;
+      select.appendChild(option);
+    });
+    select.value = verbs.some((v) => v.mazi === saved.verb) ? saved.verb : verbs[0].mazi;
+    label.appendChild(select);
+
+    const tabs = document.createElement("div");
+    tabs.className = "conjugation-tabs";
+    tabs.setAttribute("role", "tablist");
+    const tenses = [
+      ["mazi", "Mâzi", "geçmiş zaman"],
+      ["muzari", "Muzari", "şimdiki / geniş zaman"]
+    ];
+    let activeTense = saved.tense === "muzari" ? "muzari" : "mazi";
+    const tabButtons = tenses.map(([value, title, note]) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "conjugation-tab";
+      button.dataset.tense = value;
+      button.setAttribute("role", "tab");
+      button.innerHTML = `<strong>${title}</strong><small>${note}</small>`;
+      button.addEventListener("click", () => {
+        activeTense = value;
+        render();
+      });
+      tabs.appendChild(button);
+      return button;
+    });
+
+    toolbar.append(label, tabs);
+
+    const summary = document.createElement("p");
+    summary.className = "conjugation-summary";
+
+    const gridHost = document.createElement("div");
+    gridHost.className = "conjugation-host";
+
+    const hint = document.createElement("p");
+    hint.className = "pronoun-grid__legend";
+    hint.textContent = "Listedeki fiillerin hepsi sâlim (kuvvetli) üç harfli fiillerdir; çekimleri düzenli kalıpla üretilir. Bir kutuya dokununca o biçim sesli okunur.";
+
+    host.append(toolbar, summary, gridHost, hint);
+
+    function render() {
+      const verb = findVerb(select.value);
+      tabButtons.forEach((button) => {
+        const on = button.dataset.tense === activeTense;
+        button.classList.toggle("is-active", on);
+        button.setAttribute("aria-selected", String(on));
+      });
+      gridHost.replaceChildren();
+      const grid = buildConjugationGrid(verb, activeTense);
+      if (grid) gridHost.appendChild(grid);
+      summary.innerHTML = `<b lang="ar" dir="rtl">${activeTense === "muzari" ? verb.muzari : verb.mazi}</b>`
+        + ` · <strong>${verb.tr}</strong> · ${activeTense === "muzari" ? "muzari (şimdiki/geniş zaman)" : "mâzi (geçmiş zaman)"}`;
+      try {
+        localStorage.setItem(storeKey, JSON.stringify({ verb: select.value, tense: activeTense }));
+      } catch {
+        /* depolama kapali olabilir */
+      }
+    }
+
+    select.addEventListener("change", render);
+    render();
+  }
+
   function setupUniversalArabicTools() {
     document.querySelectorAll("[lang^='ar']").forEach((element) => {
       if (element.closest(".reading-tools")) return;
+      if (element.closest(".word-map")) return;
+      if (element.closest(".pronoun-grid")) return;
       if (element.closest(".flashcard")) return;
       if (element.matches(".sentence-study article > .arabic.sentence")) return;
       if (element.closest(".arabic-tools, .flashcard-actions, .sentence-actions")) return;
@@ -2183,6 +3121,9 @@
   }
 
   warmUpVoices();
+  setupConjugationGrids();
+  setupConjugationWorkbench();
+
   async function copyArabicText(text) {
     if (!text) return;
     try {
