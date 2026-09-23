@@ -207,6 +207,11 @@ dialog::backdrop{background:rgba(0,0,0,.62)}
 .db select option{background:var(--b1);color:var(--ink)}
 .db .ok{width:100%;background:var(--acc);color:var(--b2);border-radius:.69rem;padding:.75rem;
   font-size:.69rem;letter-spacing:.16em;font-weight:600;margin-top:.125rem}
+.db .ok:disabled{opacity:.45;cursor:default}
+/* konum listeleri yüklenirken / yüklenemezse gösterilen satır */
+.db .dmsg{margin:0 0 .8rem;font-size:.78rem;line-height:1.45;color:var(--ink-2)}
+.db .dmsg:empty{display:none}
+.db .dmsg.hata{color:var(--ker)}
 
 /* Vakit bilgisi penceresi — ezan ekranıyla aynı ölçekte okunur.
    .genis: icinde "ne yapilir / nelerden kacinilir" listesi olan vakitler iki sutuna acilir. */
@@ -517,7 +522,8 @@ body.focus.ui .fbar{opacity:1;pointer-events:auto;transform:translateX(-50%) tra
     <label for="sU">ÜLKE</label><select id="sU"></select>
     <label for="sS">ŞEHİR</label><select id="sS"></select>
     <label for="sI">İLÇE</label><select id="sI"></select>
-    <button class="ok" id="dlgOk">KAYDET</button>
+    <p class="dmsg" id="dlgMsg" role="status"></p>
+    <button class="ok" id="dlgOk" disabled>KAYDET</button>
   </div>
 </dialog>
 
@@ -1561,6 +1567,10 @@ var MODEL=null,MONTH=null,DATE=new Date(),LASTW=null,LASTSEG=-2,HI={s:null,e:nul
 var VIEW=store.get("vakit.gorunum")||"arc";
 function isToday(){ return new Date().toDateString()===DATE.toDateString(); }
 function now(M){ var d=new Date(),m=d.getHours()*60+d.getMinutes()+d.getSeconds()/60;
+  /* Gece modeli (dünün kaydı, 00:00 – imsak arası): şu an her zaman modelin gece
+     ucundadır. Dünün imsakı bugünkünden birkaç dakika önce olabildiği için genel
+     kural 05:09'u yanlışlıkla dünün sabahına yerleştirirdi. */
+  if(M.geceModeli) return Math.min(m+1440, M.t1);
   while(m<M.t0) m+=1440; while(m>M.t1) m-=1440; return m; }
 
 function drawCurrent(){
@@ -1584,9 +1594,10 @@ function paint(){
   $("capR").textContent="BATIŞ (SUNSET) "+hm(M.t.batis);
   geceLegend(M,live);
   paintRail(M,live);
-  $("gDate").textContent=M.rec.MiladiTarihUzun||"";
-  $("hDate").textContent=M.rec.HicriTarihUzun||"";
-  $("dayLbl").textContent=live?"bugün":M.rec.MiladiTarihKisa.slice(0,5);
+  var G=M.gun||M.rec;
+  $("gDate").textContent=G.MiladiTarihUzun||"";
+  $("hDate").textContent=G.HicriTarihUzun||"";
+  $("dayLbl").textContent=live?"bugün":G.MiladiTarihKisa.slice(0,5);
   $("dayLbl").className="lbl"+(live?" today":"");
   stampSync();
   tick();
@@ -1633,10 +1644,21 @@ function fitRail(){
   if(r.scrollWidth > r.clientWidth+1) r.classList.add("uc");
 }
 
+/* Vakit yeni girdiyse 5 saniye sonra ezan ekranı açılır.
+   eski: bir önceki vakit adı (ilk açılışta null — o zaman açılmaz).
+   (n-cur.s) denetimi, sekme arka planda kalıp geç fark edilen geçişleri eler. */
+function ezanPlanla(eski){
+  var M=MODEL; if(!M || eski==null || !isToday()) return;
+  var n=now(M), cur=curWin(M);
+  if(cur.ad===eski || EZAN_VAKITLERI.indexOf(cur.ad)<0 || (n-cur.s)*60 >= 90) return;
+  clearTimeout(EZ_ACILIS);
+  EZ_ACILIS=setTimeout(function(){ ezanAc(cur.ad, hm(cur.s)); }, 5000);
+}
+
 function tick(){
   var M=MODEL; if(!M) return;
   if(!isToday()){
-    $("vakit").textContent=(M.rec.MiladiTarihUzun||"").split(" ").pop();
+    $("vakit").textContent=((M.gun||M.rec).MiladiTarihUzun||"").split(" ").pop();
     $("count").textContent=hm(M.t.imsak)+" – "+hm(M.t.yatsi);
     $("until").innerHTML="İmsaktan yatsıya · Fajr to Isha";
     $("fill").style.width="0%"; return;
@@ -1646,12 +1668,7 @@ function tick(){
     var eski=LASTW;
     LASTW=cur.ad;
     paintRail(M,true); startAnim({s:cur.s,e:cur.e});
-    /* vakit yeni girdiyse 5 saniye sonra ezan ekranı açılır.
-       (n-cur.s) denetimi, sekme arka planda kalıp geç fark edilen geçişleri eler. */
-    if(eski!==null && isToday() && EZAN_VAKITLERI.indexOf(cur.ad)>=0 && (n-cur.s)*60 < 90){
-      clearTimeout(EZ_ACILIS);
-      EZ_ACILIS=setTimeout(function(){ ezanAc(cur.ad, hm(cur.s)); }, 5000);
-    }
+    ezanPlanla(eski);
   }
   var si=segIndex(M);
   if(si!==LASTSEG){ LASTSEG=si; drawCurrent(); renderHi(M); }   /* kerahat girdi/çıktı */
@@ -1700,27 +1717,76 @@ function refresh(force){
       [["YENİDEN DENE",function(){refresh(true);}],["PROXY İLE DENE",function(){useProxy=true;refresh(true);}]]);
   });
 }
+function gunIndex(k){
+  if(!MONTH) return -1;
+  for(var j=0;j<MONTH.length;j++) if(MONTH[j].MiladiTarihKisa===k) return j;
+  return -1;
+}
+
+/* CANLI: kullanıcı "bugün"ü izliyor mu. Takvim günü değişince (gece yarısı ya da
+   cihaz uykudan uyanınca) ekran kendiliğinden yeni güne geçer.
+   CANLI_ANAHTAR: "gg.aa.yyyy|gece" (00:00 – imsak arası) veya "gg.aa.yyyy|gun".
+   Gece yarısından imsaka kadar geçen süre bir önceki günün gecesidir; o aralıkta
+   model dünün kaydı + bugünün imsakıyla kurulur. Anahtar değişince model yeniden kurulur. */
+var CANLI=true, CANLI_ANAHTAR=null;
+function canliAnahtar(){
+  var d=new Date(), k=dkey(d), i=gunIndex(k);
+  if(i<0) return k+"|yok";
+  var m=d.getHours()*60+d.getMinutes()+d.getSeconds()/60;
+  return k+(m<mn(MONTH[i].Imsak) ? "|gece" : "|gun");
+}
+
 function show(){
   if(!MONTH) return;
-  var k=dkey(DATE),i=-1;
-  for(var j=0;j<MONTH.length;j++) if(MONTH[j].MiladiTarihKisa===k){ i=j; break; }
-  if(i<0){ msg("Bu gün indirilen ay verisinde yok","Diyanet tek istekte 32 günlük kayıt veriyor.",
-    [["AYI YENİLE",function(){refresh(true);}]]); return; }
+  var k=dkey(DATE), i=gunIndex(k), eski=LASTW;
+  CANLI=isToday();
+  CANLI_ANAHTAR = CANLI ? canliAnahtar() : null;
+  if(i<0){
+    /* eski günün çizimi ekranda kalmasın */
+    MODEL=null; LASTW=null; HI={s:null,e:null};
+    ["arc","kadran","strip","dikey"].forEach(function(id){ clear($(id)); });
+    $("rail").innerHTML=""; $("gleg").innerHTML="";
+    $("vakit").textContent="—"; $("count").textContent="--:--:--"; $("until").innerHTML="&nbsp;";
+    $("fill").style.width="0%"; $("gDate").textContent=""; $("hDate").textContent="";
+    $("dayLbl").textContent=CANLI?"bugün":k.slice(0,5);
+    msg("Bu gün indirilen veride yok","Diyanet tek istekte 32 günlük kayıt veriyor (yaklaşık 6 gün öncesi, 25 gün sonrası).",
+      CANLI?[["VERİYİ YENİLE",function(){refresh(true);}]]:[["BUGÜNE DÖN",function(){DATE=new Date();show();}]]);
+    return;
+  }
   $("msg").style.display="none";
   LASTW=null;
-  MODEL=build(MONTH[i],MONTH[i+1]);
+  var gece = CANLI && /\|gece$/.test(CANLI_ANAHTAR) && i>0;
+  MODEL = gece ? build(MONTH[i-1],MONTH[i]) : build(MONTH[i],MONTH[i+1]);
+  MODEL.gun = MONTH[i];                                   /* ekranda yazan tarih her zaman takvim günü */
+  MODEL.geceModeli = gece;
   $("loc").innerHTML='<span class="a">'+LOC.ust+'</span><span class="b">'+LOC.ad+'</span>';
   paint();
+  if(CANLI) ezanPlanla(eski);
+}
+
+/* Canlı izlerken takvim günü ya da gece/gündüz modeli değiştiyse yeniden kur.
+   Saniyede bir çağrılır; uykudan uyanınca da hemen çağrılır. */
+function canliDenetle(){
+  if(!CANLI || !MONTH) return false;
+  if(canliAnahtar()===CANLI_ANAHTAR && isToday()) return false;
+  DATE=new Date(); show();
+  return true;
 }
 
 /* ---------- gün gezinme: tıkla veya basılı tut ---------- */
-function stepDay(d){ DATE.setDate(DATE.getDate()+d); show(); }
+/* Verinin dışına çıkılmaz: Diyanet geçmiş günleri vermiyor, ileri tarafı da
+   yenilendikçe kendiliğinden uzar. */
+function stepDay(d){
+  var h=new Date(DATE.getTime()); h.setDate(h.getDate()+d);
+  if(gunIndex(dkey(h))<0){ toast(d<0?"DAHA ÖNCESİNİN VERİSİ YOK":"DAHA SONRASININ VERİSİ HENÜZ YOK"); return false; }
+  DATE=h; show(); return true;
+}
 function holdable(btn,d){
   var to=0, iv=0;
   function start(e){
     e.preventDefault();
-    stepDay(d);
-    to=setTimeout(function(){ iv=setInterval(function(){ stepDay(d); },110); },420);
+    if(!stepDay(d)) return;
+    to=setTimeout(function(){ iv=setInterval(function(){ if(!stepDay(d)) stop(); },110); },420);
   }
   function stop(){ clearTimeout(to); clearInterval(iv); to=iv=0; }
   btn.addEventListener("pointerdown",start);
@@ -2023,22 +2089,52 @@ function cached(k,p){ var kk="vakit.l."+k,c=store.get(kk);
   return get(p).then(function(d){ store.set(kk,d); return d; }); }
 function fillSel(sel,pairs,val){
   sel.innerHTML=pairs.map(function(p){return '<option value="'+p[0]+'">'+p[1]+'</option>';}).join("");
-  if(val) sel.value=val; }
+  if(val) sel.value=val;
+  if(sel.selectedIndex<0 && sel.options.length) sel.selectedIndex=0; }
 function loadS(v){ return cached("s"+$("sU").value,"/sehirler/"+$("sU").value)
   .then(function(d){ fillSel($("sS"),d.map(function(x){return [x.SehirID,x.SehirAdi];}),v); }); }
 function loadI(v){ return cached("i"+$("sS").value,"/ilceler/"+$("sS").value)
   .then(function(d){ fillSel($("sI"),d.map(function(x){return [x.IlceID,x.IlceAdi];}),v); }); }
 
+/* Konum listeleri yüklenirken ve yüklenemezse KAYDET kapalı kalır; durum pencerede yazar.
+   (Eskiden hata sessizce yutuluyordu; boş listeyle KAYDET'e basınca betik çöküyordu.) */
+function dlgDurum(t,hata){
+  var m=$("dlgMsg"); m.textContent=t||""; m.classList.toggle("hata",!!hata);
+}
+function dlgHazir(){
+  var ok = !!($("sU").value && $("sS").value && $("sI").value &&
+              $("sS").selectedOptions[0] && $("sI").selectedOptions[0]);
+  $("dlgOk").disabled=!ok;
+  return ok;
+}
+function dlgYukle(is){
+  $("dlgOk").disabled=true; dlgDurum("Liste yükleniyor…");
+  return is().then(function(){ dlgDurum(""); dlgHazir(); })
+    .catch(function(){
+      dlgHazir(); $("dlgOk").disabled=true;
+      dlgDurum("Liste alınamadı. İnternet bağlantınızı kontrol edip pencereyi kapatıp yeniden açın.",true);
+    });
+}
 $("loc").addEventListener("click",function(){
   openDlg(dlg);
-  cached("ulkeler","/ulkeler").then(function(u){
-    fillSel($("sU"),u.map(function(x){return [x.UlkeID,x.UlkeAdi];}),LOC.ulke);
-    return loadS(LOC.sehir); }).then(function(){ return loadI(LOC.ilce); }).catch(function(){});
+  dlgYukle(function(){
+    return cached("ulkeler","/ulkeler").then(function(u){
+      fillSel($("sU"),u.map(function(x){return [x.UlkeID,x.UlkeAdi];}),LOC.ulke);
+      return loadS(LOC.sehir); }).then(function(){ return loadI(LOC.ilce); });
+  });
 });
 $("dlgX").addEventListener("click",function(){ closeDlg(dlg); });
-$("sU").addEventListener("change",function(){ loadS().then(function(){ return loadI(); }); });
-$("sS").addEventListener("change",function(){ loadI(); });
+$("sU").addEventListener("change",function(){
+  $("sS").innerHTML=""; $("sI").innerHTML="";
+  dlgYukle(function(){ return loadS().then(function(){ return loadI(); }); });
+});
+$("sS").addEventListener("change",function(){
+  $("sI").innerHTML="";
+  dlgYukle(function(){ return loadI(); });
+});
+$("sI").addEventListener("change",dlgHazir);
 $("dlgOk").addEventListener("click",function(){
+  if(!dlgHazir()) return;
   LOC={ulke:$("sU").value,sehir:$("sS").value,ilce:$("sI").value,
        ad:$("sI").selectedOptions[0].text,ust:$("sS").selectedOptions[0].text};
   store.set("vakit.loc",LOC);
@@ -2047,11 +2143,21 @@ $("dlgOk").addEventListener("click",function(){
 });
 
 /* ---------- zamanlayıcılar ---------- */
-setInterval(function(){ if(isToday()) tick(); },1000);
-setInterval(function(){ var d=new Date();
-  if(d.getHours()===0&&d.getMinutes()===1){ DATE=new Date(); show(); } },60000);
+/* Saniyede bir: önce gün / gece değişimi (eskiden yalnız tam 00:01'de bakılıyordu;
+   cihaz o dakikayı uykuda geçirirse ekran dünde takılı kalıyordu), sonra sayaç. */
+setInterval(function(){ if(!canliDenetle() && isToday()) tick(); },1000);
 setInterval(function(){ if(bayatMi()) refresh(true); }, 3600e3);   /* saatte bir tazelik denetimi */
 window.addEventListener("online",function(){ if(bayatMi()) refresh(true); });
+/* Uykudan uyanma, sekmeye geri dönme, telefonda uygulamayı yeniden açma:
+   zamanlayıcıyı beklemeden günü ve verinin tazeliğini hemen denetle. */
+function uyandi(){
+  if(document.visibilityState==="hidden") return;
+  if(!canliDenetle() && isToday()) tick();
+  if(bayatMi()) refresh(true);
+}
+document.addEventListener("visibilitychange",uyandi);
+window.addEventListener("pageshow",uyandi);
+window.addEventListener("focus",uyandi);
 
 var RT=0;
 window.addEventListener("resize",function(){ clearTimeout(RT); RT=setTimeout(paint,180); });
