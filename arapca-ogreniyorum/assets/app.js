@@ -52,7 +52,17 @@
     "ders-07": "Muzari fiile giriş",
     "ders-08": "Muzari tam çekim ve olumsuzluk",
     "ders-09": "Gelecek zaman",
-    "ders-10": "Zamanlar karşılaştırması"
+    "ders-10": "Zamanlar karşılaştırması",
+    "ders-11": "Emir: “yap!”",
+    "ders-12": "Nehiy (yapma!) ve لَمْ",
+    "ders-13": "Soru kelimeleri",
+    "ders-14": "İsim tamlaması (izafet)",
+    "ders-15": "Bitişik zamirler (kitabım, kitabın)",
+    "ders-16": "Harf-i cerler (fî, ilâ, min…)",
+    "ders-17": "İkil ve çoğul isimler",
+    "ders-18": "İşaret isimleri: bu, şu, bunlar",
+    "ders-19": "İlgi zamirleri (الَّذِي، الَّتِي)",
+    "ders-20": "İ‘râba giriş ve bütünleştirme"
   };
 
   const LESSON_REVIEW_SETS = {
@@ -125,6 +135,76 @@
       { id: "d9-len", sourceLesson: "ders-09", topic: "Olumsuz gelecek", prompt: "لَنْ أَكْتُبَ ne demektir?", options: [["yazmayacagim", "Yazmayacağım"], ["yazmiyorum", "Yazmıyorum"], ["yazmadim", "Yazmadım"]], answer: "yazmayacagim", explanation: "لَنْ geleceği olumsuz yapar ve fiilin sonunu üstün yapar." },
       { id: "d9-len-yezhebu", sourceLesson: "ders-09", topic: "Olumsuz gelecek", prompt: "“Onlar gitmeyecekler” hangisidir?", options: [["dogru", "لَنْ يَذْهَبُوا"], ["nunlu", "لَنْ يَذْهَبُونَ"], ["la", "لَا يَذْهَبُونَ"]], answer: "dogru", explanation: "لَنْ’den sonra ـُونَ’nin ن’si düşer: يَذْهَبُوا." },
       { id: "d9-tekasur", sourceLesson: "ders-09", topic: "Kur’an bağlantısı", prompt: "كَلَّا سَوْفَ تَعْلَمُونَ ne demektir?", options: [["bileceksiniz", "Hayır! Yakında bileceksiniz."], ["bilmiyorsunuz", "Hayır! Bilmiyorsunuz."], ["bildiniz", "Hayır! Bildiniz."]], answer: "bileceksiniz", explanation: "سَوْفَ + تَعْلَمُونَ: “siz” şahsında gelecek." }
+    ],
+    "ders-11": [
+      { id: "d10-zaman", sourceLesson: "ders-10", topic: "Zamanlar", prompt: "سَنَكْتُبُ hangi zamandır?", options: [["gelecek", "Gelecek"], ["simdiki", "Şimdiki / geniş"], ["gecmis", "Geçmiş"]], answer: "gelecek", explanation: "Muzarinin önündeki سَـ geleceği gösterir: “yazacağız”." },
+      { id: "d10-ma", sourceLesson: "ders-10", topic: "Olumsuz geçmiş", prompt: "مَا ذَهَبْتُ ne demektir?", options: [["gitmedim", "Gitmedim"], ["gitmiyorum", "Gitmiyorum"], ["gitmeyecegim", "Gitmeyeceğim"]], answer: "gitmedim", explanation: "مَا + mâzi geçmişi olumsuz yapar; fiil değişmez." },
+      { id: "d10-ems", sourceLesson: "ders-10", topic: "Zaman kelimeleri", prompt: "أَمْسِ ne demektir?", options: [["dun", "Dün"], ["yarin", "Yarın"], ["bugun", "Bugün"]], answer: "dun", explanation: "أَمْسِ “dün” demektir ve geçmiş zamanla kullanılır." },
+      { id: "d10-len", sourceLesson: "ders-10", topic: "Üç olumsuzluk", prompt: "سَيَكْتُبُ fiilinin olumsuzu hangisidir?", options: [["len", "لَنْ يَكْتُبَ"], ["la-se", "لَا سَيَكْتُبُ"], ["ma-se", "مَا سَيَكْتُبُ"]], answer: "len", explanation: "Geleceğin olumsuzu لَنْ + muzari; fiilin sonu üstün olur." },
+      { id: "d10-abedtum", sourceLesson: "ders-10", topic: "Kur’an bağlantısı", prompt: "عَبَدْتُمْ hangi zaman ve şahıstır?", options: [["mazi-siz", "Mâzi · siz"], ["muzari-siz", "Muzari · siz"], ["mazi-onlar", "Mâzi · onlar"]], answer: "mazi-siz", explanation: "Sondaki تُمْ mâzide “siz” ekidir: “kulluk ettiniz”." }
+    ],
+    "ders-12": [
+      { id: "d11-uktub", sourceLesson: "ders-11", topic: "Emir", prompt: "اُكْتُبْ ne demektir?", options: [["yaz", "Yaz!"], ["yaziyorsun", "Yazıyorsun"], ["yazdi", "Yazdı"]], answer: "yaz", explanation: "تَكْتُبُ → اُكْتُبْ: muzari “sen” biçiminden yapılan emir." },
+      { id: "d11-izheb", sourceLesson: "ders-11", topic: "Emir", prompt: "يَذْهَبُ fiilinin emri hangisidir?", options: [["izheb", "اِذْهَبْ"], ["uzhub", "اُذْهُبْ"], ["yezheb", "يَذْهَبْ"]], answer: "izheb", explanation: "Orta harf üstünlü olduğu için başa esreli hemze gelir: اِذْهَبْ." },
+      { id: "d11-ijlisi", sourceLesson: "ders-11", topic: "Emir çekimi", prompt: "اِجْلِسِي kime söylenir?", options: [["kadin", "Bir kadına"], ["erkek", "Bir erkeğe"], ["topluluk", "Topluluğa"]], answer: "kadin", explanation: "Sondaki ـِي kadına yapılan emrin işaretidir: تَجْلِسِينَ → اِجْلِسِي." },
+      { id: "d11-vasl", sourceLesson: "ders-11", topic: "Hemze-i vasl", prompt: "وَاكْتُبْ nasıl okunur?", options: [["vektub", "vektub"], ["veuktub", "ve-uktub"], ["veiktub", "ve-iktub"]], answer: "vektub", explanation: "Önünde وَ olduğu için hemze-i vasl okunmaz." },
+      { id: "d11-ikra", sourceLesson: "ders-11", topic: "Kur’an bağlantısı", prompt: "Alak 1’deki اقْرَأْ ne demektir?", options: [["oku", "Oku!"], ["okudu", "Okudu"], ["okuyor", "Okuyor"]], answer: "oku", explanation: "يَقْرَأُ fiilinin emri: “oku!”." }
+    ],
+    "ders-13": [
+      { id: "d12-nehy", sourceLesson: "ders-12", topic: "Nehiy", prompt: "لَا تَكْتُبْ ne demektir?", options: [["yazma", "Yazma!"], ["yazmiyorsun", "Yazmıyorsun"], ["yazmadin", "Yazmadın"]], answer: "yazma", explanation: "لَا + muzari, sonu sükûn: yasak bildirir." },
+      { id: "d12-lem", sourceLesson: "ders-12", topic: "لَمْ", prompt: "لَمْ يَذْهَبُوا ne demektir?", options: [["gitmediler", "Gitmediler"], ["gitmiyorlar", "Gitmiyorlar"], ["gitmeyin", "Gitmeyin!"]], answer: "gitmediler", explanation: "لَمْ muzariyi geçmişe çevirip olumsuz yapar." },
+      { id: "d12-fark", sourceLesson: "ders-12", topic: "Nehiy", prompt: "لَا تَكْتُبُ ile لَا تَكْتُبْ arasındaki fark nedir?", options: [["bilgi-yasak", "Biri bilgi, biri yasak; son harekeye bakılır"], ["zaman", "Biri geçmiş, biri gelecek"], ["yok", "Fark yoktur"]], answer: "bilgi-yasak", explanation: "Son harf ötreyse “yazmıyorsun”, sükûnsa “yazma!”." },
+      { id: "d12-tahzen", sourceLesson: "ders-12", topic: "Kur’an bağlantısı", prompt: "لَا تَحْزَنْ ne demektir?", options: [["uzulme", "Üzülme!"], ["uzulmedi", "Üzülmedi"], ["uzulmeyecek", "Üzülmeyecek"]], answer: "uzulme", explanation: "Tevbe 40: nehiy, “üzülme”." },
+      { id: "d12-yelid", sourceLesson: "ders-12", topic: "Kur’an bağlantısı", prompt: "لَمْ يَلِدْ ne demektir?", options: [["dogurmadi", "Doğurmadı"], ["dogurmaz", "Doğurmaz"], ["dogurmayacak", "Doğurmayacak"]], answer: "dogurmadi", explanation: "İhlâs 3: لَمْ + يَلِدْ, geçmişin olumsuzu." }
+    ],
+    "ders-14": [
+      { id: "d13-men", sourceLesson: "ders-13", topic: "Soru kelimeleri", prompt: "مَنْ ne demektir?", options: [["kim", "Kim?"], ["ne", "Ne?"], ["nerede", "Nerede?"]], answer: "kim", explanation: "مَنْ kişiyi sorar: مَنْ هَذَا؟ “Bu kim?”" },
+      { id: "d13-eyne", sourceLesson: "ders-13", topic: "Soru kelimeleri", prompt: "“Nerede?” hangisidir?", options: [["eyne", "أَيْنَ"], ["meta", "مَتَى"], ["keyfe", "كَيْفَ"]], answer: "eyne", explanation: "أَيْنَ yer sorar." },
+      { id: "d13-maza", sourceLesson: "ders-13", topic: "مَا ve مَاذَا", prompt: "Fiilden önce gelen “ne?” hangisidir?", options: [["maza", "مَاذَا"], ["men", "مَنْ"], ["kem", "كَمْ"]], answer: "maza", explanation: "مَاذَا genellikle fiilden önce gelir: مَاذَا تَقْرَأُ؟" },
+      { id: "d13-kem", sourceLesson: "ders-13", topic: "كَمْ", prompt: "كَمْ’den sonra isim nasıl gelir?", options: [["tekil", "Tekil ve üstün tenvinli"], ["cogul", "Çoğul ve ötreli"], ["ikil", "İkil"]], answer: "tekil", explanation: "كَمْ كِتَابًا؟ “Kaç kitap?”" },
+      { id: "d13-elem", sourceLesson: "ders-13", topic: "Kur’an bağlantısı", prompt: "أَلَمْ تَرَ ne demektir?", options: [["gormedin-mi", "Görmedin mi?"], ["gorecek-misin", "Görecek misin?"], ["gor", "Gör!"]], answer: "gormedin-mi", explanation: "أَ + لَمْ olumsuz soru kurar (Fîl 1)." }
+    ],
+    "ders-15": [
+      { id: "d14-kitab", sourceLesson: "ders-14", topic: "İsim tamlaması", prompt: "كِتَابُ الطَّالِبِ ne demektir?", options: [["ogrencinin", "Öğrencinin kitabı"], ["yeni", "Yeni kitap"], ["cumle", "Kitap öğrencidir"]], answer: "ogrencinin", explanation: "Birinci isim muzâf, ikinci isim esreli muzâfun ileyh: “öğrencinin kitabı”." },
+      { id: "d14-al", sourceLesson: "ders-14", topic: "İsim tamlaması", prompt: "Tamlamanın birinci ismi ال alır mı?", options: [["hayir", "Hayır"], ["evet", "Evet"], ["cogul", "Yalnız çoğulda"]], answer: "hayir", explanation: "Muzâf ال ve tenvin almaz; belirliliği ikinci isimden gelir." },
+      { id: "d14-esre", sourceLesson: "ders-14", topic: "İsim tamlaması", prompt: "Tamlamanın ikinci isminin sonu nasıl okunur?", options: [["esre", "Esre"], ["otre", "Ötre"], ["ustun", "Üstün"]], answer: "esre", explanation: "Muzâfun ileyh her zaman mecrurdur, yani esre okunur." },
+      { id: "d14-resul", sourceLesson: "ders-14", topic: "İsim tamlaması", prompt: "“Allah’ın elçisi” hangisidir?", options: [["dogru", "رَسُولُ اللَّهِ"], ["al", "الرَّسُولُ اللَّهُ"], ["tenvin", "رَسُولٌ اللَّهِ"]], answer: "dogru", explanation: "رَسُولُ ال ve tenvin almaz; اللَّهِ esredir." },
+      { id: "d14-malik", sourceLesson: "ders-14", topic: "Kur’an bağlantısı", prompt: "مَالِكِ يَوْمِ الدِّينِ ne demektir?", options: [["dogru", "Din (hesap) gününün sahibi"], ["cumle", "Sahip, gün dindir"], ["ters", "Dinin sahibinin günü"]], answer: "dogru", explanation: "Üç isimli zincir; sondan başa çevrilir." }
+    ],
+    "ders-16": [
+      { id: "d15-kitabi", sourceLesson: "ders-15", topic: "Bitişik zamirler", prompt: "كِتَابِي ne demektir?", options: [["kitabim", "Kitabım"], ["kitabin", "Kitabın"], ["onun", "Onun kitabı"]], answer: "kitabim", explanation: "ـِي “benim” anlamındaki bitişik zamirdir." },
+      { id: "d15-ha", sourceLesson: "ders-15", topic: "Bitişik zamirler", prompt: "اِسْمُهَا ne demektir?", options: [["kadin", "Onun (kadın) adı"], ["erkek", "Onun (erkek) adı"], ["adim", "Adım"]], answer: "kadin", explanation: "ـهَا “onun (kadın)” ekidir." },
+      { id: "d15-indi", sourceLesson: "ders-15", topic: "Sahiplik", prompt: "عِنْدِي كِتَابٌ ne demektir?", options: [["var", "Bir kitabım var"], ["yok", "Kitabım yanımda değil"], ["al", "Kitabı yanıma al"]], answer: "var", explanation: "عِنْدَ + zamir sahiplik bildirir: “bende bir kitap var”." },
+      { id: "d15-ni", sourceLesson: "ders-15", topic: "Fiile gelen zamir", prompt: "Fiile gelen “beni” eki hangisidir?", options: [["ni", "ـنِي"], ["i", "ـِي"], ["na", "ـنَا"]], answer: "ni", explanation: "يَعْرِفُنِي “beni tanıyor”: fiilde ـنِي kullanılır." },
+      { id: "d15-dinukum", sourceLesson: "ders-15", topic: "Kur’an bağlantısı", prompt: "دِينُكُمْ ne demektir?", options: [["dininiz", "Dininiz"], ["dinimiz", "Dinimiz"], ["dinleri", "Onların dini"]], answer: "dininiz", explanation: "دِين + ـكُمْ “sizin” (Kâfirûn 6)." }
+    ],
+    "ders-17": [
+      { id: "d16-fi", sourceLesson: "ders-16", topic: "Harf-i cerler", prompt: "فِي ne demektir?", options: [["de", "-de, içinde"], ["den", "-den"], ["e", "-e"]], answer: "de", explanation: "فِي yer bildirir: فِي الْبَيْتِ “evde”." },
+      { id: "d16-mecrur", sourceLesson: "ders-16", topic: "Harf-i cerler", prompt: "Harf-i cerden sonra gelen isim nasıl okunur?", options: [["esre", "Esre"], ["otre", "Ötre"], ["ustun", "Üstün"]], answer: "esre", explanation: "Harf-i cerden sonraki isim mecrurdur." },
+      { id: "d16-aleyhi", sourceLesson: "ders-16", topic: "Edat + zamir", prompt: "عَلَيْهِ ne demektir?", options: [["uzerine", "Onun üzerine; ona"], ["ondan", "Ondan"], ["onunla", "Onunla"]], answer: "uzerine", explanation: "عَلَى + ـهُ; zamirle عَلَيْـ olur." },
+      { id: "d16-selam", sourceLesson: "ders-16", topic: "Selamlaşma", prompt: "السَّلَامُ عَلَيْكُمْ selamının cevabı hangisidir?", options: [["cevap", "وَعَلَيْكُمُ السَّلَامُ"], ["ila", "السَّلَامُ إِلَيْكُمْ"], ["min", "عَلَيْكُمْ مِنَ السَّلَامِ"]], answer: "cevap", explanation: "“Esenlik sizin de üzerinize olsun.”" },
+      { id: "d16-niyet", sourceLesson: "ders-16", topic: "Hadis bağlantısı", prompt: "إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ ne demektir?", options: [["dogru", "Ameller ancak niyetlere göredir"], ["once", "Ameller niyetten önce gelir"], ["esit", "Niyetler ameldir"]], answer: "dogru", explanation: "بِالنِّيَّاتِ = بِـ + النِّيَّاتِ “niyetlere göre”." }
+    ],
+    "ders-18": [
+      { id: "d17-ikil", sourceLesson: "ders-17", topic: "İkil isim", prompt: "كِتَابَانِ ne demektir?", options: [["iki", "İki kitap"], ["cok", "Kitaplar"], ["bir", "Bir kitap"]], answer: "iki", explanation: "ـَانِ ikil ekidir." },
+      { id: "d17-salim", sourceLesson: "ders-17", topic: "Çoğul türleri", prompt: "مُعَلِّمُونَ hangi çoğul türüdür?", options: [["salim", "Sâlim eril çoğul"], ["kirik", "Kırık çoğul"], ["ikil", "İkil"]], answer: "salim", explanation: "Tekil مُعَلِّم bozulmadan ـُونَ almıştır." },
+      { id: "d17-kirik", sourceLesson: "ders-17", topic: "Kırık çoğul", prompt: "كِتَابٌ kelimesinin çoğulu hangisidir?", options: [["kutub", "كُتُبٌ"], ["kitabun", "كِتَابُونَ"], ["ketebu", "كَتَبُوا"]], answer: "kutub", explanation: "كِتَابٌ → كُتُبٌ: kırık çoğul." },
+      { id: "d17-uyum", sourceLesson: "ders-17", topic: "Çoğulda uyum", prompt: "“Kitaplar yeni.” hangisidir?", options: [["dogru", "الْكُتُبُ جَدِيدَةٌ"], ["cogul", "الْكُتُبُ جَدِيدُونَ"], ["eril", "الْكُتُبُ جَدِيدٌ"]], answer: "dogru", explanation: "İnsan olmayan çoğulun sıfatı dişil tekil olur." },
+      { id: "d17-afvac", sourceLesson: "ders-17", topic: "Kur’an bağlantısı", prompt: "أَفْوَاجًا ne demektir?", options: [["boluk", "Bölük bölük"], ["tek", "Tek tek"], ["iki", "İkişer"]], answer: "boluk", explanation: "فَوْجٌ “bölük” kelimesinin kırık çoğulu (Nasr 2)." }
+    ],
+    "ders-19": [
+      { id: "d18-zalike", sourceLesson: "ders-18", topic: "İşaret isimleri", prompt: "ذَلِكَ ne demektir?", options: [["su", "Şu, o · eril"], ["bu", "Bu · eril"], ["bunlar", "Bunlar"]], answer: "su", explanation: "ذَلِكَ uzak, eril tekil işarettir." },
+      { id: "d18-tilke", sourceLesson: "ders-18", topic: "İşaret isimleri", prompt: "“Şu okul” hangisidir?", options: [["tilke", "تِلْكَ الْمَدْرَسَةُ"], ["zalike", "ذَلِكَ الْمَدْرَسَةُ"], ["haza", "هَذَا الْمَدْرَسَةُ"]], answer: "tilke", explanation: "مَدْرَسَة dişil; uzak dişil işaret تِلْكَ." },
+      { id: "d18-cumle", sourceLesson: "ders-18", topic: "Cümle ve tamlama", prompt: "هَذَا كِتَابٌ ne demektir?", options: [["cumle", "Bu bir kitaptır"], ["tamlama", "Bu kitap"], ["uzak", "Şu kitap"]], answer: "cumle", explanation: "İşaret + belirsiz isim tam bir cümledir." },
+      { id: "d18-haulai", sourceLesson: "ders-18", topic: "İşaret isimleri", prompt: "هَؤُلَاءِ hangi isimler için kullanılır?", options: [["insan", "İnsan çoğulu"], ["esya", "İnsan olmayan çoğul"], ["ikil", "İkil"]], answer: "insan", explanation: "İnsan olmayan çoğul için هَذِهِ kullanılır." },
+      { id: "d18-bakara", sourceLesson: "ders-18", topic: "Kur’an bağlantısı", prompt: "ذَلِكَ الْكِتَابُ لَا رَيْبَ فِيهِ ne demektir?", options: [["dogru", "O kitap; onda hiç şüphe yoktur"], ["emir", "Bu kitabı şüpheyle oku"], ["ters", "O kitap şüphelidir"]], answer: "dogru", explanation: "Bakara 2; ذَلِكَ yüceliği vurgular." }
+    ],
+    "ders-20": [
+      { id: "d19-lezi", sourceLesson: "ders-19", topic: "İlgi zamirleri", prompt: "الَّذِي ne demektir?", options: [["olan", "… olan (eril tekil)"], ["bu", "Bu"], ["kim", "Kim?"]], answer: "olan", explanation: "الَّذِي eril tekil ilgi zamiridir." },
+      { id: "d19-lati", sourceLesson: "ders-19", topic: "İlgi zamirleri", prompt: "“Giden kadın” hangisidir?", options: [["lati", "الْمَرْأَةُ الَّتِي ذَهَبَتْ"], ["lezi", "الْمَرْأَةُ الَّذِي ذَهَبَ"], ["lezine", "الْمَرْأَةُ الَّذِينَ ذَهَبُوا"]], answer: "lati", explanation: "Dişil tekil isim için الَّتِي, fiil de dişil." },
+      { id: "d19-aid", sourceLesson: "ders-19", topic: "Dönüş zamiri", prompt: "الْكِتَابُ الَّذِي قَرَأْتُهُ ne demektir?", options: [["okudugum", "Okuduğum kitap"], ["cumle", "Kitabı okudum"], ["okuyan", "Kitabı okuyan"]], answer: "okudugum", explanation: "ـهُ kitaba dönen zamirdir." },
+      { id: "d19-ma", sourceLesson: "ders-19", topic: "مَنْ ve مَا", prompt: "اُكْتُبْ مَا تَسْمَعُ ne demektir?", options: [["duydugunu", "Duyduğunu yaz"], ["soru", "Ne duyuyorsun, yaz"], ["olumsuz", "Duymadın, yaz"]], answer: "duydugunu", explanation: "Burada مَا “… olan şey” anlamındadır." },
+      { id: "d19-fatiha", sourceLesson: "ders-19", topic: "Kur’an bağlantısı", prompt: "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ ne demektir?", options: [["dogru", "Kendilerine nimet verdiklerinin yoluna"], ["yol", "Nimet verdiğin yolda"], ["nimet", "Onların nimetine"]], answer: "dogru", explanation: "الَّذِينَ + sıla; عَلَيْهِمْ dönüş zamiri." }
     ]
   };
 
@@ -176,6 +256,56 @@
       quran_verb: { answer: "عَبَدْتُمْ", note: "Mâzi “siz”: sonda تُمْ. Mushafta عَبَدتُّمْ diye yazılır.", topic: "Kur’an bağlantısı" },
       speaking_story: { answer: "أَمْسِ ذَهَبْتُ إِلَى الْمَدْرَسَةِ. الْيَوْمَ أَكْتُبُ الدَّرْسَ. غَدًا سَأَقْرَأُ الْقُرْآنَ.", note: "Üç cümle, üç zaman: mâzi, muzari, سَـ + muzari.", topic: "Zamanlar karşılaştırması" },
       speaking_neg: { answer: "مَا شَرِبْتُ الْقَهْوَةَ أَمْسِ.", note: "Geçmişin olumsuzu: مَا + mâzi; fiil değişmez.", topic: "Olumsuz geçmiş" }
+    },
+    "ders-11": {
+      quran_verb: { answer: "اقْرَأْ", note: "Muzari يَقْرَأُ → emir اِقْرَأْ “oku!”. Mushafta baştaki elif vasl işaretiyle yazılır.", topic: "Kur’an bağlantısı" },
+      speaking_open: { answer: "اِفْتَحِ الْبَابَ.", note: "Sakin ح, ال’den önce esre alır: “iftahi’l-bâb”.", topic: "Emir" },
+      speaking_go: { answer: "اِذْهَبُوا إِلَى الْمَسْجِدِ.", note: "Topluluğa emir sonda ـُوا alır; elif okunmaz.", topic: "Emir çekimi" }
+    },
+    "ders-12": {
+      quran_verb: { answer: "لَا تَحْزَنْ", note: "لَا + تَحْزَنْ; sonu sakin olduğu için yasak bildirir: “üzülme”.", topic: "Kur’an bağlantısı" },
+      speaking_nehy: { answer: "لَا تَذْهَبْ إِلَى السُّوقِ.", note: "Nehiyde muzarinin تَـ’si kalır, son harf sakin olur.", topic: "Nehiy" },
+      speaking_lem: { answer: "لَمْ أَشْرَبِ الْقَهْوَةَ أَمْسِ.", note: "لَمْ + أَشْرَبْ; ال’den önce esre okunur. أَمْسِ başta da olabilir.", topic: "لَمْ ile olumsuz geçmiş" }
+    },
+    "ders-13": {
+      quran_word: { answer: "كَيْفَ", note: "“Nasıl?” sorusu; burada “nasıl/ne şekilde” anlamında cümle içinde kullanılmış.", topic: "Kur’an bağlantısı" },
+      speaking_where: { answer: "إِلَى أَيْنَ تَذْهَبُ؟", note: "إِلَى + أَيْنَ “nereye?”; tek başına أَيْنَ تَذْهَبُ؟ da günlük dilde anlaşılır.", topic: "Soru kelimeleri" },
+      speaking_when: { answer: "مَتَى سَتَذْهَبُ إِلَى الْمَدْرَسَةِ؟", note: "مَتَى + gelecek zaman (Ders 09).", topic: "Soru kelimeleri" }
+    },
+    "ders-14": {
+      quran_chain: { answer: "مَالِكِ يَوْمِ الدِّينِ", note: "Üç isim: mâlik (sahip) + yevm (gün) + dîn (hesap). Ortadaki يَوْمِ hem ال almaz hem esredir.", topic: "Kur’an bağlantısı" },
+      speaking_book: { answer: "هَذَا كِتَابُ الطَّالِبِ.", note: "كِتَابُ ال almaz; الطَّالِبِ esredir.", topic: "İsim tamlaması" },
+      speaking_door: { answer: "فَتَحْتُ بَابَ الْمَسْجِدِ.", note: "بَابَ nesne olduğu için üstün; الْمَسْجِدِ tamlama nedeniyle esre.", topic: "İsim tamlaması" }
+    },
+    "ders-15": {
+      quran_word: { answer: "دِينُكُمْ", note: "دِين + ـكُمْ “sizin”: dininiz.", topic: "Kur’an bağlantısı" },
+      speaking_have: { answer: "عِنْدِي كِتَابٌ جَدِيدٌ.", note: "Sahiplik عِنْدَ + zamir ile kurulur: “bende yeni bir kitap var”.", topic: "Bitişik zamirler" },
+      speaking_name: { answer: "اِسْمُهَا فَاطِمَةُ.", note: "اِسْم + ـهَا “onun (kadın)”. فَاطِمَةُ tek ötre alır, tenvin almaz.", topic: "Bitişik zamirler" }
+    },
+    "ders-16": {
+      quran_harf: { answer: "بِـ ، مِنْ", note: "بِرَبِّ kelimesindeki بِـ ve مِنْ شَرِّ’deki مِنْ. İkisinden sonraki isim de esredir.", topic: "Kur’an bağlantısı" },
+      speaking_where: { answer: "الْكِتَابُ عَلَى الْمَكْتَبِ.", note: "عَلَى’dan sonra الْمَكْتَبِ esre okunur.", topic: "Harf-i cerler" },
+      speaking_pen: { answer: "كَتَبْتُ الدَّرْسَ بِالْقَلَمِ.", note: "Araç bildiren بِـ kelimeye bitişik yazılır; الْقَلَمِ esredir.", topic: "Harf-i cerler" }
+    },
+    "ders-17": {
+      quran_plural: { answer: "أَفْوَاجًا", note: "فَوْجٌ “bölük” kelimesinin kırık çoğulu; üstün tenvin: “efvâcen”.", topic: "Kur’an bağlantısı" },
+      speaking_two: { answer: "فِي الْبَيْتِ طَالِبَانِ.", note: "İkil ötre durumunda ـَانِ ile biter; yer bildiren kısım başa geçebilir.", topic: "İkil isim" },
+      speaking_books: { answer: "الْكُتُبُ جَدِيدَةٌ.", note: "İnsan olmayan çoğulun sıfatı dişil tekil olur.", topic: "Çoğulda uyum" }
+    },
+    "ders-18": {
+      quran_word: { answer: "ذَلِكَ", note: "Uzak işaret; burada Kur’an’ın yüceliğini vurgular. Mushafta ذَٰلِكَ diye küçük elifle yazılır.", topic: "Kur’an bağlantısı" },
+      speaking_that: { answer: "ذَلِكَ الرَّجُلُ مُعَلِّمٌ.", note: "ذَلِكَ الرَّجُلُ “şu adam” öznedir; مُعَلِّمٌ belirsiz yüklemdir.", topic: "İşaret isimleri" },
+      speaking_these: { answer: "هَؤُلَاءِ طُلَّابٌ مُجْتَهِدُونَ.", note: "İnsan çoğulu için هَؤُلَاءِ; sıfat da çoğul.", topic: "İşaret isimleri" }
+    },
+    "ders-19": {
+      quran_word: { answer: "الَّذِينَ", note: "Eril çoğul ilgi zamiri; sıla cümlesi أَنْعَمْتَ عَلَيْهِمْ “kendilerine nimet verdiğin”.", topic: "Kur’an bağlantısı" },
+      speaking_who: { answer: "الطَّالِبُ الَّذِي كَتَبَ الدَّرْسَ مُجْتَهِدٌ.", note: "الَّذِي + sıla; yüklem مُجْتَهِدٌ en sonda. يَكْتُبُ ile “yazan” da olur.", topic: "İlgi zamirleri" },
+      speaking_book: { answer: "الْكِتَابُ الَّذِي قَرَأْتُهُ جَدِيدٌ.", note: "قَرَأْتُهُ’daki ـهُ kitaba dönen zamirdir.", topic: "Dönüş zamiri" }
+    },
+    "ders-20": {
+      quran_word: { answer: "الْحَمْدُ", note: "Cümlenin başı (mübtedâ) olduğu için merfû: ötre.", topic: "Kur’an bağlantısı" },
+      speaking_irab: { answer: "قَرَأَ الْمُعَلِّمُ الْكِتَابَ فِي الْمَسْجِدِ.", note: "Fâil ötre, nesne üstün, harf-i cerden sonra esre.", topic: "İ‘râb" },
+      speaking_want: { answer: "أُرِيدُ أَنْ أَتَعَلَّمَ الْعَرَبِيَّةَ.", note: "أَنْ’den sonra muzari mansûb: أَتَعَلَّمَ. الْعَرَبِيَّةَ nesnedir.", topic: "Fiilde i‘râb" }
     }
   };
 
@@ -200,10 +330,30 @@
     "ders-09:alistirma-1": "Gelecek = سَـ (bitişik) veya سَوْفَ (ayrı) + muzari. Fiilin geri kalanı muzaridekiyle aynıdır.",
     "ders-09:alistirma-2": "لَنْ ile سَـ birlikte kullanılmaz; لَنْ’den sonra fiilin sonu üstün olur, ـُونَ / ـِينَ / ـَانِ’deki ن düşer.",
     "ders-10:alistirma-1": "Fiilin başına bak: سَـ gelecek, أ/ن/ت/ي muzari; şahıs eki sonda ise mâzi. أَمْسِ، الآنَ، غَدًا ipucu verir.",
-    "ders-10:alistirma-2": "Geçmiş: مَا + mâzi · şimdiki/geniş: لَا + muzari · gelecek: لَنْ + muzari (sonu üstün)."
+    "ders-10:alistirma-2": "Geçmiş: مَا + mâzi · şimdiki/geniş: لَا + muzari · gelecek: لَنْ + muzari (sonu üstün).",
+    "ders-11:alistirma-1": "Emir muzari “sen” biçiminden yapılır: baştaki تَـ düşer, sonu sükûn olur ya da ن düşer. Orta harf ötreliyse başa اُ, değilse اِ gelir.",
+    "ders-11:alistirma-2": "Hemze-i vasl yalnızca söze onunla başlanınca okunur: وَاكْتُبْ “vektub”. Sakin son harf ال’den önce esre alır: اِفْتَحِ الْبَابَ.",
+    "ders-12:alistirma-1": "لَا + muzari “sen” biçimi: son harf sükûnsa yasak (yapma!), ötreyse bilgi (yapmıyorsun). لَمْ her zaman geçmişi olumsuz yapar.",
+    "ders-12:alistirma-2": "Cezmde son harf sakin olur; ـِينَ / ـَانِ / ـُونَ eklerindeki ن düşer. Sakin harf ال’den önce esre okunur.",
+    "ders-13:alistirma-1": "Soru kelimesi cümlenin başına gelir: مَنْ kim, مَا / مَاذَا ne, أَيْنَ nerede, مَتَى ne zaman, كَيْفَ nasıl, لِمَاذَا neden, كَمْ kaç.",
+    "ders-13:alistirma-2": "Cevap sorunun türüne uymalı: مَنْ’e kişi, أَيْنَ’e yer, مَتَى’ye zaman. أَلَمْ olumsuz sorudur: “…-medin mi?”",
+    "ders-14:alistirma-1": "İzafette birinci isim ال ve tenvin almaz; ikinci ismin sonu esredir. Türkçeye sondan başa çevir: كِتَابُ الطَّالِبِ “öğrencinin kitabı”.",
+    "ders-14:alistirma-2": "Birinci ismin son harekesi cümledeki görevine göre değişir; ikinci isim hep esre kalır. Zincirde ortadaki isim hem ال almaz hem esre okunur.",
+    "ders-15:alistirma-1": "Sondaki eke bak: ـِي ben, ـكَ / ـكِ sen, ـهُ / ـهَا o, ـنَا biz, ـكُمْ siz, ـهُمْ onlar. Zamirli isim ال almaz.",
+    "ders-15:alistirma-2": "Esre veya ي’den sonra ـهُ → ـهِ, ـهُمْ → ـهِمْ okunur. Fiile gelen “beni” eki ـنِي’dir. عِنْدِي “bende” sahiplik bildirir.",
+    "ders-16:alistirma-1": "Harf-i cerden sonraki isim mecrurdur: esre ya da esreli tenvin alır. بِـ، لِـ، كَـ kelimeye bitişik yazılır.",
+    "ders-16:alistirma-2": "عَلَى ve إِلَى zamirle عَلَيْـ / إِلَيْـ olur. Fiillerin sevdiği edatlar vardır: ذَهَبَ إِلَى، خَرَجَ مِنْ، جَلَسَ عَلَى.",
+    "ders-17:alistirma-1": "İkil ـَانِ / ـَيْنِ, sâlim eril çoğul ـُونَ / ـِينَ, sâlim dişil çoğul ـَاتٌ ile biter. Ek yoksa ve kelimenin içi değişmişse kırık çoğuldur.",
+    "ders-17:alistirma-2": "Öznede ـَانِ / ـُونَ; nesnede ve harf-i cerden sonra ـَيْنِ / ـِينَ kullanılır. İnsan olmayan çoğul dişil tekil gibi davranır: هَذِهِ كُتُبٌ جَدِيدَةٌ.",
+    "ders-18:alistirma-1": "Yakın: هَذَا / هَذِهِ / هَذَانِ / هَؤُلَاءِ; uzak: ذَلِكَ / تِلْكَ / أُولَئِكَ. Cinsiyet ve sayı, gösterilen isme uyar.",
+    "ders-18:alistirma-2": "İşaret + belirsiz isim bir cümledir (هَذَا كِتَابٌ “bu bir kitaptır”); işaret + ال’li isim tamlamadır (هَذَا الْكِتَابُ “bu kitap”). İnsan olmayan çoğul için هَذِهِ / تِلْكَ kullanılır.",
+    "ders-19:alistirma-1": "الَّذِي eril tekil, الَّتِي dişil tekil ve insan olmayan çoğul, الَّذِينَ eril çoğul, اللَّاتِي dişil çoğul içindir. Türkçeye -en / -an veya -dığı ile çevir.",
+    "ders-19:alistirma-2": "Nesneyi anlatan sıla cümlesi isme dönen bir zamir taşır: الْكِتَابُ الَّذِي قَرَأْتُهُ. Belirsiz isimden sonra الَّذِي gelmez: كِتَابٌ قَرَأْتُهُ.",
+    "ders-20:alistirma-1": "Merfû: ötre (özne, cümlenin başı ve yüklemi). Mansûb: üstün (nesne, إِنَّ’den sonra). Mecrûr: esre (harf-i cerden sonra, tamlamanın ikinci ismi).",
+    "ders-20:alistirma-2": "Önce fiili ve harfleri ayır; sonra her isme görevini sor. Fiilde لَنْ / أَنْ mansûb, لَمْ / nehiy لَا meczûm yapar."
   };
 
-  const BREAKDOWN_LESSONS = new Set(["ders-01", "ders-02", "ders-03", "ders-04", "ders-05", "ders-06", "ders-07", "ders-08", "ders-09", "ders-10"]);
+  const BREAKDOWN_LESSONS = new Set(["ders-01", "ders-02", "ders-03", "ders-04", "ders-05", "ders-06", "ders-07", "ders-08", "ders-09", "ders-10", "ders-11", "ders-12", "ders-13", "ders-14", "ders-15", "ders-16", "ders-17", "ders-18", "ders-19", "ders-20"]);
 
   const WORD_ROLES = {
     isim: "İsim",
@@ -384,7 +534,146 @@
     "أَمْسِ ذَهَبْتُ إِلَى السُّوقِ.": [{"w": "أَمْسِ", "t": "dün", "r": "isim", "n": "Zaman bildiren isim; geçmiş zamanla kullanılır. Sonu her zaman esredir: “emsi”."}, {"w": "ذَهَبْتُ", "t": "gittim", "r": "fiil", "n": "Mâzi; sondaki تُ → “ben”."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "السُّوقِ", "t": "çarşı", "r": "isim", "n": "Şemsî harfle başlar: “es-sûki”. Edattan sonra geldiği için sonu esre."}],
     "سَأَذْهَبُ إِلَى الْمَدْرَسَةِ غَدًا.": [{"w": "سَأَذْهَبُ", "t": "gideceğim", "r": "fiil", "n": "سَـ + أَذْهَبُ: gelecek; أَ → “ben”."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "الْمَدْرَسَةِ", "t": "okul", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}, {"w": "غَدًا", "t": "yarın", "r": "isim", "n": "Zaman bildiren isim; gelecek zamanla kullanılır."}],
     "سَوْفَ نَقْرَأُ الْكِتَابَ.": [{"w": "سَوْفَ", "t": "-ecek / -acak", "r": "harf", "n": "Gelecek işareti; fiilden ayrı yazılır."}, {"w": "نَقْرَأُ", "t": "okuruz", "r": "fiil", "n": "Muzari, نَـ → “biz”. سَوْفَ ile “okuyacağız”."}, {"w": "الْكِتَابَ", "t": "kitabı", "r": "isim", "n": "Nesne olduğu için sonu üstün."}],
-    "لَنْ يَذْهَبُوا إِلَى السُّوقِ.": [{"w": "لَنْ", "t": "-meyecek", "r": "harf", "n": "Geleceği olumsuz yapar; fiilin sonunu üstün yapar, sondaki ن çoğu biçimde düşer."}, {"w": "يَذْهَبُوا", "t": "gitmek (onlar)", "r": "fiil", "n": "يَذْهَبُونَ’nun ن’si لَنْ yüzünden düşmüş."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "السُّوقِ", "t": "çarşı", "r": "isim", "n": "Şemsî harfle başlar: “es-sûki”. Edattan sonra geldiği için sonu esre."}]
+    "لَنْ يَذْهَبُوا إِلَى السُّوقِ.": [{"w": "لَنْ", "t": "-meyecek", "r": "harf", "n": "Geleceği olumsuz yapar; fiilin sonunu üstün yapar, sondaki ن çoğu biçimde düşer."}, {"w": "يَذْهَبُوا", "t": "gitmek (onlar)", "r": "fiil", "n": "يَذْهَبُونَ’nun ن’si لَنْ yüzünden düşmüş."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "السُّوقِ", "t": "çarşı", "r": "isim", "n": "Şemsî harfle başlar: “es-sûki”. Edattan sonra geldiği için sonu esre."}],
+    "اُكْتُبْ دَرْسًا.": [{"w": "اُكْتُبْ", "t": "yaz!", "r": "fiil", "n": "Emir · erkeğe: تَكْتُبُ → اُكْتُبْ. Orta harf ötreli olduğu için başta اُ."}, {"w": "دَرْسًا", "t": "bir ders", "r": "isim", "n": "Belirsiz nesne: üstün tenvin, “dersen”."}],
+    "اُكْتُبِ الدَّرْسَ.": [{"w": "اُكْتُبِ", "t": "yaz!", "r": "fiil", "n": "Emir · erkeğe. Sonu normalde sakin; ال’den önce esre okunur."}, {"w": "الدَّرْسَ", "t": "dersi", "r": "isim", "n": "Şemsî harfle başlar: “ed-darse”. Nesne olduğu için sonu üstün."}],
+    "اِجْلِسْ، مِنْ فَضْلِكَ.": [{"w": "اِجْلِسْ", "t": "otur!", "r": "fiil", "n": "Emir · erkeğe: يَجْلِسُ → اِجْلِسْ. Orta harf esreli olduğu için başta اِ."}, {"w": "مِنْ", "t": "-den", "r": "harf", "n": "مِنْ فَضْلِكَ kalıbının ilk parçası."}, {"w": "فَضْلِكَ", "t": "lütfun(dan)", "r": "isim", "n": "فَضْل “lütuf” + ـكَ “senin”. Birlikte “lütfen (erkeğe)”."}],
+    "اِجْلِسِي هُنَا.": [{"w": "اِجْلِسِي", "t": "otur!", "r": "fiil", "n": "Emir · kadına: تَجْلِسِينَ → اِجْلِسِي; sondaki ن düşer."}, {"w": "هُنَا", "t": "burada", "r": "isim", "n": "Yer bildiren kelime: “burada, buraya”."}],
+    "اُدْخُلُوا الْمَسْجِدَ.": [{"w": "اُدْخُلُوا", "t": "girin!", "r": "fiil", "n": "Emir · topluluğa: تَدْخُلُونَ → اُدْخُلُوا. Sondaki elif okunmaz."}, {"w": "الْمَسْجِدَ", "t": "mescide", "r": "isim", "n": "دَخَلَ fiili nesneyi doğrudan alır; sonu üstün."}],
+    "اِفْتَحِ الْبَابَ.": [{"w": "اِفْتَحِ", "t": "aç!", "r": "fiil", "n": "Emir · erkeğe: يَفْتَحُ → اِفْتَحْ. ال’den önce son harf esre okunur."}, {"w": "الْبَابَ", "t": "kapıyı", "r": "isim", "n": "بَاب “kapı”. Nesne olduğu için sonu üstün."}],
+    "اِقْرَأْ كِتَابًا.": [{"w": "اِقْرَأْ", "t": "oku!", "r": "fiil", "n": "Emir · erkeğe: يَقْرَأُ → اِقْرَأْ. Orta harf üstünlü, başta اِ."}, {"w": "كِتَابًا", "t": "bir kitap", "r": "isim", "n": "Belirsiz nesne: üstün tenvin, “kitâben”."}],
+    "اِسْمَعْ وَاكْتُبْ.": [{"w": "اِسْمَعْ", "t": "dinle!", "r": "fiil", "n": "Emir · erkeğe: يَسْمَعُ → اِسْمَعْ."}, {"w": "وَاكْتُبْ", "t": "ve yaz!", "r": "fiil", "n": "وَ + اُكْتُبْ. Önünde وَ olduğu için hemze okunmaz: “vektub”."}],
+    "اِشْرَبِي الْمَاءَ.": [{"w": "اِشْرَبِي", "t": "iç!", "r": "fiil", "n": "Emir · kadına: تَشْرَبِينَ → اِشْرَبِي."}, {"w": "الْمَاءَ", "t": "suyu", "r": "isim", "n": "Nesne olduğu için sonu üstün."}],
+    "اِذْهَبَا إِلَى السُّوقِ.": [{"w": "اِذْهَبَا", "t": "gidin! (ikiniz)", "r": "fiil", "n": "Emir · siz ikiniz: تَذْهَبَانِ → اِذْهَبَا; sondaki ـنِ düşer."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "السُّوقِ", "t": "çarşı", "r": "isim", "n": "Şemsî harfle başlar: “es-sûki”. Edattan sonra esre."}],
+    "اِذْهَبُوا إِلَى الْمَسْجِدِ.": [{"w": "اِذْهَبُوا", "t": "gidin!", "r": "fiil", "n": "Emir · topluluğa: تَذْهَبُونَ → اِذْهَبُوا. Elif okunmaz."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "اُخْرُجْنَ مِنَ الْفَصْلِ.": [{"w": "اُخْرُجْنَ", "t": "çıkın! (kadınlar)", "r": "fiil", "n": "Emir · kadınlar: تَخْرُجْنَ → اُخْرُجْنَ; bu biçim değişmez."}, {"w": "مِنَ", "t": "-den", "r": "harf", "n": "مِنْ, ال’den önce مِنَ okunur."}, {"w": "الْفَصْلِ", "t": "sınıf", "r": "isim", "n": "فَصْل “sınıf”. Edattan sonra esre."}],
+    "اُدْخُلْ وَاجْلِسْ.": [{"w": "اُدْخُلْ", "t": "gir!", "r": "fiil", "n": "Emir · erkeğe: يَدْخُلُ → اُدْخُلْ."}, {"w": "وَاجْلِسْ", "t": "ve otur!", "r": "fiil", "n": "وَ + اِجْلِسْ; hemze okunmaz: “vecles”."}],
+    "اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ.": [{"w": "اقْرَأْ", "t": "oku!", "r": "fiil", "n": "Emir · erkeğe. Alak 1: inen ilk âyetin ilk kelimesi."}, {"w": "بِاسْمِ", "t": "adıyla", "r": "isim", "n": "بِـ “ile” + اِسْم “ad”. Hemze-i vasl okunmaz: “bismi”."}, {"w": "رَبِّكَ", "t": "Rabbinin", "r": "isim", "n": "رَبّ + ـكَ “senin”."}, {"w": "الَّذِي", "t": "ki o", "r": "zamir", "n": "İlgi zamiri: “… olan” (Ders 19)."}, {"w": "خَلَقَ", "t": "yarattı", "r": "fiil", "n": "Mâzi, 3. tekil eril; الَّذِي ile “yaratan”."}],
+    "لَا تَكْتُبْ هُنَا.": [{"w": "لَا", "t": "-ma / -me", "r": "harf", "n": "Muzari “sen/siz” fiilinin önünde yasak bildirir: “-ma, -me”. Fiilin sonu cezmlenir."}, {"w": "تَكْتُبْ", "t": "yaz(ma)", "r": "fiil", "n": "تَكْتُبُ’nun sonu sükûn olmuş: nehiy."}, {"w": "هُنَا", "t": "buraya", "r": "isim", "n": "Yer bildiren kelime: “burada, buraya”."}],
+    "لَا تَذْهَبِي إِلَى السُّوقِ.": [{"w": "لَا", "t": "-ma / -me", "r": "harf", "n": "Muzari “sen/siz” fiilinin önünde yasak bildirir: “-ma, -me”. Fiilin sonu cezmlenir."}, {"w": "تَذْهَبِي", "t": "git(me) · kadın", "r": "fiil", "n": "تَذْهَبِينَ’nin ـنَ’si düşmüş."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat; sonraki ismin sonu esre olur."}, {"w": "السُّوقِ", "t": "çarşı", "r": "isim", "n": "Şemsî harfle başlar: “es-sûki”. Edattan sonra esre."}],
+    "لَا تَجْلِسُوا هُنَا.": [{"w": "لَا", "t": "-ma / -me", "r": "harf", "n": "Muzari “sen/siz” fiilinin önünde yasak bildirir: “-ma, -me”. Fiilin sonu cezmlenir."}, {"w": "تَجْلِسُوا", "t": "otur(mayın)", "r": "fiil", "n": "تَجْلِسُونَ’un ن’si düşmüş; okunmayan elif yazılmış."}, {"w": "هُنَا", "t": "burada", "r": "isim", "n": "Yer bildiren kelime."}],
+    "لَا تَشْرَبِ الْقَهْوَةَ.": [{"w": "لَا", "t": "-ma / -me", "r": "harf", "n": "Muzari “sen/siz” fiilinin önünde yasak bildirir: “-ma, -me”. Fiilin sonu cezmlenir."}, {"w": "تَشْرَبِ", "t": "iç(me)", "r": "fiil", "n": "Sonu sakin; ال’den önce esre okunur."}, {"w": "الْقَهْوَةَ", "t": "kahveyi", "r": "isim", "n": "قَهْوَةٌ “kahve” dişil bir isimdir. Nesne olduğu için sonu üstün."}],
+    "لَا تَحْزَنْ.": [{"w": "لَا", "t": "-ma / -me", "r": "harf", "n": "Muzari “sen/siz” fiilinin önünde yasak bildirir: “-ma, -me”. Fiilin sonu cezmlenir."}, {"w": "تَحْزَنْ", "t": "üzül(me)", "r": "fiil", "n": "تَحْزَنُ “üzülüyorsun” → cezm: sonu sükûn."}],
+    "لَا تَفْتَحَا الْبَابَ.": [{"w": "لَا", "t": "-ma / -me", "r": "harf", "n": "Muzari “sen/siz” fiilinin önünde yasak bildirir: “-ma, -me”. Fiilin sonu cezmlenir."}, {"w": "تَفْتَحَا", "t": "aç(mayın) · ikiniz", "r": "fiil", "n": "تَفْتَحَانِ’nin ـنِ’si düşmüş."}, {"w": "الْبَابَ", "t": "kapıyı", "r": "isim", "n": "Nesne olduğu için sonu üstün."}],
+    "لَمْ أَكْتُبِ الدَّرْسَ بَعْدُ.": [{"w": "لَمْ", "t": "-medi", "r": "harf", "n": "Muzarinin önünde geçmişi olumsuz yapar: “-medi”. Fiilin sonu cezmlenir."}, {"w": "أَكْتُبِ", "t": "yazmak · ben", "r": "fiil", "n": "أَكْتُبُ → cezm; ال’den önce esre okunur."}, {"w": "الدَّرْسَ", "t": "dersi", "r": "isim", "n": "Şemsî harfle başlar: “ed-darse”. Nesne olduğu için sonu üstün."}, {"w": "بَعْدُ", "t": "henüz", "r": "isim", "n": "Olumsuz cümlenin sonunda “henüz”."}],
+    "لَمْ يَذْهَبُوا إِلَى الْمَسْجِدِ.": [{"w": "لَمْ", "t": "-medi", "r": "harf", "n": "Muzarinin önünde geçmişi olumsuz yapar: “-medi”. Fiilin sonu cezmlenir."}, {"w": "يَذْهَبُوا", "t": "gitmek · onlar", "r": "fiil", "n": "يَذْهَبُونَ’un ن’si düşmüş."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Edattan sonra geldiği için sonu esre."}],
+    "لَمْ نَشْرَبِ الْمَاءَ.": [{"w": "لَمْ", "t": "-medi", "r": "harf", "n": "Muzarinin önünde geçmişi olumsuz yapar: “-medi”. Fiilin sonu cezmlenir."}, {"w": "نَشْرَبِ", "t": "içmek · biz", "r": "fiil", "n": "نَشْرَبُ → cezm; ال’den önce esre."}, {"w": "الْمَاءَ", "t": "suyu", "r": "isim", "n": "Nesne olduğu için sonu üstün."}],
+    "لَمْ تَفْتَحِي الْبَابَ.": [{"w": "لَمْ", "t": "-medi", "r": "harf", "n": "Muzarinin önünde geçmişi olumsuz yapar: “-medi”. Fiilin sonu cezmlenir."}, {"w": "تَفْتَحِي", "t": "açmak · sen (kadın)", "r": "fiil", "n": "تَفْتَحِينَ’nin ـنَ’si düşmüş."}, {"w": "الْبَابَ", "t": "kapıyı", "r": "isim", "n": "Nesne olduğu için sonu üstün."}],
+    "هُوَ لَمْ يَخْرُجْ مِنَ الْبَيْتِ.": [{"w": "هُوَ", "t": "o (erkek)", "r": "zamir", "n": "3. tekil eril zamir."}, {"w": "لَمْ", "t": "-medi", "r": "harf", "n": "Muzarinin önünde geçmişi olumsuz yapar: “-medi”. Fiilin sonu cezmlenir."}, {"w": "يَخْرُجْ", "t": "çıkmak · o", "r": "fiil", "n": "يَخْرُجُ → cezm: sonu sükûn."}, {"w": "مِنَ", "t": "-den", "r": "harf", "n": "مِنْ, ال’den önce مِنَ okunur."}, {"w": "الْبَيْتِ", "t": "ev", "r": "isim", "n": "Edattan sonra esre."}],
+    "لَا تَشْرَبِ الْقَهْوَةَ، اِشْرَبِ الْمَاءَ.": [{"w": "لَا", "t": "-ma / -me", "r": "harf", "n": "Muzari “sen/siz” fiilinin önünde yasak bildirir: “-ma, -me”. Fiilin sonu cezmlenir."}, {"w": "تَشْرَبِ", "t": "iç(me)", "r": "fiil", "n": "Nehiy; ال’den önce esre okunur."}, {"w": "الْقَهْوَةَ", "t": "kahveyi", "r": "isim", "n": "Nesne; sonu üstün."}, {"w": "اِشْرَبِ", "t": "iç!", "r": "fiil", "n": "Emir (Ders 11); ال’den önce esre okunur."}, {"w": "الْمَاءَ", "t": "suyu", "r": "isim", "n": "Nesne; sonu üstün."}],
+    "لَمْ يَلِدْ وَلَمْ يُولَدْ.": [{"w": "لَمْ", "t": "-medi", "r": "harf", "n": "Muzarinin önünde geçmişi olumsuz yapar: “-medi”. Fiilin sonu cezmlenir."}, {"w": "يَلِدْ", "t": "doğurmak · o", "r": "fiil", "n": "يَلِدُ “doğurur” → cezm. İhlâs 3."}, {"w": "وَلَمْ", "t": "ve -medi", "r": "harf", "n": "وَ “ve” + لَمْ."}, {"w": "يُولَدْ", "t": "doğurulmak · o", "r": "fiil", "n": "يُولَدُ “doğurulur” (edilgen) → cezm."}],
+    "لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا.": [{"w": "لَا", "t": "-ma / -me", "r": "harf", "n": "Muzari “sen/siz” fiilinin önünde yasak bildirir: “-ma, -me”. Fiilin sonu cezmlenir."}, {"w": "تَحْزَنْ", "t": "üzül(me)", "r": "fiil", "n": "Nehiy; Tevbe 40."}, {"w": "إِنَّ", "t": "şüphesiz", "r": "harf", "n": "Cümleyi pekiştiren edat; sonraki ismin sonu üstün olur."}, {"w": "اللَّهَ", "t": "Allah", "r": "isim", "n": "إِنَّ’den sonra geldiği için sonu üstün."}, {"w": "مَعَنَا", "t": "bizimle", "r": "isim", "n": "مَعَ “ile, beraber” + نَا “biz”."}],
+    "مَنْ هَذَا؟": [{"w": "مَنْ", "t": "kim?", "r": "soru", "n": "Kişiyi soran soru kelimesi."}, {"w": "هَذَا", "t": "bu (eril)", "r": "zamir", "n": "Eril işaret ismi."}],
+    "مَا هَذَا؟": [{"w": "مَا", "t": "ne?", "r": "soru", "n": "İsim ve zamirden önce “ne?”"}, {"w": "هَذَا", "t": "bu (eril)", "r": "zamir", "n": "Eril işaret ismi."}],
+    "مَاذَا تَقْرَأُ؟": [{"w": "مَاذَا", "t": "ne?", "r": "soru", "n": "Fiilden önce “ne?”"}, {"w": "تَقْرَأُ", "t": "okuyorsun", "r": "fiil", "n": "Muzari; baştaki تَـ burada “sen (erkek)”."}],
+    "أَيْنَ الْمَسْجِدُ؟": [{"w": "أَيْنَ", "t": "nerede?", "r": "soru", "n": "Yer soran soru kelimesi."}, {"w": "الْمَسْجِدُ", "t": "mescit", "r": "isim", "n": "Cümlenin öznesi; sonu ötre."}],
+    "إِلَى أَيْنَ تَذْهَبُ؟": [{"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön edatı; أَيْنَ ile “nereye?”"}, {"w": "أَيْنَ", "t": "nere?", "r": "soru", "n": "Yer soran soru kelimesi."}, {"w": "تَذْهَبُ", "t": "gidiyorsun", "r": "fiil", "n": "Muzari; تَـ “sen (erkek)”."}],
+    "مِنْ أَيْنَ أَنْتَ؟": [{"w": "مِنْ", "t": "-den", "r": "harf", "n": "Ayrılma/çıkış edatı; أَيْنَ ile “nereden?”"}, {"w": "أَيْنَ", "t": "nere?", "r": "soru", "n": "Yer soran soru kelimesi."}, {"w": "أَنْتَ", "t": "sen (erkek)", "r": "zamir", "n": "2. tekil eril zamir."}],
+    "مَتَى تَذْهَبُ إِلَى السُّوقِ؟": [{"w": "مَتَى", "t": "ne zaman?", "r": "soru", "n": "Zaman soran soru kelimesi."}, {"w": "تَذْهَبُ", "t": "gidiyorsun", "r": "fiil", "n": "Muzari; تَـ “sen”."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat."}, {"w": "السُّوقِ", "t": "çarşı", "r": "isim", "n": "Şemsî harfle başlar: “es-sûki”. Edattan sonra esre."}],
+    "كَيْفَ حَالُكَ؟": [{"w": "كَيْفَ", "t": "nasıl?", "r": "soru", "n": "Durum soran soru kelimesi."}, {"w": "حَالُكَ", "t": "hâlin", "r": "isim", "n": "حَال “durum” + ـكَ “senin”."}],
+    "بِخَيْرٍ، الْحَمْدُ لِلَّهِ.": [{"w": "بِخَيْرٍ", "t": "iyiyim", "r": "isim", "n": "بِـ “ile, içinde” + خَيْر “iyilik”: “iyilik içinde”."}, {"w": "الْحَمْدُ", "t": "hamd", "r": "isim", "n": "Övgü; cümlenin başı olduğu için sonu ötre."}, {"w": "لِلَّهِ", "t": "Allah’a", "r": "isim", "n": "لِـ “-e, için” + اللَّه."}],
+    "لِمَاذَا لَمْ تَذْهَبْ إِلَى الْمَدْرَسَةِ؟": [{"w": "لِمَاذَا", "t": "neden?", "r": "soru", "n": "Sebep soran soru kelimesi."}, {"w": "لَمْ", "t": "-medi", "r": "harf", "n": "Muzariyi geçmişe çevirip olumsuz yapar (Ders 12)."}, {"w": "تَذْهَبْ", "t": "gitmek · sen", "r": "fiil", "n": "تَذْهَبُ → cezm."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat."}, {"w": "الْمَدْرَسَةِ", "t": "okul", "r": "isim", "n": "Edattan sonra esre."}],
+    "كَمْ طَالِبًا فِي الْفَصْلِ؟": [{"w": "كَمْ", "t": "kaç?", "r": "soru", "n": "Sayı soran soru; sonraki isim tekil ve üstün tenvinli."}, {"w": "طَالِبًا", "t": "öğrenci", "r": "isim", "n": "كَمْ’den sonra üstün tenvin: “tâliben”."}, {"w": "فِي", "t": "-de", "r": "harf", "n": "Yer bildiren edat."}, {"w": "الْفَصْلِ", "t": "sınıf", "r": "isim", "n": "Edattan sonra esre."}],
+    "مَنْ كَتَبَ الدَّرْسَ؟": [{"w": "مَنْ", "t": "kim?", "r": "soru", "n": "Kişiyi soran soru kelimesi."}, {"w": "كَتَبَ", "t": "yazdı", "r": "fiil", "n": "Mâzi, 3. tekil eril."}, {"w": "الدَّرْسَ", "t": "dersi", "r": "isim", "n": "Nesne; sonu üstün."}],
+    "مَا اسْمُكَ؟": [{"w": "مَا", "t": "ne?", "r": "soru", "n": "İsimden önce “ne?”"}, {"w": "اسْمُكَ", "t": "adın", "r": "isim", "n": "اِسْم “ad” + ـكَ “senin”. Önde مَا olduğu için hemze okunmaz: “mesmuk”."}],
+    "هَلْ أَتَاكَ حَدِيثُ الْغَاشِيَةِ؟": [{"w": "هَلْ", "t": "…mı?", "r": "soru", "n": "Evet-hayır sorusu edatı."}, {"w": "أَتَاكَ", "t": "sana geldi", "r": "fiil", "n": "أَتَى “geldi” + ـكَ “sana”."}, {"w": "حَدِيثُ", "t": "haber, söz", "r": "isim", "n": "“Hadis” kelimesi buradan gelir."}, {"w": "الْغَاشِيَةِ", "t": "kuşatanın", "r": "isim", "n": "Kıyamet günü; tamlamanın ikinci öğesi, sonu esre."}],
+    "كِتَابُ الطَّالِبِ جَدِيدٌ.": [{"w": "كِتَابُ", "t": "kitabı", "r": "isim", "n": "Tamlamanın birinci ismi (muzâf): ال ve tenvin almaz. Özne olduğu için ötre."}, {"w": "الطَّالِبِ", "t": "öğrencinin", "r": "isim", "n": "Tamlamanın ikinci ismi: sonu esre."}, {"w": "جَدِيدٌ", "t": "yeni", "r": "isim", "n": "Cümlenin yüklemi; belirsiz ve ötre tenvinli."}],
+    "هَذَا بَيْتُ الْمُعَلِّمِ.": [{"w": "هَذَا", "t": "bu", "r": "zamir", "n": "Eril işaret ismi."}, {"w": "بَيْتُ", "t": "evi", "r": "isim", "n": "Tamlamanın birinci ismi (muzâf): ال ve tenvin almaz."}, {"w": "الْمُعَلِّمِ", "t": "öğretmenin", "r": "isim", "n": "Tamlamanın ikinci ismi: sonu esre."}],
+    "فَتَحَ الطَّالِبُ بَابَ الْفَصْلِ.": [{"w": "فَتَحَ", "t": "açtı", "r": "fiil", "n": "Mâzi, 3. tekil eril."}, {"w": "الطَّالِبُ", "t": "öğrenci", "r": "isim", "n": "İşi yapan; sonu ötre."}, {"w": "بَابَ", "t": "kapısını", "r": "isim", "n": "Tamlamanın birinci ismi (muzâf): ال ve tenvin almaz. Nesne olduğu için üstün."}, {"w": "الْفَصْلِ", "t": "sınıfın", "r": "isim", "n": "Tamlamanın ikinci ismi: esre."}],
+    "ذَهَبْتُ إِلَى بَيْتِ الْمُعَلِّمِ.": [{"w": "ذَهَبْتُ", "t": "gittim", "r": "fiil", "n": "Mâzi; تُ “ben”."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat."}, {"w": "بَيْتِ", "t": "evi", "r": "isim", "n": "Tamlamanın birinci ismi (muzâf): ال ve tenvin almaz. Edattan sonra esre."}, {"w": "الْمُعَلِّمِ", "t": "öğretmenin", "r": "isim", "n": "Tamlamanın ikinci ismi: esre."}],
+    "بَابُ بَيْتِ الْمُعَلِّمِ كَبِيرٌ.": [{"w": "بَابُ", "t": "kapısı", "r": "isim", "n": "Tamlamanın birinci ismi (muzâf): ال ve tenvin almaz. Özne, ötre."}, {"w": "بَيْتِ", "t": "evinin", "r": "isim", "n": "Zincirin ortası: hem esre hem ال almaz."}, {"w": "الْمُعَلِّمِ", "t": "öğretmenin", "r": "isim", "n": "Zincirin sonu: esre."}, {"w": "كَبِيرٌ", "t": "büyük", "r": "isim", "n": "Yüklem; ötre tenvin."}],
+    "قَرَأْتُ كِتَابَ اللَّهِ.": [{"w": "قَرَأْتُ", "t": "okudum", "r": "fiil", "n": "Mâzi; تُ “ben”."}, {"w": "كِتَابَ", "t": "kitabını", "r": "isim", "n": "Tamlamanın birinci ismi (muzâf): ال ve tenvin almaz. Nesne, üstün."}, {"w": "اللَّهِ", "t": "Allah’ın", "r": "isim", "n": "Tamlamanın ikinci ismi: esre."}],
+    "مُحَمَّدٌ رَسُولُ اللَّهِ.": [{"w": "مُحَمَّدٌ", "t": "Muhammed", "r": "isim", "n": "Özel isim; cümlenin başı, ötre."}, {"w": "رَسُولُ", "t": "elçisi", "r": "isim", "n": "Tamlamanın birinci ismi (muzâf): ال ve tenvin almaz. Yüklem, ötre."}, {"w": "اللَّهِ", "t": "Allah’ın", "r": "isim", "n": "Tamlamanın ikinci ismi: esre."}],
+    "لِمَنْ هَذَا الْكِتَابُ؟": [{"w": "لِمَنْ", "t": "kimin?", "r": "soru", "n": "لِـ “için, -e ait” + مَنْ “kim”."}, {"w": "هَذَا", "t": "bu", "r": "zamir", "n": "Eril işaret ismi."}, {"w": "الْكِتَابُ", "t": "kitap", "r": "isim", "n": "هَذَا ile “bu kitap”."}],
+    "هَذَا كِتَابُ الْمُعَلِّمِ.": [{"w": "هَذَا", "t": "bu", "r": "zamir", "n": "Eril işaret ismi."}, {"w": "كِتَابُ", "t": "kitabı", "r": "isim", "n": "Tamlamanın birinci ismi (muzâf): ال ve tenvin almaz."}, {"w": "الْمُعَلِّمِ", "t": "öğretmenin", "r": "isim", "n": "Tamlamanın ikinci ismi: esre."}],
+    "بَيْتُ الْمُعَلِّمِ قَرِيبٌ مِنَ الْمَسْجِدِ.": [{"w": "بَيْتُ", "t": "evi", "r": "isim", "n": "Tamlamanın birinci ismi (muzâf): ال ve tenvin almaz. Özne, ötre."}, {"w": "الْمُعَلِّمِ", "t": "öğretmenin", "r": "isim", "n": "Tamlamanın ikinci ismi: esre."}, {"w": "قَرِيبٌ", "t": "yakın", "r": "isim", "n": "Yüklem; مِنْ ile “-e yakın”."}, {"w": "مِنَ", "t": "-den", "r": "harf", "n": "مِنْ, ال’den önce مِنَ okunur."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Edattan sonra esre."}],
+    "فَتَحْتُ بَابَ الْمَسْجِدِ.": [{"w": "فَتَحْتُ", "t": "açtım", "r": "fiil", "n": "Mâzi; تُ “ben”."}, {"w": "بَابَ", "t": "kapısını", "r": "isim", "n": "Tamlamanın birinci ismi (muzâf): ال ve tenvin almaz. Nesne, üstün."}, {"w": "الْمَسْجِدِ", "t": "mescidin", "r": "isim", "n": "Tamlamanın ikinci ismi: esre."}],
+    "بِسْمِ اللَّهِ.": [{"w": "بِسْمِ", "t": "adıyla", "r": "isim", "n": "بِـ “ile” + اِسْم “ad”; muzâf, edattan sonra esre."}, {"w": "اللَّهِ", "t": "Allah’ın", "r": "isim", "n": "Tamlamanın ikinci ismi: esre."}],
+    "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ.": [{"w": "الْحَمْدُ", "t": "hamd", "r": "isim", "n": "Cümlenin başı; sonu ötre."}, {"w": "لِلَّهِ", "t": "Allah’a", "r": "isim", "n": "لِـ + اللَّه; edattan sonra esre."}, {"w": "رَبِّ", "t": "Rabbi", "r": "isim", "n": "Allah’ı niteler, o yüzden esre; aynı zamanda muzâf."}, {"w": "الْعَالَمِينَ", "t": "âlemlerin", "r": "isim", "n": "Muzâfun ileyh; çoğul olduğu için esre yerine ـِينَ."}],
+    "مَالِكِ يَوْمِ الدِّينِ.": [{"w": "مَالِكِ", "t": "sahibi", "r": "isim", "n": "Muzâf; önceki âyetteki Allah’ı nitelediği için esre."}, {"w": "يَوْمِ", "t": "gününün", "r": "isim", "n": "Zincirin ortası: esre ve ال’siz."}, {"w": "الدِّينِ", "t": "dinin, hesabın", "r": "isim", "n": "Zincirin sonu: esre. Şemsî harf: “ed-dîn”."}],
+    "هَذَا كِتَابِي.": [{"w": "هَذَا", "t": "bu", "r": "zamir", "n": "Eril işaret ismi."}, {"w": "كِتَابِي", "t": "kitabım", "r": "isim", "n": "كِتَاب + ـِي “benim”. Zamirli isim ال almaz."}],
+    "مَا اسْمُكِ؟": [{"w": "مَا", "t": "ne?", "r": "soru", "n": "İsimden önce “ne?”"}, {"w": "اسْمُكِ", "t": "adın (kadın)", "r": "isim", "n": "اِسْم + ـكِ “senin (kadın)”."}],
+    "اِسْمُهُ عَلِيٌّ.": [{"w": "اِسْمُهُ", "t": "onun adı", "r": "isim", "n": "اِسْم + ـهُ “onun (erkek)”."}, {"w": "عَلِيٌّ", "t": "Ali", "r": "isim", "n": "Özel isim; yüklem, ötre tenvin."}],
+    "عِنْدِي كِتَابٌ جَدِيدٌ.": [{"w": "عِنْدِي", "t": "bende", "r": "isim", "n": "عِنْدَ “yanında” (zarf) + ـِي: sahiplik bildirir."}, {"w": "كِتَابٌ", "t": "bir kitap", "r": "isim", "n": "Belirsiz; ötre tenvin."}, {"w": "جَدِيدٌ", "t": "yeni", "r": "isim", "n": "Sıfat; kitapla uyumlu."}],
+    "ذَهَبَ الطَّالِبُ إِلَى بَيْتِهِ.": [{"w": "ذَهَبَ", "t": "gitti", "r": "fiil", "n": "Mâzi, 3. tekil eril."}, {"w": "الطَّالِبُ", "t": "öğrenci", "r": "isim", "n": "İşi yapan; ötre."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat."}, {"w": "بَيْتِهِ", "t": "onun evi", "r": "isim", "n": "بَيْت + ـهُ; esreden sonra ـهِ okunur."}],
+    "أَيْنَ بَيْتُكُمْ؟": [{"w": "أَيْنَ", "t": "nerede?", "r": "soru", "n": "Yer soran soru kelimesi."}, {"w": "بَيْتُكُمْ", "t": "eviniz", "r": "isim", "n": "بَيْت + ـكُمْ “sizin”."}],
+    "بَيْتُنَا قَرِيبٌ مِنَ الْمَسْجِدِ.": [{"w": "بَيْتُنَا", "t": "evimiz", "r": "isim", "n": "بَيْت + ـنَا “bizim”."}, {"w": "قَرِيبٌ", "t": "yakın", "r": "isim", "n": "Yüklem; مِنْ ile “-e yakın”."}, {"w": "مِنَ", "t": "-den", "r": "harf", "n": "مِنْ, ال’den önce مِنَ okunur."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Edattan sonra esre."}],
+    "هَلْ عِنْدَكَ أَخٌ؟": [{"w": "هَلْ", "t": "…mı?", "r": "soru", "n": "Evet-hayır sorusu."}, {"w": "عِنْدَكَ", "t": "sende", "r": "isim", "n": "عِنْدَ (zarf) + ـكَ: “senin … var mı?”"}, {"w": "أَخٌ", "t": "bir kardeş", "r": "isim", "n": "Erkek kardeş; belirsiz."}],
+    "كِتَابِي فِي بَيْتِي.": [{"w": "كِتَابِي", "t": "kitabım", "r": "isim", "n": "كِتَاب + ـِي."}, {"w": "فِي", "t": "-de", "r": "harf", "n": "Yer bildiren edat."}, {"w": "بَيْتِي", "t": "evim", "r": "isim", "n": "بَيْت + ـِي; edattan sonra da görünüşü değişmez."}],
+    "ذَهَبْتُ مَعَهُمْ إِلَى السُّوقِ.": [{"w": "ذَهَبْتُ", "t": "gittim", "r": "fiil", "n": "Mâzi; تُ “ben”."}, {"w": "مَعَهُمْ", "t": "onlarla", "r": "isim", "n": "مَعَ “ile” (zarf) + ـهُمْ “onlar”."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Yön bildiren edat."}, {"w": "السُّوقِ", "t": "çarşı", "r": "isim", "n": "Edattan sonra esre."}],
+    "كَتَبْتُهُ أَمْسِ.": [{"w": "كَتَبْتُهُ", "t": "onu yazdım", "r": "fiil", "n": "كَتَبْتُ “yazdım” + ـهُ “onu”: fiile gelen zamir nesnedir."}, {"w": "أَمْسِ", "t": "dün", "r": "isim", "n": "Zaman bildiren isim."}],
+    "أُمِّي فِي الْبَيْتِ.": [{"w": "أُمِّي", "t": "annem", "r": "isim", "n": "أُمّ + ـِي “benim”."}, {"w": "فِي", "t": "-de", "r": "harf", "n": "Yer bildiren edat."}, {"w": "الْبَيْتِ", "t": "ev", "r": "isim", "n": "Edattan sonra esre."}],
+    "لَكُمْ دِينُكُمْ وَلِيَ دِينِ.": [{"w": "لَكُمْ", "t": "size", "r": "harf", "n": "لِـ + ـكُمْ; لِـ zamirle لَـ okunur."}, {"w": "دِينُكُمْ", "t": "dininiz", "r": "isim", "n": "دِين + ـكُمْ."}, {"w": "وَلِيَ", "t": "ve bana", "r": "harf", "n": "وَ + لِـ + ـِي."}, {"w": "دِينِ", "t": "dinim", "r": "isim", "n": "Sondaki ي mushafta yazılmamış; esre onu gösterir."}],
+    "أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ؟": [{"w": "أَلَمْ", "t": "-medik mi?", "r": "soru", "n": "أَ + لَمْ: olumsuz soru."}, {"w": "نَشْرَحْ", "t": "açarız", "r": "fiil", "n": "Muzari “biz”; لَمْ yüzünden cezmli."}, {"w": "لَكَ", "t": "senin için", "r": "harf", "n": "لِـ + ـكَ."}, {"w": "صَدْرَكَ", "t": "göğsünü", "r": "isim", "n": "صَدْر + ـكَ; nesne olduğu için üstün."}],
+    "الْكِتَابُ عَلَى الْمَكْتَبِ.": [{"w": "الْكِتَابُ", "t": "kitap", "r": "isim", "n": "Cümlenin başı; ötre."}, {"w": "عَلَى", "t": "üzerinde", "r": "harf", "n": "Harf-i cer: üzerinde."}, {"w": "الْمَكْتَبِ", "t": "masa", "r": "isim", "n": "Harf-i cerden sonra geldiği için sonu esre (mecrur)."}],
+    "ذَهَبْتُ مِنَ الْبَيْتِ إِلَى الْمَسْجِدِ.": [{"w": "ذَهَبْتُ", "t": "gittim", "r": "fiil", "n": "Mâzi; تُ “ben”."}, {"w": "مِنَ", "t": "-den", "r": "harf", "n": "مِنْ, ال’den önce مِنَ okunur."}, {"w": "الْبَيْتِ", "t": "ev", "r": "isim", "n": "Harf-i cerden sonra geldiği için sonu esre (mecrur)."}, {"w": "إِلَى", "t": "-e / -a", "r": "harf", "n": "Harf-i cer: yön."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Harf-i cerden sonra geldiği için sonu esre (mecrur)."}],
+    "كَتَبْتُ الدَّرْسَ بِالْقَلَمِ.": [{"w": "كَتَبْتُ", "t": "yazdım", "r": "fiil", "n": "Mâzi; تُ “ben”."}, {"w": "الدَّرْسَ", "t": "dersi", "r": "isim", "n": "Nesne; üstün."}, {"w": "بِالْقَلَمِ", "t": "kalemle", "r": "isim", "n": "بِـ “ile” + الْقَلَمِ; Harf-i cerden sonra geldiği için sonu esre (mecrur)."}],
+    "هَذَا الْكِتَابُ لِلطَّالِبِ.": [{"w": "هَذَا", "t": "bu", "r": "zamir", "n": "Eril işaret ismi."}, {"w": "الْكِتَابُ", "t": "kitap", "r": "isim", "n": "هَذَا ile “bu kitap”."}, {"w": "لِلطَّالِبِ", "t": "öğrenci için", "r": "isim", "n": "لِـ + الطَّالِبِ; ال’in elifi düşer. Harf-i cerden sonra geldiği için sonu esre (mecrur)."}],
+    "جَلَسَ الْمُعَلِّمُ عَلَى الْكُرْسِيِّ.": [{"w": "جَلَسَ", "t": "oturdu", "r": "fiil", "n": "Mâzi; عَلَى ile kullanılır."}, {"w": "الْمُعَلِّمُ", "t": "öğretmen", "r": "isim", "n": "İşi yapan; ötre."}, {"w": "عَلَى", "t": "üzerine", "r": "harf", "n": "Harf-i cer."}, {"w": "الْكُرْسِيِّ", "t": "sandalye", "r": "isim", "n": "Harf-i cerden sonra geldiği için sonu esre (mecrur)."}],
+    "سَأَلْتُ عَنِ الدَّرْسِ.": [{"w": "سَأَلْتُ", "t": "sordum", "r": "fiil", "n": "Mâzi; سَأَلَ عَنْ “hakkında sordu”."}, {"w": "عَنِ", "t": "hakkında", "r": "harf", "n": "عَنْ, ال’den önce عَنِ okunur."}, {"w": "الدَّرْسِ", "t": "ders", "r": "isim", "n": "Harf-i cerden sonra geldiği için sonu esre (mecrur)."}],
+    "خَرَجَ الطَّالِبُ مِنَ الْفَصْلِ.": [{"w": "خَرَجَ", "t": "çıktı", "r": "fiil", "n": "Mâzi; مِنْ ile kullanılır."}, {"w": "الطَّالِبُ", "t": "öğrenci", "r": "isim", "n": "İşi yapan; ötre."}, {"w": "مِنَ", "t": "-den", "r": "harf", "n": "Harf-i cer."}, {"w": "الْفَصْلِ", "t": "sınıf", "r": "isim", "n": "Harf-i cerden sonra geldiği için sonu esre (mecrur)."}],
+    "السَّلَامُ عَلَيْكُمْ.": [{"w": "السَّلَامُ", "t": "esenlik, selam", "r": "isim", "n": "Cümlenin başı; ötre."}, {"w": "عَلَيْكُمْ", "t": "üzerinize", "r": "harf", "n": "عَلَى + ـكُمْ; zamirle عَلَيْـ olur."}],
+    "وَعَلَيْكُمُ السَّلَامُ.": [{"w": "وَعَلَيْكُمُ", "t": "ve sizin üzerinize", "r": "harf", "n": "وَ + عَلَى + ـكُمْ; ال’den önce mîm ötre alır."}, {"w": "السَّلَامُ", "t": "esenlik", "r": "isim", "n": "Ötre."}],
+    "نَظَرْتُ إِلَى الْقَمَرِ.": [{"w": "نَظَرْتُ", "t": "baktım", "r": "fiil", "n": "Mâzi; نَظَرَ إِلَى “-e baktı”."}, {"w": "إِلَى", "t": "-e", "r": "harf", "n": "Harf-i cer."}, {"w": "الْقَمَرِ", "t": "ay", "r": "isim", "n": "Harf-i cerden sonra geldiği için sonu esre (mecrur)."}],
+    "دَرَسْتُ حَتَّى الْمَسَاءِ.": [{"w": "دَرَسْتُ", "t": "ders çalıştım", "r": "fiil", "n": "Mâzi; تُ “ben”."}, {"w": "حَتَّى", "t": "-e kadar", "r": "harf", "n": "Harf-i cer: sınır bildirir."}, {"w": "الْمَسَاءِ", "t": "akşam", "r": "isim", "n": "Harf-i cerden sonra geldiği için sonu esre (mecrur)."}],
+    "الطَّالِبُ فِي الْفَصْلِ مَعَ الْمُعَلِّمِ.": [{"w": "الطَّالِبُ", "t": "öğrenci", "r": "isim", "n": "Cümlenin başı; ötre."}, {"w": "فِي", "t": "-de", "r": "harf", "n": "Harf-i cer."}, {"w": "الْفَصْلِ", "t": "sınıf", "r": "isim", "n": "Harf-i cerden sonra geldiği için sonu esre (mecrur)."}, {"w": "مَعَ", "t": "ile, birlikte", "r": "isim", "n": "Zarf; sonraki isim tamlama gibi esre olur."}, {"w": "الْمُعَلِّمِ", "t": "öğretmen", "r": "isim", "n": "مَعَ’den sonra esre."}],
+    "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ.": [{"w": "قُلْ", "t": "de ki", "r": "fiil", "n": "Emir: “söyle!”."}, {"w": "أَعُوذُ", "t": "sığınırım", "r": "fiil", "n": "Muzari “ben”; بِـ ile kullanılır."}, {"w": "بِرَبِّ", "t": "Rabbine", "r": "isim", "n": "بِـ + رَبِّ; Harf-i cerden sonra geldiği için sonu esre (mecrur)."}, {"w": "الْفَلَقِ", "t": "sabah aydınlığının", "r": "isim", "n": "Tamlamanın ikinci ismi; esre."}],
+    "إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ.": [{"w": "إِنَّمَا", "t": "ancak, sadece", "r": "harf", "n": "Sınırlama bildiren edat."}, {"w": "الْأَعْمَالُ", "t": "ameller", "r": "isim", "n": "عَمَل’in çoğulu; cümlenin başı, ötre."}, {"w": "بِالنِّيَّاتِ", "t": "niyetlere göre", "r": "isim", "n": "بِـ + النِّيَّاتِ (نِيَّة’nin çoğulu); Harf-i cerden sonra geldiği için sonu esre (mecrur)."}],
+    "فِي الْفَصْلِ طَالِبَانِ.": [{"w": "فِي", "t": "-de", "r": "harf", "n": "Harf-i cer."}, {"w": "الْفَصْلِ", "t": "sınıf", "r": "isim", "n": "Harf-i cerden sonra esre."}, {"w": "طَالِبَانِ", "t": "iki öğrenci", "r": "isim", "n": "İkil; ötre durumunda ـَانِ."}],
+    "رَأَيْتُ طَالِبَيْنِ فِي الْمَسْجِدِ.": [{"w": "رَأَيْتُ", "t": "gördüm", "r": "fiil", "n": "Mâzi; تُ “ben”."}, {"w": "طَالِبَيْنِ", "t": "iki öğrenci", "r": "isim", "n": "İkil nesne: ـَيْنِ."}, {"w": "فِي", "t": "-de", "r": "harf", "n": "Harf-i cer."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Esre."}],
+    "الْمُعَلِّمُونَ فِي الْمَدْرَسَةِ.": [{"w": "الْمُعَلِّمُونَ", "t": "öğretmenler", "r": "isim", "n": "Sâlim eril çoğul; ötre durumunda ـُونَ."}, {"w": "فِي", "t": "-de", "r": "harf", "n": "Harf-i cer."}, {"w": "الْمَدْرَسَةِ", "t": "okul", "r": "isim", "n": "Esre."}],
+    "ذَهَبْتُ مَعَ الْمُعَلِّمِينَ.": [{"w": "ذَهَبْتُ", "t": "gittim", "r": "fiil", "n": "Mâzi; تُ “ben”."}, {"w": "مَعَ", "t": "ile", "r": "isim", "n": "Zarf; sonraki isim esre durumunda."}, {"w": "الْمُعَلِّمِينَ", "t": "öğretmenler", "r": "isim", "n": "Sâlim eril çoğul; esre durumunda ـِينَ."}],
+    "الطَّالِبَاتُ مُجْتَهِدَاتٌ.": [{"w": "الطَّالِبَاتُ", "t": "kadın öğrenciler", "r": "isim", "n": "Sâlim dişil çoğul: ـَاتٌ."}, {"w": "مُجْتَهِدَاتٌ", "t": "çalışkan(lar)", "r": "isim", "n": "İnsan çoğulu olduğu için yüklem de dişil çoğul."}],
+    "هَذِهِ كُتُبٌ جَدِيدَةٌ.": [{"w": "هَذِهِ", "t": "bunlar", "r": "zamir", "n": "İnsan olmayan çoğul için dişil tekil işaret."}, {"w": "كُتُبٌ", "t": "kitaplar", "r": "isim", "n": "كِتَابٌ’ın kırık çoğulu."}, {"w": "جَدِيدَةٌ", "t": "yeni", "r": "isim", "n": "İnsan olmayan çoğulun sıfatı dişil tekil."}],
+    "الْبُيُوتُ قَرِيبَةٌ مِنَ الْمَسْجِدِ.": [{"w": "الْبُيُوتُ", "t": "evler", "r": "isim", "n": "بَيْتٌ’in kırık çoğulu."}, {"w": "قَرِيبَةٌ", "t": "yakın", "r": "isim", "n": "İnsan olmayan çoğul: dişil tekil yüklem."}, {"w": "مِنَ", "t": "-den", "r": "harf", "n": "مِنْ, ال’den önce مِنَ."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Esre."}],
+    "الرِّجَالُ فِي السُّوقِ.": [{"w": "الرِّجَالُ", "t": "adamlar", "r": "isim", "n": "رَجُلٌ’ün kırık çoğulu."}, {"w": "فِي", "t": "-de", "r": "harf", "n": "Harf-i cer."}, {"w": "السُّوقِ", "t": "çarşı", "r": "isim", "n": "Esre."}],
+    "الْأَوْلَادُ يَلْعَبُونَ فِي الْحَدِيقَةِ.": [{"w": "الْأَوْلَادُ", "t": "çocuklar", "r": "isim", "n": "وَلَدٌ’un kırık çoğulu (أَفْعَالٌ kalıbı)."}, {"w": "يَلْعَبُونَ", "t": "oynuyorlar", "r": "fiil", "n": "Muzari 3. çoğul eril."}, {"w": "فِي", "t": "-de", "r": "harf", "n": "Harf-i cer."}, {"w": "الْحَدِيقَةِ", "t": "bahçe", "r": "isim", "n": "Esre."}],
+    "عِنْدِي كُتُبٌ كَثِيرَةٌ.": [{"w": "عِنْدِي", "t": "bende", "r": "isim", "n": "عِنْدَ + ـِي: sahiplik."}, {"w": "كُتُبٌ", "t": "kitaplar", "r": "isim", "n": "Kırık çoğul."}, {"w": "كَثِيرَةٌ", "t": "çok", "r": "isim", "n": "İnsan olmayan çoğulun sıfatı dişil tekil."}],
+    "الطُّلَّابُ مُجْتَهِدُونَ.": [{"w": "الطُّلَّابُ", "t": "öğrenciler", "r": "isim", "n": "طَالِبٌ’in kırık çoğulu."}, {"w": "مُجْتَهِدُونَ", "t": "çalışkan(lar)", "r": "isim", "n": "İnsan çoğulu: yüklem sâlim eril çoğul."}],
+    "قَرَأْتُ كِتَابَيْنِ.": [{"w": "قَرَأْتُ", "t": "okudum", "r": "fiil", "n": "Mâzi; تُ “ben”."}, {"w": "كِتَابَيْنِ", "t": "iki kitap", "r": "isim", "n": "İkil nesne: ـَيْنِ."}],
+    "تَبَّتْ يَدَا أَبِي لَهَبٍ.": [{"w": "تَبَّتْ", "t": "kurusun, helâk oldu", "r": "fiil", "n": "Mâzi, 3. tekil dişil (eller dişildir)."}, {"w": "يَدَا", "t": "iki eli", "r": "isim", "n": "يَدَانِ; tamlamanın ilk ismi olduğu için ن düşmüş."}, {"w": "أَبِي", "t": "babasının", "r": "isim", "n": "أَبٌ “baba”; esre durumunda tamlamada أَبِي biçimini alır."}, {"w": "لَهَبٍ", "t": "alevin", "r": "isim", "n": "Esreli tenvin; “Ebû Leheb” lakabı."}],
+    "يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا.": [{"w": "يَدْخُلُونَ", "t": "giriyorlar", "r": "fiil", "n": "Muzari 3. çoğul eril."}, {"w": "فِي", "t": "-e, içine", "r": "harf", "n": "Harf-i cer."}, {"w": "دِينِ", "t": "dinine", "r": "isim", "n": "Muzâf; harf-i cerden sonra esre."}, {"w": "اللَّهِ", "t": "Allah’ın", "r": "isim", "n": "Muzâfun ileyh; esre."}, {"w": "أَفْوَاجًا", "t": "bölük bölük", "r": "isim", "n": "فَوْجٌ’un kırık çoğulu; üstün tenvin."}],
+    "هَذَا الْكِتَابُ جَدِيدٌ.": [{"w": "هَذَا", "t": "bu", "r": "zamir", "n": "Yakın, eril tekil işaret."}, {"w": "الْكِتَابُ", "t": "kitap", "r": "isim", "n": "ال’li isim: “bu kitap”."}, {"w": "جَدِيدٌ", "t": "yeni", "r": "isim", "n": "Yüklem; belirsiz."}],
+    "ذَلِكَ الرَّجُلُ مُعَلِّمٌ.": [{"w": "ذَلِكَ", "t": "şu, o", "r": "zamir", "n": "Uzak, eril tekil işaret: “zâlike”."}, {"w": "الرَّجُلُ", "t": "adam", "r": "isim", "n": "ال’li isim; şemsî harf: “er-racul”."}, {"w": "مُعَلِّمٌ", "t": "bir öğretmen", "r": "isim", "n": "Yüklem; belirsiz."}],
+    "تِلْكَ الْمَدْرَسَةُ كَبِيرَةٌ.": [{"w": "تِلْكَ", "t": "şu, o", "r": "zamir", "n": "Uzak, dişil tekil işaret."}, {"w": "الْمَدْرَسَةُ", "t": "okul", "r": "isim", "n": "Dişil isim."}, {"w": "كَبِيرَةٌ", "t": "büyük", "r": "isim", "n": "Dişil yüklem."}],
+    "هَؤُلَاءِ طُلَّابٌ مُجْتَهِدُونَ.": [{"w": "هَؤُلَاءِ", "t": "bunlar", "r": "zamir", "n": "Yakın çoğul (insanlar): “hâulâi”."}, {"w": "طُلَّابٌ", "t": "öğrenciler", "r": "isim", "n": "Kırık çoğul."}, {"w": "مُجْتَهِدُونَ", "t": "çalışkan", "r": "isim", "n": "İnsan çoğulu; sıfat da çoğul."}],
+    "أُولَئِكَ الطُّلَّابُ فِي الْمَسْجِدِ.": [{"w": "أُولَئِكَ", "t": "şunlar, onlar", "r": "zamir", "n": "Uzak çoğul; و okunmaz: “ulâike”."}, {"w": "الطُّلَّابُ", "t": "öğrenciler", "r": "isim", "n": "ال’li kırık çoğul."}, {"w": "فِي", "t": "-de", "r": "harf", "n": "Harf-i cer."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Esre."}],
+    "هَذَانِ كِتَابَانِ.": [{"w": "هَذَانِ", "t": "bu ikisi", "r": "zamir", "n": "Yakın, eril ikil işaret."}, {"w": "كِتَابَانِ", "t": "iki kitap", "r": "isim", "n": "İkil; ötre durumu."}],
+    "هَاتَانِ طَالِبَتَانِ.": [{"w": "هَاتَانِ", "t": "bu ikisi (dişil)", "r": "zamir", "n": "Yakın, dişil ikil işaret."}, {"w": "طَالِبَتَانِ", "t": "iki kadın öğrenci", "r": "isim", "n": "ة açık ت olur, ـَانِ eklenir."}],
+    "هَذِهِ الْكُتُبُ جَدِيدَةٌ.": [{"w": "هَذِهِ", "t": "bu", "r": "zamir", "n": "İnsan olmayan çoğul için dişil tekil işaret."}, {"w": "الْكُتُبُ", "t": "kitaplar", "r": "isim", "n": "Kırık çoğul."}, {"w": "جَدِيدَةٌ", "t": "yeni", "r": "isim", "n": "Dişil tekil yüklem."}],
+    "مَا ذَلِكَ؟": [{"w": "مَا", "t": "ne?", "r": "soru", "n": "İsimden önce “ne?”"}, {"w": "ذَلِكَ", "t": "şu", "r": "zamir", "n": "Uzak işaret."}],
+    "ذَلِكَ مَسْجِدٌ كَبِيرٌ.": [{"w": "ذَلِكَ", "t": "şu", "r": "zamir", "n": "Uzak işaret."}, {"w": "مَسْجِدٌ", "t": "bir mescit", "r": "isim", "n": "Belirsiz yüklem."}, {"w": "كَبِيرٌ", "t": "büyük", "r": "isim", "n": "Sıfat; mescide uyar."}],
+    "مَنْ هَؤُلَاءِ؟": [{"w": "مَنْ", "t": "kim?", "r": "soru", "n": "Kişiyi sorar."}, {"w": "هَؤُلَاءِ", "t": "bunlar", "r": "zamir", "n": "Yakın çoğul (insanlar)."}],
+    "تِلْكَ الْكُتُبُ هُنَاكَ.": [{"w": "تِلْكَ", "t": "o", "r": "zamir", "n": "İnsan olmayan çoğul için uzak dişil işaret."}, {"w": "الْكُتُبُ", "t": "kitaplar", "r": "isim", "n": "Kırık çoğul."}, {"w": "هُنَاكَ", "t": "orada", "r": "isim", "n": "Uzak yer bildirir."}],
+    "ذَلِكَ الْكِتَابُ لَا رَيْبَ فِيهِ.": [{"w": "ذَلِكَ", "t": "o", "r": "zamir", "n": "Uzak işaret; burada yüceliği vurgular."}, {"w": "الْكِتَابُ", "t": "kitap", "r": "isim", "n": "Kur’an."}, {"w": "لَا", "t": "hiç … yok", "r": "harf", "n": "Cinsi tamamen olumsuzlayan لَا."}, {"w": "رَيْبَ", "t": "şüphe", "r": "isim", "n": "لَا’dan sonra üstün okunur."}, {"w": "فِيهِ", "t": "onda", "r": "harf", "n": "فِي + ـهِ."}],
+    "أُولَئِكَ هُمُ الْمُفْلِحُونَ.": [{"w": "أُولَئِكَ", "t": "işte onlar", "r": "zamir", "n": "Uzak çoğul işaret."}, {"w": "هُمُ", "t": "onlar", "r": "zamir", "n": "Vurgulayan zamir; ال’den önce mîm ötre okunur."}, {"w": "الْمُفْلِحُونَ", "t": "kurtuluşa erenler", "r": "isim", "n": "Sâlim eril çoğul."}],
+    "الطَّالِبُ الَّذِي يَكْتُبُ الدَّرْسَ مُجْتَهِدٌ.": [{"w": "الطَّالِبُ", "t": "öğrenci", "r": "isim", "n": "Cümlenin öznesi; ötre."}, {"w": "الَّذِي", "t": "ki o", "r": "zamir", "n": "İlgi zamiri (eril tekil): “… olan, ki o”."}, {"w": "يَكْتُبُ", "t": "yazıyor", "r": "fiil", "n": "Sıla cümlesinin fiili."}, {"w": "الدَّرْسَ", "t": "dersi", "r": "isim", "n": "Nesne; üstün."}, {"w": "مُجْتَهِدٌ", "t": "çalışkan", "r": "isim", "n": "Ana cümlenin yüklemi."}],
+    "الطَّالِبَةُ الَّتِي فِي الْفَصْلِ أُخْتِي.": [{"w": "الطَّالِبَةُ", "t": "kız öğrenci", "r": "isim", "n": "Özne; ötre."}, {"w": "الَّتِي", "t": "ki o", "r": "zamir", "n": "İlgi zamiri (dişil tekil ve insan olmayan çoğul): “… olan, ki o”."}, {"w": "فِي", "t": "-de", "r": "harf", "n": "Harf-i cer; sıla bir yer ifadesi."}, {"w": "الْفَصْلِ", "t": "sınıf", "r": "isim", "n": "Esre."}, {"w": "أُخْتِي", "t": "kız kardeşim", "r": "isim", "n": "أُخْت + ـِي; yüklem."}],
+    "الْكِتَابُ الَّذِي قَرَأْتُهُ جَدِيدٌ.": [{"w": "الْكِتَابُ", "t": "kitap", "r": "isim", "n": "Özne."}, {"w": "الَّذِي", "t": "ki", "r": "zamir", "n": "İlgi zamiri (eril tekil): “… olan, ki o”."}, {"w": "قَرَأْتُهُ", "t": "onu okudum", "r": "fiil", "n": "قَرَأْتُ + ـهُ; ـهُ kitaba dönen zamir."}, {"w": "جَدِيدٌ", "t": "yeni", "r": "isim", "n": "Yüklem."}],
+    "الرِّجَالُ الَّذِينَ ذَهَبُوا إِلَى الْمَسْجِدِ مُعَلِّمُونَ.": [{"w": "الرِّجَالُ", "t": "adamlar", "r": "isim", "n": "Kırık çoğul; özne."}, {"w": "الَّذِينَ", "t": "ki onlar", "r": "zamir", "n": "İlgi zamiri (eril çoğul)."}, {"w": "ذَهَبُوا", "t": "gittiler", "r": "fiil", "n": "Sıla fiili; çoğulla uyumlu."}, {"w": "إِلَى", "t": "-e", "r": "harf", "n": "Harf-i cer."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Esre."}, {"w": "مُعَلِّمُونَ", "t": "öğretmenler", "r": "isim", "n": "Yüklem; sâlim eril çoğul."}],
+    "الْكُتُبُ الَّتِي قَرَأْتُهَا كَثِيرَةٌ.": [{"w": "الْكُتُبُ", "t": "kitaplar", "r": "isim", "n": "İnsan olmayan çoğul."}, {"w": "الَّتِي", "t": "ki", "r": "zamir", "n": "İlgi zamiri (dişil tekil ve insan olmayan çoğul): “… olan, ki o”."}, {"w": "قَرَأْتُهَا", "t": "onları okudum", "r": "fiil", "n": "قَرَأْتُ + ـهَا; insan olmayan çoğula dönen dişil zamir."}, {"w": "كَثِيرَةٌ", "t": "çok", "r": "isim", "n": "Dişil tekil yüklem."}],
+    "اُكْتُبْ مَا تَسْمَعُ.": [{"w": "اُكْتُبْ", "t": "yaz!", "r": "fiil", "n": "Emir (Ders 11)."}, {"w": "مَا", "t": "şey ki", "r": "zamir", "n": "İlgi anlamında مَا: “… olan şey”."}, {"w": "تَسْمَعُ", "t": "duyuyorsun", "r": "fiil", "n": "Muzari “sen”; sıla fiili."}],
+    "أُحِبُّ مَنْ يَقْرَأُ الْقُرْآنَ.": [{"w": "أُحِبُّ", "t": "severim", "r": "fiil", "n": "يُحِبُّ “sever” fiilinin “ben” biçimi."}, {"w": "مَنْ", "t": "kimse ki", "r": "zamir", "n": "İlgi anlamında مَنْ: “… olan kimse”."}, {"w": "يَقْرَأُ", "t": "okuyor", "r": "fiil", "n": "Sıla fiili."}, {"w": "الْقُرْآنَ", "t": "Kur’an’ı", "r": "isim", "n": "Nesne; üstün."}],
+    "هَذَا هُوَ الْكِتَابُ الَّذِي قَرَأْتُهُ أَمْسِ.": [{"w": "هَذَا", "t": "bu", "r": "zamir", "n": "İşaret ismi."}, {"w": "هُوَ", "t": "o", "r": "zamir", "n": "Vurgu zamiri: “işte”."}, {"w": "الْكِتَابُ", "t": "kitap", "r": "isim", "n": "Yüklem tarafı."}, {"w": "الَّذِي", "t": "ki", "r": "zamir", "n": "İlgi zamiri (eril tekil): “… olan, ki o”."}, {"w": "قَرَأْتُهُ", "t": "onu okudum", "r": "fiil", "n": "Dönüş zamirli sıla."}, {"w": "أَمْسِ", "t": "dün", "r": "isim", "n": "Zaman bildirir."}],
+    "أَيُّ كِتَابٍ هَذَا؟": [{"w": "أَيُّ", "t": "hangi?", "r": "soru", "n": "Sonraki ismi tamlama gibi esre yapar."}, {"w": "كِتَابٍ", "t": "kitap", "r": "isim", "n": "أَيُّ’dan sonra esreli tenvin."}, {"w": "هَذَا", "t": "bu", "r": "zamir", "n": "İşaret ismi."}],
+    "مَنِ الطَّالِبُ الَّذِي كَتَبَ الدَّرْسَ؟": [{"w": "مَنِ", "t": "kim?", "r": "soru", "n": "مَنْ, ال’den önce مَنِ okunur."}, {"w": "الطَّالِبُ", "t": "öğrenci", "r": "isim", "n": "Ötre."}, {"w": "الَّذِي", "t": "ki o", "r": "zamir", "n": "İlgi zamiri (eril tekil): “… olan, ki o”."}, {"w": "كَتَبَ", "t": "yazdı", "r": "fiil", "n": "Sıla fiili."}, {"w": "الدَّرْسَ", "t": "dersi", "r": "isim", "n": "Nesne."}],
+    "عِنْدِي كِتَابٌ قَرَأْتُهُ مَرَّتَيْنِ.": [{"w": "عِنْدِي", "t": "bende", "r": "isim", "n": "Sahiplik (Ders 15)."}, {"w": "كِتَابٌ", "t": "bir kitap", "r": "isim", "n": "Belirsiz; bu yüzden الَّذِي kullanılmaz."}, {"w": "قَرَأْتُهُ", "t": "onu okudum", "r": "fiil", "n": "Belirsiz ismi niteleyen cümle; ـهُ kitaba döner."}, {"w": "مَرَّتَيْنِ", "t": "iki kez", "r": "isim", "n": "مَرَّة “kez” kelimesinin ikili (ـَيْنِ)."}],
+    "الْمَرْأَةُ الَّتِي ذَهَبَتْ إِلَى السُّوقِ أُمِّي.": [{"w": "الْمَرْأَةُ", "t": "kadın", "r": "isim", "n": "Özne; ötre."}, {"w": "الَّتِي", "t": "ki o", "r": "zamir", "n": "İlgi zamiri (dişil tekil ve insan olmayan çoğul): “… olan, ki o”."}, {"w": "ذَهَبَتْ", "t": "gitti", "r": "fiil", "n": "Sıla fiili; dişil."}, {"w": "إِلَى", "t": "-e", "r": "harf", "n": "Harf-i cer."}, {"w": "السُّوقِ", "t": "çarşı", "r": "isim", "n": "Esre."}, {"w": "أُمِّي", "t": "annem", "r": "isim", "n": "أُمّ + ـِي; yüklem."}],
+    "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ.": [{"w": "صِرَاطَ", "t": "yolu(na)", "r": "isim", "n": "Tamlamanın ilk ismi; üstün."}, {"w": "الَّذِينَ", "t": "ki onlar", "r": "zamir", "n": "İlgi zamiri (eril çoğul)."}, {"w": "أَنْعَمْتَ", "t": "nimet verdin", "r": "fiil", "n": "Mâzi; تَ “sen”."}, {"w": "عَلَيْهِمْ", "t": "onlara", "r": "harf", "n": "عَلَى + ـهِمْ; الَّذِينَ’e dönen zamir."}],
+    "الَّذِي أَطْعَمَهُمْ مِنْ جُوعٍ.": [{"w": "الَّذِي", "t": "ki O", "r": "zamir", "n": "Önceki âyetteki “Rab”e bağlanan ilgi zamiri."}, {"w": "أَطْعَمَهُمْ", "t": "onları doyurdu", "r": "fiil", "n": "أَطْعَمَ + ـهُمْ."}, {"w": "مِنْ", "t": "-den", "r": "harf", "n": "Harf-i cer."}, {"w": "جُوعٍ", "t": "açlık", "r": "isim", "n": "Esreli tenvin."}],
+    "الْمُعَلِّمُ فِي الْمَسْجِدِ.": [{"w": "الْمُعَلِّمُ", "t": "öğretmen", "r": "isim", "n": "Mübtedâ: merfû."}, {"w": "فِي", "t": "-de", "r": "harf", "n": "Harf-i cer; mebnî."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Mecrûr: esre."}],
+    "قَرَأْتُ كِتَابَ الْمُعَلِّمِ.": [{"w": "قَرَأْتُ", "t": "okudum", "r": "fiil", "n": "Mâzi; تُ fâil zamiri."}, {"w": "كِتَابَ", "t": "kitabını", "r": "isim", "n": "Nesne: mansûb; tamlamanın ilk ismi."}, {"w": "الْمُعَلِّمِ", "t": "öğretmenin", "r": "isim", "n": "Tamlamanın ikinci ismi: mecrûr."}],
+    "إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ.": [{"w": "إِنَّ", "t": "şüphesiz", "r": "harf", "n": "Sonraki ismi mansûb yapar."}, {"w": "اللَّهَ", "t": "Allah", "r": "isim", "n": "إِنَّ’nin ismi: mansûb."}, {"w": "غَفُورٌ", "t": "çok bağışlayan", "r": "isim", "n": "Yüklem (haber): merfû."}, {"w": "رَحِيمٌ", "t": "çok merhametli", "r": "isim", "n": "İkinci yüklem: merfû."}],
+    "رَأَيْتُ الْمُعَلِّمِينَ فِي الْمَسْجِدِ.": [{"w": "رَأَيْتُ", "t": "gördüm", "r": "fiil", "n": "Mâzi."}, {"w": "الْمُعَلِّمِينَ", "t": "öğretmenleri", "r": "isim", "n": "Nesne: mansûb; sâlim çoğulda ـِينَ."}, {"w": "فِي", "t": "-de", "r": "harf", "n": "Harf-i cer."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Mecrûr."}],
+    "الطُّلَّابُ يَكْتُبُونَ الدُّرُوسَ.": [{"w": "الطُّلَّابُ", "t": "öğrenciler", "r": "isim", "n": "Mübtedâ: merfû."}, {"w": "يَكْتُبُونَ", "t": "yazıyorlar", "r": "fiil", "n": "Merfû muzari; ن duruyor."}, {"w": "الدُّرُوسَ", "t": "dersleri", "r": "isim", "n": "Nesne: mansûb; دَرْس’in kırık çoğulu."}],
+    "لَنْ يَذْهَبَ الطَّالِبُ إِلَى السُّوقِ.": [{"w": "لَنْ", "t": "-meyecek", "r": "harf", "n": "Muzariyi mansûb yapar."}, {"w": "يَذْهَبَ", "t": "gitmek", "r": "fiil", "n": "Mansûb muzari: üstün."}, {"w": "الطَّالِبُ", "t": "öğrenci", "r": "isim", "n": "Fâil: merfû."}, {"w": "إِلَى", "t": "-e", "r": "harf", "n": "Harf-i cer."}, {"w": "السُّوقِ", "t": "çarşı", "r": "isim", "n": "Mecrûr."}],
+    "لَمْ يَكْتُبِ الطَّالِبُ الدَّرْسَ.": [{"w": "لَمْ", "t": "-medi", "r": "harf", "n": "Muzariyi meczûm yapar."}, {"w": "يَكْتُبِ", "t": "yazmak", "r": "fiil", "n": "Meczûm; ال’den önce esre okunur."}, {"w": "الطَّالِبُ", "t": "öğrenci", "r": "isim", "n": "Fâil: merfû."}, {"w": "الدَّرْسَ", "t": "dersi", "r": "isim", "n": "Mef‘ûl: mansûb."}],
+    "أُرِيدُ أَنْ أَذْهَبَ إِلَى الْمَسْجِدِ.": [{"w": "أُرِيدُ", "t": "istiyorum", "r": "fiil", "n": "Merfû muzari “ben”."}, {"w": "أَنْ", "t": "-mek", "r": "harf", "n": "Sonraki muzariyi mansûb yapar."}, {"w": "أَذْهَبَ", "t": "gitmek (ben)", "r": "fiil", "n": "Mansûb muzari."}, {"w": "إِلَى", "t": "-e", "r": "harf", "n": "Harf-i cer."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Mecrûr."}],
+    "أُرِيدُ أَنْ أَتَعَلَّمَ الْعَرَبِيَّةَ.": [{"w": "أُرِيدُ", "t": "istiyorum", "r": "fiil", "n": "Merfû muzari."}, {"w": "أَنْ", "t": "-mek", "r": "harf", "n": "Mansûb yapan edat."}, {"w": "أَتَعَلَّمَ", "t": "öğrenmek (ben)", "r": "fiil", "n": "Mansûb muzari."}, {"w": "الْعَرَبِيَّةَ", "t": "Arapçayı", "r": "isim", "n": "Nesne: mansûb."}],
+    "قَرَأَ الْمُعَلِّمُ الْكِتَابَ فِي الْمَسْجِدِ.": [{"w": "قَرَأَ", "t": "okudu", "r": "fiil", "n": "Mâzi; mebnî."}, {"w": "الْمُعَلِّمُ", "t": "öğretmen", "r": "isim", "n": "Fâil: merfû."}, {"w": "الْكِتَابَ", "t": "kitabı", "r": "isim", "n": "Mef‘ûl: mansûb."}, {"w": "فِي", "t": "-de", "r": "harf", "n": "Harf-i cer."}, {"w": "الْمَسْجِدِ", "t": "mescit", "r": "isim", "n": "Mecrûr."}],
+    "كِتَابُ الطَّالِبِ عَلَى الْمَكْتَبِ.": [{"w": "كِتَابُ", "t": "kitabı", "r": "isim", "n": "Mübtedâ: merfû; tamlamanın ilk ismi."}, {"w": "الطَّالِبِ", "t": "öğrencinin", "r": "isim", "n": "Tamlamanın ikinci ismi: mecrûr."}, {"w": "عَلَى", "t": "üzerinde", "r": "harf", "n": "Harf-i cer."}, {"w": "الْمَكْتَبِ", "t": "masa", "r": "isim", "n": "Mecrûr."}],
+    "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ.": [{"w": "إِيَّاكَ", "t": "yalnız seni", "r": "zamir", "n": "Öne alınmış nesne zamiri."}, {"w": "نَعْبُدُ", "t": "kulluk ederiz", "r": "fiil", "n": "Merfû muzari “biz”."}, {"w": "وَإِيَّاكَ", "t": "ve yalnız senden", "r": "zamir", "n": "وَ + إِيَّاكَ."}, {"w": "نَسْتَعِينُ", "t": "yardım dileriz", "r": "fiil", "n": "Merfû muzari “biz”."}],
+    "مَاذَا تُرِيدُ أَنْ تَفْعَلَ غَدًا؟": [{"w": "مَاذَا", "t": "ne?", "r": "soru", "n": "Fiilden önce “ne?”"}, {"w": "تُرِيدُ", "t": "istiyorsun", "r": "fiil", "n": "Merfû muzari “sen”."}, {"w": "أَنْ", "t": "-mek", "r": "harf", "n": "Mansûb yapan edat."}, {"w": "تَفْعَلَ", "t": "yapmak (sen)", "r": "fiil", "n": "Mansûb muzari."}, {"w": "غَدًا", "t": "yarın", "r": "isim", "n": "Zaman bildiren isim; mansûb."}]
   };
 
   const LESSON_EXAMPLE_SENTENCES = {
@@ -567,6 +856,166 @@
       { ar: "مَاذَا فَعَلْتَ أَمْسِ؟", tr: "Dün ne yaptın?" },
       { ar: "قَرَأْتُ كِتَابًا.", tr: "Bir kitap okudum." },
       { ar: "الْيَوْمَ أَقْرَأُ كِتَابًا.", tr: "Bugün bir kitap okuyorum." }
+    ],
+    "ders-11": [
+      { ar: "اُكْتُبْ دَرْسًا.", tr: "Bir ders yaz." },
+      { ar: "اُكْتُبِ الدَّرْسَ.", tr: "Dersi yaz." },
+      { ar: "اِجْلِسْ، مِنْ فَضْلِكَ.", tr: "Lütfen otur." },
+      { ar: "اِجْلِسِي هُنَا.", tr: "Burada otur. (kadına)" },
+      { ar: "اُدْخُلُوا الْمَسْجِدَ.", tr: "Mescide girin." },
+      { ar: "اِفْتَحِ الْبَابَ.", tr: "Kapıyı aç." },
+      { ar: "اِقْرَأْ كِتَابًا.", tr: "Bir kitap oku." },
+      { ar: "اِسْمَعْ وَاكْتُبْ.", tr: "Dinle ve yaz." },
+      { ar: "اِشْرَبِي الْمَاءَ.", tr: "Suyu iç. (kadına)" },
+      { ar: "اِذْهَبَا إِلَى السُّوقِ.", tr: "Siz ikiniz çarşıya gidin." },
+      { ar: "اِذْهَبُوا إِلَى الْمَسْجِدِ.", tr: "Mescide gidin." },
+      { ar: "اُخْرُجْنَ مِنَ الْفَصْلِ.", tr: "Sınıftan çıkın. (kadınlara)" },
+      { ar: "اُدْخُلْ وَاجْلِسْ.", tr: "Gir ve otur." },
+      { ar: "اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ.", tr: "Yaratan Rabbinin adıyla oku!" }
+    ],
+    "ders-12": [
+      { ar: "لَا تَكْتُبْ هُنَا.", tr: "Buraya yazma." },
+      { ar: "لَا تَذْهَبِي إِلَى السُّوقِ.", tr: "Çarşıya gitme. (kadına)" },
+      { ar: "لَا تَجْلِسُوا هُنَا.", tr: "Burada oturmayın." },
+      { ar: "لَا تَشْرَبِ الْقَهْوَةَ.", tr: "Kahve içme." },
+      { ar: "لَا تَحْزَنْ.", tr: "Üzülme." },
+      { ar: "لَا تَفْتَحَا الْبَابَ.", tr: "Siz ikiniz kapıyı açmayın." },
+      { ar: "لَمْ أَكْتُبِ الدَّرْسَ بَعْدُ.", tr: "Dersi henüz yazmadım." },
+      { ar: "لَمْ يَذْهَبُوا إِلَى الْمَسْجِدِ.", tr: "Mescide gitmediler." },
+      { ar: "لَمْ نَشْرَبِ الْمَاءَ.", tr: "Suyu içmedik." },
+      { ar: "لَمْ تَفْتَحِي الْبَابَ.", tr: "Kapıyı açmadın. (kadın)" },
+      { ar: "هُوَ لَمْ يَخْرُجْ مِنَ الْبَيْتِ.", tr: "O evden çıkmadı." },
+      { ar: "لَا تَشْرَبِ الْقَهْوَةَ، اِشْرَبِ الْمَاءَ.", tr: "Kahve içme, su iç." },
+      { ar: "لَمْ يَلِدْ وَلَمْ يُولَدْ.", tr: "Doğurmadı ve doğurulmadı." },
+      { ar: "لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا.", tr: "Üzülme, şüphesiz Allah bizimle beraberdir." }
+    ],
+    "ders-13": [
+      { ar: "مَنْ هَذَا؟", tr: "Bu kim?" },
+      { ar: "مَا هَذَا؟", tr: "Bu ne?" },
+      { ar: "مَاذَا تَقْرَأُ؟", tr: "Ne okuyorsun?" },
+      { ar: "أَيْنَ الْمَسْجِدُ؟", tr: "Mescit nerede?" },
+      { ar: "إِلَى أَيْنَ تَذْهَبُ؟", tr: "Nereye gidiyorsun?" },
+      { ar: "مِنْ أَيْنَ أَنْتَ؟", tr: "Nerelisin?" },
+      { ar: "مَتَى تَذْهَبُ إِلَى السُّوقِ؟", tr: "Çarşıya ne zaman gidiyorsun?" },
+      { ar: "كَيْفَ حَالُكَ؟", tr: "Nasılsın?" },
+      { ar: "بِخَيْرٍ، الْحَمْدُ لِلَّهِ.", tr: "İyiyim, Allah’a hamd olsun." },
+      { ar: "لِمَاذَا لَمْ تَذْهَبْ إِلَى الْمَدْرَسَةِ؟", tr: "Neden okula gitmedin?" },
+      { ar: "كَمْ طَالِبًا فِي الْفَصْلِ؟", tr: "Sınıfta kaç öğrenci var?" },
+      { ar: "مَنْ كَتَبَ الدَّرْسَ؟", tr: "Dersi kim yazdı?" },
+      { ar: "مَا اسْمُكَ؟", tr: "Adın ne?" },
+      { ar: "هَلْ أَتَاكَ حَدِيثُ الْغَاشِيَةِ؟", tr: "Kuşatanın haberi sana geldi mi?" }
+    ],
+    "ders-14": [
+      { ar: "كِتَابُ الطَّالِبِ جَدِيدٌ.", tr: "Öğrencinin kitabı yeni." },
+      { ar: "هَذَا بَيْتُ الْمُعَلِّمِ.", tr: "Bu, öğretmenin evi." },
+      { ar: "فَتَحَ الطَّالِبُ بَابَ الْفَصْلِ.", tr: "Öğrenci sınıfın kapısını açtı." },
+      { ar: "ذَهَبْتُ إِلَى بَيْتِ الْمُعَلِّمِ.", tr: "Öğretmenin evine gittim." },
+      { ar: "بَابُ بَيْتِ الْمُعَلِّمِ كَبِيرٌ.", tr: "Öğretmenin evinin kapısı büyük." },
+      { ar: "قَرَأْتُ كِتَابَ اللَّهِ.", tr: "Allah’ın kitabını okudum." },
+      { ar: "مُحَمَّدٌ رَسُولُ اللَّهِ.", tr: "Muhammed Allah’ın elçisidir." },
+      { ar: "لِمَنْ هَذَا الْكِتَابُ؟", tr: "Bu kitap kimin?" },
+      { ar: "هَذَا كِتَابُ الْمُعَلِّمِ.", tr: "Bu, öğretmenin kitabı." },
+      { ar: "بَيْتُ الْمُعَلِّمِ قَرِيبٌ مِنَ الْمَسْجِدِ.", tr: "Öğretmenin evi mescide yakın." },
+      { ar: "فَتَحْتُ بَابَ الْمَسْجِدِ.", tr: "Mescidin kapısını açtım." },
+      { ar: "بِسْمِ اللَّهِ.", tr: "Allah’ın adıyla." },
+      { ar: "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ.", tr: "Hamd, âlemlerin Rabbi Allah’a mahsustur." },
+      { ar: "مَالِكِ يَوْمِ الدِّينِ.", tr: "Din (hesap) gününün sahibi." }
+    ],
+    "ders-15": [
+      { ar: "هَذَا كِتَابِي.", tr: "Bu benim kitabım." },
+      { ar: "مَا اسْمُكِ؟", tr: "Adın ne? (kadına)" },
+      { ar: "اِسْمُهُ عَلِيٌّ.", tr: "Onun adı Ali." },
+      { ar: "عِنْدِي كِتَابٌ جَدِيدٌ.", tr: "Yeni bir kitabım var." },
+      { ar: "ذَهَبَ الطَّالِبُ إِلَى بَيْتِهِ.", tr: "Öğrenci evine gitti." },
+      { ar: "أَيْنَ بَيْتُكُمْ؟", tr: "Eviniz nerede?" },
+      { ar: "بَيْتُنَا قَرِيبٌ مِنَ الْمَسْجِدِ.", tr: "Evimiz mescide yakın." },
+      { ar: "هَلْ عِنْدَكَ أَخٌ؟", tr: "Kardeşin var mı?" },
+      { ar: "كِتَابِي فِي بَيْتِي.", tr: "Kitabım evimde." },
+      { ar: "ذَهَبْتُ مَعَهُمْ إِلَى السُّوقِ.", tr: "Onlarla çarşıya gittim." },
+      { ar: "كَتَبْتُهُ أَمْسِ.", tr: "Onu dün yazdım." },
+      { ar: "أُمِّي فِي الْبَيْتِ.", tr: "Annem evde." },
+      { ar: "لَكُمْ دِينُكُمْ وَلِيَ دِينِ.", tr: "Sizin dininiz size, benim dinim bana." },
+      { ar: "أَلَمْ نَشْرَحْ لَكَ صَدْرَكَ؟", tr: "Senin göğsünü açıp genişletmedik mi?" }
+    ],
+    "ders-16": [
+      { ar: "الْكِتَابُ عَلَى الْمَكْتَبِ.", tr: "Kitap masanın üzerinde." },
+      { ar: "ذَهَبْتُ مِنَ الْبَيْتِ إِلَى الْمَسْجِدِ.", tr: "Evden mescide gittim." },
+      { ar: "كَتَبْتُ الدَّرْسَ بِالْقَلَمِ.", tr: "Dersi kalemle yazdım." },
+      { ar: "هَذَا الْكِتَابُ لِلطَّالِبِ.", tr: "Bu kitap öğrencinindir." },
+      { ar: "جَلَسَ الْمُعَلِّمُ عَلَى الْكُرْسِيِّ.", tr: "Öğretmen sandalyeye oturdu." },
+      { ar: "سَأَلْتُ عَنِ الدَّرْسِ.", tr: "Ders hakkında sordum." },
+      { ar: "خَرَجَ الطَّالِبُ مِنَ الْفَصْلِ.", tr: "Öğrenci sınıftan çıktı." },
+      { ar: "السَّلَامُ عَلَيْكُمْ.", tr: "Esenlik üzerinize olsun." },
+      { ar: "وَعَلَيْكُمُ السَّلَامُ.", tr: "Esenlik sizin de üzerinize olsun." },
+      { ar: "نَظَرْتُ إِلَى الْقَمَرِ.", tr: "Aya baktım." },
+      { ar: "دَرَسْتُ حَتَّى الْمَسَاءِ.", tr: "Akşama kadar ders çalıştım." },
+      { ar: "الطَّالِبُ فِي الْفَصْلِ مَعَ الْمُعَلِّمِ.", tr: "Öğrenci öğretmenle birlikte sınıfta." },
+      { ar: "قُلْ أَعُوذُ بِرَبِّ الْفَلَقِ.", tr: "De ki: Sabah aydınlığının Rabbine sığınırım." },
+      { ar: "إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ.", tr: "Ameller ancak niyetlere göredir." }
+    ],
+    "ders-17": [
+      { ar: "فِي الْفَصْلِ طَالِبَانِ.", tr: "Sınıfta iki öğrenci var." },
+      { ar: "رَأَيْتُ طَالِبَيْنِ فِي الْمَسْجِدِ.", tr: "Mescitte iki öğrenci gördüm." },
+      { ar: "الْمُعَلِّمُونَ فِي الْمَدْرَسَةِ.", tr: "Öğretmenler okulda." },
+      { ar: "ذَهَبْتُ مَعَ الْمُعَلِّمِينَ.", tr: "Öğretmenlerle gittim." },
+      { ar: "الطَّالِبَاتُ مُجْتَهِدَاتٌ.", tr: "Kadın öğrenciler çalışkan." },
+      { ar: "هَذِهِ كُتُبٌ جَدِيدَةٌ.", tr: "Bunlar yeni kitaplar." },
+      { ar: "الْبُيُوتُ قَرِيبَةٌ مِنَ الْمَسْجِدِ.", tr: "Evler mescide yakın." },
+      { ar: "الرِّجَالُ فِي السُّوقِ.", tr: "Adamlar çarşıda." },
+      { ar: "الْأَوْلَادُ يَلْعَبُونَ فِي الْحَدِيقَةِ.", tr: "Çocuklar bahçede oynuyorlar." },
+      { ar: "عِنْدِي كُتُبٌ كَثِيرَةٌ.", tr: "Çok kitabım var." },
+      { ar: "الطُّلَّابُ مُجْتَهِدُونَ.", tr: "Öğrenciler çalışkan." },
+      { ar: "قَرَأْتُ كِتَابَيْنِ.", tr: "İki kitap okudum." },
+      { ar: "تَبَّتْ يَدَا أَبِي لَهَبٍ.", tr: "Ebû Leheb’in iki eli kurusun." },
+      { ar: "يَدْخُلُونَ فِي دِينِ اللَّهِ أَفْوَاجًا.", tr: "Allah’ın dinine bölük bölük giriyorlar." }
+    ],
+    "ders-18": [
+      { ar: "هَذَا الْكِتَابُ جَدِيدٌ.", tr: "Bu kitap yeni." },
+      { ar: "ذَلِكَ الرَّجُلُ مُعَلِّمٌ.", tr: "Şu adam bir öğretmen." },
+      { ar: "تِلْكَ الْمَدْرَسَةُ كَبِيرَةٌ.", tr: "O okul büyük." },
+      { ar: "هَؤُلَاءِ طُلَّابٌ مُجْتَهِدُونَ.", tr: "Bunlar çalışkan öğrenciler." },
+      { ar: "أُولَئِكَ الطُّلَّابُ فِي الْمَسْجِدِ.", tr: "Şu öğrenciler mescitte." },
+      { ar: "هَذَانِ كِتَابَانِ.", tr: "Bunlar iki kitap." },
+      { ar: "هَاتَانِ طَالِبَتَانِ.", tr: "Bunlar iki kadın öğrenci." },
+      { ar: "هَذِهِ الْكُتُبُ جَدِيدَةٌ.", tr: "Bu kitaplar yeni." },
+      { ar: "مَا ذَلِكَ؟", tr: "Şu ne?" },
+      { ar: "ذَلِكَ مَسْجِدٌ كَبِيرٌ.", tr: "Şu büyük bir mescit." },
+      { ar: "مَنْ هَؤُلَاءِ؟", tr: "Bunlar kim?" },
+      { ar: "تِلْكَ الْكُتُبُ هُنَاكَ.", tr: "O kitaplar orada." },
+      { ar: "ذَلِكَ الْكِتَابُ لَا رَيْبَ فِيهِ.", tr: "O kitap; onda hiç şüphe yoktur." },
+      { ar: "أُولَئِكَ هُمُ الْمُفْلِحُونَ.", tr: "İşte onlar kurtuluşa erenlerdir." }
+    ],
+    "ders-19": [
+      { ar: "الطَّالِبُ الَّذِي يَكْتُبُ الدَّرْسَ مُجْتَهِدٌ.", tr: "Dersi yazan öğrenci çalışkan." },
+      { ar: "الطَّالِبَةُ الَّتِي فِي الْفَصْلِ أُخْتِي.", tr: "Sınıftaki kız öğrenci kız kardeşim." },
+      { ar: "الْكِتَابُ الَّذِي قَرَأْتُهُ جَدِيدٌ.", tr: "Okuduğum kitap yeni." },
+      { ar: "الرِّجَالُ الَّذِينَ ذَهَبُوا إِلَى الْمَسْجِدِ مُعَلِّمُونَ.", tr: "Mescide giden adamlar öğretmen." },
+      { ar: "الْكُتُبُ الَّتِي قَرَأْتُهَا كَثِيرَةٌ.", tr: "Okuduğum kitaplar çok." },
+      { ar: "اُكْتُبْ مَا تَسْمَعُ.", tr: "Duyduğunu yaz." },
+      { ar: "أُحِبُّ مَنْ يَقْرَأُ الْقُرْآنَ.", tr: "Kur’an okuyanı severim." },
+      { ar: "هَذَا هُوَ الْكِتَابُ الَّذِي قَرَأْتُهُ أَمْسِ.", tr: "Dün okuduğum kitap işte bu." },
+      { ar: "أَيُّ كِتَابٍ هَذَا؟", tr: "Bu hangi kitap?" },
+      { ar: "مَنِ الطَّالِبُ الَّذِي كَتَبَ الدَّرْسَ؟", tr: "Dersi yazan öğrenci kim?" },
+      { ar: "عِنْدِي كِتَابٌ قَرَأْتُهُ مَرَّتَيْنِ.", tr: "İki kez okuduğum bir kitabım var." },
+      { ar: "الْمَرْأَةُ الَّتِي ذَهَبَتْ إِلَى السُّوقِ أُمِّي.", tr: "Çarşıya giden kadın annem." },
+      { ar: "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ.", tr: "Kendilerine nimet verdiklerinin yoluna." },
+      { ar: "الَّذِي أَطْعَمَهُمْ مِنْ جُوعٍ.", tr: "Ki O, onları açlıktan doyurdu." }
+    ],
+    "ders-20": [
+      { ar: "كَتَبَ الطَّالِبُ الدَّرْسَ.", tr: "Öğrenci dersi yazdı." },
+      { ar: "الْمُعَلِّمُ فِي الْمَسْجِدِ.", tr: "Öğretmen mescitte." },
+      { ar: "قَرَأْتُ كِتَابَ الْمُعَلِّمِ.", tr: "Öğretmenin kitabını okudum." },
+      { ar: "إِنَّ اللَّهَ غَفُورٌ رَحِيمٌ.", tr: "Şüphesiz Allah çok bağışlayan, çok merhamet edendir." },
+      { ar: "رَأَيْتُ الْمُعَلِّمِينَ فِي الْمَسْجِدِ.", tr: "Mescitte öğretmenleri gördüm." },
+      { ar: "الطُّلَّابُ يَكْتُبُونَ الدُّرُوسَ.", tr: "Öğrenciler dersleri yazıyorlar." },
+      { ar: "لَنْ يَذْهَبَ الطَّالِبُ إِلَى السُّوقِ.", tr: "Öğrenci çarşıya gitmeyecek." },
+      { ar: "لَمْ يَكْتُبِ الطَّالِبُ الدَّرْسَ.", tr: "Öğrenci dersi yazmadı." },
+      { ar: "أُرِيدُ أَنْ أَذْهَبَ إِلَى الْمَسْجِدِ.", tr: "Mescide gitmek istiyorum." },
+      { ar: "أُرِيدُ أَنْ أَتَعَلَّمَ الْعَرَبِيَّةَ.", tr: "Arapça öğrenmek istiyorum." },
+      { ar: "قَرَأَ الْمُعَلِّمُ الْكِتَابَ فِي الْمَسْجِدِ.", tr: "Öğretmen kitabı mescitte okudu." },
+      { ar: "كِتَابُ الطَّالِبِ عَلَى الْمَكْتَبِ.", tr: "Öğrencinin kitabı masanın üzerinde." },
+      { ar: "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ.", tr: "Yalnız sana kulluk eder, yalnız senden yardım dileriz." },
+      { ar: "مَاذَا تُرِيدُ أَنْ تَفْعَلَ غَدًا؟", tr: "Yarın ne yapmak istiyorsun?" }
     ]
   };
 
@@ -3299,4 +3748,6 @@
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => toast.classList.remove("show"), 3200);
   }
+  // Sûre sayfaları (sureler.js) sesli okuma ve bildirimler için bu ortak yardımcıları kullanır.
+  window.ArapcaApp = Object.assign(window.ArapcaApp || {}, { speakArabic, stopActiveSpeech, showToast });
 })();

@@ -3605,6 +3605,10 @@ body[data-word-map="hidden"] .word-map {
   gap: 0.6rem;
 }
 
+.word-map__note[hidden] {
+  display: none;
+}
+
 .word-map__note-text {
   margin: 0;
   flex: 1 1 auto;

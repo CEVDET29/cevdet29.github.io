@@ -203,6 +203,25 @@
   }
 
   const wordAudio = (s, a, w) => [`https://audio.qurancdn.com/wbw/${pad3(s)}_${pad3(a)}_${pad3(w)}.mp3`];
+
+  // Kelime kartındaki kelimeyi sûre içinde bulur; hâfızın o kelimeyi okuduğu sesi çalmak için.
+  // Önce harekesiz birebir eşleşme, sonra önek/sonek almış biçim (بِرَبِّ، طَيْرًا، صَلَاتِهِمْ) aranır.
+  const bareArabic = (text) => String(text).replace(/[\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g, "").replace(/[أإآٱ]/g, "ا").replace(/ى/g, "ي").replace(/ة/g, "ت").trim();
+  function findWordSpot(surah, ar) {
+    const target = bareArabic(ar);
+    if (!target) return null;
+    let loose = null;
+    for (let a = 0; a < surah.ayetler.length; a += 1) {
+      const words = surah.ayetler[a].kelimeler;
+      for (let w = 0; w < words.length; w += 1) {
+        const bare = bareArabic(words[w].w);
+        if (bare === target) return { ayah: a + 1, word: w + 1 };
+        const extra = bare.length - target.length;
+        if (!loose && extra > 0 && extra <= 4 && bare.includes(target)) loose = { ayah: a + 1, word: w + 1 };
+      }
+    }
+    return loose;
+  }
   const ayahAudio = (s, a) => [
     `https://verses.quran.com/Alafasy/mp3/${pad3(s)}${pad3(a)}.mp3`,
     `https://everyayah.com/data/Alafasy_128kbps/${pad3(s)}${pad3(a)}.mp3`
@@ -612,7 +631,11 @@
       });
       const actions = el("div", "flashcard-actions");
       const speak = iconButton(`${ar} kelimesini sesli oku`, SPEAK_ICON);
-      speak.addEventListener("click", () => app().speakArabic?.(ar, speak));
+      const spot = findWordSpot(s, ar);
+      speak.addEventListener("click", () => {
+        if (spot) playSources(wordAudio(no, spot.ayah, spot.word), speak, ar);
+        else app().speakArabic?.(ar, speak);
+      });
       actions.appendChild(speak);
       wrap.append(card, actions);
       fgrid.appendChild(wrap);
