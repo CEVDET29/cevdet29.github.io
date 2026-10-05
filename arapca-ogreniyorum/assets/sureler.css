@@ -1,0 +1,250 @@
+/* --- Sureler üzerinden Arapça --- */
+
+.lesson-hero .sure-hero__title,
+.sure-hero__title {
+  margin: 0.2rem 0 0.6rem;
+  font-size: calc(2.4rem * var(--arabic-scale, 1));
+  line-height: 1.7;
+  color: var(--teal);
+}
+
+.sure-listen {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.9rem;
+  margin-top: 1.1rem;
+}
+
+.sure-listen small {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.sure-listen__all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.sure-listen__all svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  fill: currentColor;
+}
+
+.sure-listen__all.is-speaking {
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--teal) 25%, transparent);
+}
+
+.sure-toggles {
+  margin: 1rem 0 1.1rem;
+}
+
+.sure-toggles__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.sure-toggles__row .word-map-toggle {
+  min-height: 2.25rem;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.85rem;
+}
+
+.sure-toggles__row .word-map-toggle[aria-pressed="false"] {
+  opacity: 0.7;
+}
+
+/* Âyet kartı */
+.ayah-card {
+  position: relative;
+  margin-top: 1rem;
+  padding: 1rem 1.1rem 1.1rem;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+  box-shadow: var(--card-shadow);
+  scroll-margin-top: calc(var(--topbar-height, 72px) + 1rem);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ayah-card.is-playing {
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--teal) 20%, transparent), var(--card-shadow);
+}
+
+.ayah-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.ayah-card__no {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.1rem;
+  height: 2.1rem;
+  padding: 0 0.6rem;
+  border-radius: 999px;
+  background: var(--teal-soft);
+  color: var(--teal-dark);
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.ayah-card__play svg {
+  fill: currentColor;
+  stroke: none;
+}
+
+.ayah-card__arabic {
+  margin: 0.6rem 0 0.35rem;
+  font-size: calc(1.85rem * var(--arabic-scale, 1));
+  line-height: 2.1;
+  text-align: right;
+  color: var(--navy);
+}
+
+.ayah-card__tail {
+  white-space: nowrap;
+}
+
+.ayah-card__mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.6em;
+  height: 1.6em;
+  margin-inline-start: 0.15em;
+  border: 2px solid color-mix(in srgb, var(--teal) 60%, transparent);
+  border-radius: 999px;
+  color: var(--teal);
+  font-size: 0.62em;
+  line-height: 1;
+  vertical-align: middle;
+}
+
+.ayah-card__okunus {
+  margin: 0;
+  color: var(--teal-dark);
+  font-style: italic;
+  font-size: 0.98rem;
+}
+
+.ayah-card__meal {
+  margin: 0.25rem 0 0;
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.55;
+}
+
+body[data-okunus="hidden"] .ayah-card__okunus,
+body[data-okunus="hidden"] .word-chip__ok {
+  display: none;
+}
+
+body[data-meal="hidden"] .ayah-card__meal {
+  filter: blur(6px);
+  user-select: none;
+  cursor: pointer;
+}
+
+body[data-meal="hidden"] .ayah-card__meal:hover {
+  filter: none;
+}
+
+.ayah-card .word-chip {
+  min-width: 4.2rem;
+}
+
+.word-chip__ok {
+  font-size: 0.72rem;
+  line-height: 1.2;
+  color: var(--role-color);
+  opacity: 0.85;
+  font-style: italic;
+}
+
+.ayah-card .word-chip__tr {
+  max-width: 9.5rem;
+}
+
+.word-map__root {
+  display: inline-block;
+  margin-top: 0.2rem;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.sure-goal__text {
+  min-width: 0;
+}
+
+.sure-goal__text .arabic.inline {
+  font-size: 1.15em;
+}
+
+/* Kök tablosu */
+.sure-root-table td:nth-child(2) {
+  font-size: calc(1.15rem * var(--arabic-scale, 1));
+}
+
+.sure-root-table td:last-child {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+/* Liste sayfası */
+.sure-card .lesson-card__number {
+  font-size: 1.05rem;
+}
+
+.sure-card__ar {
+  margin-inline-start: 0.35rem;
+  color: var(--teal);
+  font-size: 1.1em;
+}
+
+.question.is-review-target {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--amber) 45%, transparent);
+}
+
+@media (max-width: 620px) {
+  .ayah-card {
+    padding: 0.85rem 0.8rem 0.95rem;
+  }
+
+  .ayah-card__arabic {
+    font-size: calc(1.55rem * var(--arabic-scale, 1));
+  }
+
+  .ayah-card .word-chip {
+    min-width: 3.6rem;
+    padding: 0.3rem 0.45rem;
+  }
+
+  .lesson-hero .sure-hero__title {
+    font-size: calc(2rem * var(--arabic-scale, 1));
+  }
+}
+
+@media print {
+  .sure-listen,
+  .sure-toggles__row,
+  .ayah-card__play {
+    display: none !important;
+  }
+
+  .ayah-card {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
+  body[data-meal="hidden"] .ayah-card__meal {
+    filter: none;
+  }
+}
