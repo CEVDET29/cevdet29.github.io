@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kaza Defteri</title>
+<meta name="description" content="Kaza namazı borcunu vakit vakit takip etmek için sade bir defter.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231F4E9C'/%3E%3Cg fill='none' stroke='%23fff' stroke-width='2'%3E%3Crect x='11' y='11' width='18' height='18'/%3E%3Crect x='11' y='11' width='18' height='18' transform='rotate(45 20 20)'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Düzen: üstte genel durum, ortada altı vaktin sayaç kartları, altta plan, son 14 gün ve ayarlar. İznik çinisi mavisi ve turkuazı. */
+:root{
+  --bg:#F2F5F6; --surface:#FFFFFF; --ink:#13232B; --muted:#56666E; --line:#D7E0E3;
+  --cobalt:#1F4E9C; --cobalt-soft:#E2E9F6; --turq:#13807C; --turq-soft:#DCF0EE; --warn:#A04E17;
+  --f-display:"Alegreya", Georgia, "Times New Roman", serif;
+  --f-body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-num:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0D1418; --surface:#152129; --ink:#E5EDEF; --muted:#94A5AC; --line:#25353E;
+  --cobalt:#8DB0EE; --cobalt-soft:#1B2A44; --turq:#4FC6BE; --turq-soft:#153532; --warn:#E39A62;
+  color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --bg:#0D1418; --surface:#152129; --ink:#E5EDEF; --muted:#94A5AC; --line:#25353E;
+  --cobalt:#8DB0EE; --cobalt-soft:#1B2A44; --turq:#4FC6BE; --turq-soft:#153532; --warn:#E39A62;
+  color-scheme:dark; }
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--f-body)}
+.wrap{max-width:960px;margin:0 auto;padding-inline:16px;padding-block:24px 48px;display:grid;gap:28px}
+h1,h2{font-family:var(--f-display);font-weight:700;margin:0;text-wrap:balance;letter-spacing:.005em}
+h1{font-size:2rem;line-height:1.1}
+h2{font-size:1.35rem}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.label{font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted);font-weight:600}
+.muted{color:var(--muted)}
+button{font:inherit;cursor:pointer;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);padding:.55rem .9rem;min-height:44px}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--cobalt);outline-offset:2px}
+button.primary{background:var(--cobalt);border-color:var(--cobalt);color:var(--surface);font-weight:600}
+button.turq{background:var(--turq);border-color:var(--turq);color:var(--surface);font-weight:600}
+button.danger{color:var(--warn);border-color:var(--warn)}
+button:disabled{opacity:.4;cursor:default}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:.5rem .6rem;min-height:42px}
+textarea{width:100%;min-height:110px;font-family:var(--f-num);font-size:.8rem}
+
+/* Başlık */
+header{display:grid;gap:14px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand svg{flex:none}
+.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px 24px}
+.summary .big{font-size:1.6rem;font-weight:500;line-height:1.2}
+.bar{height:10px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--turq);border-radius:99px;transition:width .3s}
+.bar.thin{height:6px}
+
+/* Vakit kartları */
+.daybar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:720px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:380px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;display:grid;gap:10px;min-width:0}
+.card.met{border-color:var(--turq);box-shadow:inset 0 0 0 1px var(--turq)}
+.card-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.card-top b{font-family:var(--f-display);font-size:1.3rem}
+.remain{font-size:1.45rem;line-height:1.1}
+.chip{display:inline-block;font-size:.78rem;padding:.15rem .55rem;border-radius:99px;background:var(--cobalt-soft);color:var(--cobalt);font-weight:600}
+.card.met .chip{background:var(--turq-soft);color:var(--turq)}
+.actions{display:grid;grid-template-columns:44px 1fr;gap:8px}
+.actions button{padding:.5rem}
+
+/* Bölümler */
+section{display:grid;gap:14px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:14px}
+.seg{display:flex;flex-wrap:wrap;gap:8px}
+.seg button[aria-pressed="true"]{background:var(--cobalt-soft);border-color:var(--cobalt);color:var(--cobalt);font-weight:600}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px 24px}
+.facts div{display:grid;gap:2px}
+.chart{overflow-x:auto}
+.chart svg{display:block;width:100%;min-width:320px;height:auto}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.form label{display:grid;gap:4px;font-size:.85rem;color:var(--muted)}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 16px}
+details[open]{padding-bottom:16px}
+summary{cursor:pointer;padding:12px 0;font-weight:600}
+details .inner{display:grid;gap:14px}
+.note{font-size:.85rem;color:var(--muted);max-width:65ch;margin:0}
+.list{margin:0;padding-left:1.3rem;display:grid;gap:8px;max-width:68ch}
+.list i{font-style:italic;color:var(--cobalt)}
+.back{color:var(--muted);text-decoration:none;font-size:.9rem;justify-self:start}
+.back:hover{color:var(--cobalt)}
+.hint{background:var(--cobalt-soft);color:var(--cobalt);border-radius:10px;padding:.6rem .8rem;font-size:.9rem}
+.toast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:.55rem 1rem;border-radius:99px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <a class="back" href="/">← Projeler</a>
+  <div class="brand">
+    <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+      <g fill="none" stroke="var(--cobalt)" stroke-width="2">
+        <rect x="9" y="9" width="22" height="22"/>
+        <rect x="9" y="9" width="22" height="22" transform="rotate(45 20 20)"/>
+      </g>
+      <circle cx="20" cy="20" r="4" fill="var(--turq)"/>
+    </svg>
+    <div>
+      <h1>Kaza Defteri</h1>
+      <div class="muted" id="subtitle">Kaza namazı takip tablosu</div>
+    </div>
+  </div>
+
+  <div class="hint" id="firstHint" hidden>Sayfa 20 yıllık örnek bir borçla açılır. Kendi borcunu “Ayarlar ve düzeltme” bölümünden gir.</div>
+
+  <div class="bar" aria-hidden="true"><i id="totalBar" style="width:0%"></i></div>
+
+  <div class="summary">
+    <div><div class="label">Tamamlanan</div><div class="big num" id="sPct">%0</div><div class="muted" id="sRekat">0 rekât</div></div>
+    <div><div class="label">Tamamlanan gün</div><div class="big num" id="sDays">0</div><div class="muted" id="sDaysOf">/ 0 gün</div></div>
+    <div><div class="label">Kalan</div><div class="big num" id="sLeft">0</div><div class="muted">günlük kaza</div></div>
+    <div><div class="label">Hedefle bitiş</div><div class="big" id="sFinish">–</div><div class="muted" id="sFinishSub"></div></div>
+  </div>
+</header>
+
+<section aria-labelledby="todayH">
+  <div class="daybar">
+    <div>
+      <h2 id="todayH">Bugün</h2>
+      <div class="muted" id="todayText">Hedef: her vakitten 1 kaza</div>
+    </div>
+    <button class="turq" id="fullDay">+1 gün tamamla (6 vakit)</button>
+  </div>
+  <div class="grid" id="cards"></div>
+</section>
+
+<section aria-labelledby="planH">
+  <h2 id="planH">Plan</h2>
+  <div class="panel">
+    <div>
+      <div class="label" style="margin-bottom:6px">Günlük hedef</div>
+      <div class="seg" id="targetSeg"></div>
+    </div>
+    <div class="facts">
+      <div><span class="label">Bu hedefle</span><span id="pTarget"></span></div>
+      <div><span class="label">Son 30 günkü hızınla</span><span id="pPace"></span></div>
+      <div><span class="label">Hedef serisi</span><span id="pStreak"></span></div>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="histH">
+  <h2 id="histH">Son 14 gün</h2>
+  <div class="panel">
+    <div class="chart" id="chart"></div>
+    <div class="note">Her çubuk o gün kılınan kazaların gün karşılığıdır (6 vakit = 1 gün). Kesikli çizgi günlük hedefin.</div>
+  </div>
+</section>
+
+<details id="settings">
+  <summary>Ayarlar ve düzeltme</summary>
+  <div class="inner">
+    <div class="form">
+      <label for="years">Borç (yıl)<input id="years" type="number" min="0" step="1" inputmode="numeric"></label>
+      <label for="extra">Ek gün<input id="extra" type="number" min="0" step="1" inputmode="numeric"></label>
+    </div>
+    <div class="note" id="totalNote"></div>
+    <div class="label">Şimdiye kadar kılınan (düzeltmek için)</div>
+    <div class="form" id="doneForm"></div>
+    <div class="row"><button class="primary" id="saveSettings">Kaydet</button></div>
+  </div>
+</details>
+
+<details id="backup">
+  <summary>Yedekle ve geri yükle</summary>
+  <div class="inner">
+    <p class="note">Kayıtlar yalnızca bu tarayıcıda tutulur. Tarayıcı verilerini silersen kaybolur. Ara sıra yedek kodunu kopyalayıp bir yere (not, e-posta) kaydet.</p>
+    <div class="row"><button id="exportBtn">Yedek kodunu göster</button><button id="copyBtn">Kopyala</button></div>
+    <textarea id="backupText" aria-label="Yedek kodu" placeholder="Yedek kodu burada görünür. Geri yüklemek için kaydettiğin kodu buraya yapıştır."></textarea>
+    <div class="row"><button class="primary" id="importBtn">Bu koddan geri yükle</button></div>
+    <hr style="border:0;border-top:1px solid var(--line);width:100%;margin:4px 0">
+    <div class="row" id="resetRow"><button class="danger" id="resetBtn">Tüm kayıtları sıfırla</button></div>
+    <div class="row" id="resetConfirm" hidden><span class="muted">Bütün sayaçlar ve geçmiş silinecek.</span><button class="danger" id="resetYes">Evet, sıfırla</button><button id="resetNo">Vazgeç</button></div>
+  </div>
+</details>
+
+<section aria-labelledby="guideH">
+  <h2 id="guideH">Rehber</h2>
+
+  <details open>
+    <summary>Kaza nasıl kılınır</summary>
+    <div class="inner">
+      <ul class="list">
+        <li><b>Niyet:</b> “Üzerimde olan, kılmadığım ilk sabah namazının farzını kılmaya niyet ettim.” Vakit adını değiştirerek her kazada aynı şekilde niyet edilir.</li>
+        <li>Kazada sünnet kılınmaz. Yalnız farzlar ve vitir kılınır.</li>
+        <li>Farzların 3. ve 4. rekâtlarında yalnız Fâtiha okunur.</li>
+        <li>Güneş doğarken, tam tepedeyken ve batarken kılınmaz. Sabah ve ikindi namazından sonra kılınabilir.</li>
+        <li>Borcu 5 vakti aşan kişi için kazalar arasında ve vakit namazıyla sıra gözetmek gerekmez.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Kazadan sonra özel bir dua var mı?</summary>
+    <div class="inner">
+      <p class="note">Kaza namazına özgü, okunması gereken bir dua yoktur. Farz namazlardan sonra okunan tesbihatı kazadan sonra da okuyabilirsin, ama zorunlu değildir. Arka arkaya birkaç kaza kılıyorsan tesbihatı her birinin ardından değil, hepsi bitince bir kez yapmak pratik olur.</p>
+      <div class="label">Namaz sonrası tesbihat sırası</div>
+      <ol class="list">
+        <li>Selamdan sonra 3 kez <i>Estağfirullah</i>.</li>
+        <li><i>Allâhümme ente's-selâm ve minke's-selâm, tebârakte yâ ze'l-celâli ve'l-ikrâm.</i></li>
+        <li>Âyetü'l-Kürsî.</li>
+        <li><span class="num">33</span> kez <i>Sübhânallah</i>, <span class="num">33</span> kez <i>Elhamdülillah</i>, <span class="num">33</span> kez <i>Allâhu ekber</i>.</li>
+        <li><i>Lâ ilâhe illallâhu vahdehû lâ şerîke leh, lehü'l-mülkü ve lehü'l-hamdü ve hüve alâ külli şey'in kadîr.</i></li>
+        <li>Kendi dilinle dua. Geçmişte kılamadıkların için tövbe ve kılabildiklerin için şükür bu dua için güzel bir konu.</li>
+      </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary>Namazı daha verimli kılmak için</summary>
+    <div class="inner">
+      <ul class="list">
+        <li><b>Acele etme.</b> Rükû, secde ve aralarındaki doğrulmalarda en az bir “Sübhânallah” diyecek kadar dur (ta'dîl-i erkân). Çok sayıda kazayı hızlıca bitirmek, azını düzgün kılmaktan iyi değildir.</li>
+        <li><b>Okuduklarının anlamını öğren.</b> Fâtiha, Sübhâneke, Ettehiyyâtü ve Salli-Bârik'in mealini bilmek, namazda ne söylediğini fark etmeni sağlar.</li>
+        <li><b>Abdesti hazırlık say.</b> Abdesti sakin alırsan namaza zihnen hazır başlarsın.</li>
+        <li><b>Ortamı hazırla.</b> Telefonu sessize al, mümkünse hep aynı sakin köşeyi kullan.</li>
+        <li><b>Sabit bir zaman belirle.</b> Kazayı belirli vakitlere bağlarsan alışkanlığa dönüşür. Yorgunken uzun oturum yerine kısa oturumlara böl.</li>
+        <li><b>Vakit namazını önceliğe koy.</b> Günün namazlarını ilk vaktinde kılmak, kazaya devam etmenin de temelidir.</li>
+        <li><b>Az ama düzenli.</b> Hedefini zorlanmadan sürdürebileceğin bir yerde tut. Çok yorulduğun bir günden sonra bırakmaktansa, her gün biraz kıl.</li>
+      </ul>
+      <p class="note">Mezhebe ve senin durumuna özel sorular için müftülüklere veya Diyanet'in ALO 190 hattına danışabilirsin.</p>
+    </div>
+  </details>
+</section>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const PRAYERS=[
+  {k:'sabah',n:'Sabah',r:2},{k:'ogle',n:'Öğle',r:4},{k:'ikindi',n:'İkindi',r:4},
+  {k:'aksam',n:'Akşam',r:3},{k:'yatsi',n:'Yatsı',r:4},{k:'vitir',n:'Vitir',r:3}
+];
+const DAY_REKAT=PRAYERS.reduce((a,p)=>a+p.r,0); // 20
+const KEY='kaza-defteri-v1';
+const nf=new Intl.NumberFormat('tr-TR');
+const fmt=n=>nf.format(n);
+
+function blank(){const o={};PRAYERS.forEach(p=>o[p.k]=0);return o}
+function defaults(){return {years:20,extra:0,target:1,done:blank(),log:{}}}
+let fresh=true;
+let S=load();
+
+function load(){
+  try{const raw=localStorage.getItem(KEY); if(raw){fresh=false;return sanitize(JSON.parse(raw))}}catch(e){}
+  return defaults();
+}
+function sanitize(o){
+  const d=defaults();
+  if(!o||typeof o!=='object')return d;
+  d.years=Math.max(0,+o.years||0); d.extra=Math.max(0,+o.extra||0);
+  d.target=[1,2,3,4,5].includes(+o.target)?+o.target:1;
+  PRAYERS.forEach(p=>{d.done[p.k]=Math.max(0,Math.floor(+(o.done&&o.done[p.k])||0))});
+  if(o.log&&typeof o.log==='object'){for(const day in o.log){if(/^\d{4}-\d{2}-\d{2}$/.test(day)){const e=blank();PRAYERS.forEach(p=>e[p.k]=Math.max(0,Math.floor(+o.log[day][p.k]||0)));d.log[day]=e}}}
+  return d;
+}
+function save(){fresh=false;try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+const totalDays=()=>Math.round(S.years*365.25)+S.extra;
+function dkey(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+const todayKey=()=>dkey(new Date());
+function dayLog(k){return S.log[k]||blank()}
+function addDays(n){const d=new Date();d.setDate(d.getDate()+n);return d}
+const longDate=d=>d.toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'});
+function duration(days){
+  if(days<=0)return 'bugün';
+  const y=Math.floor(days/365.25), m=Math.floor((days-y*365.25)/30.44);
+  if(y>0)return y+' yıl'+(m>0?' '+m+' ay':'');
+  if(m>0)return m+' ay';
+  return days+' gün';
+}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove('show'),1600)}
+
+function change(k,delta){
+  const T=totalDays(), tk=todayKey(), e=dayLog(tk);
+  if(delta>0){ if(S.done[k]>=T)return; S.done[k]++; e[k]++; }
+  else { if(e[k]<=0||S.done[k]<=0)return; S.done[k]--; e[k]--; }
+  S.log[tk]=e; save(); render();
+}
+function fullDay(){
+  const T=totalDays(), tk=todayKey(), e=dayLog(tk); let any=false;
+  PRAYERS.forEach(p=>{if(S.done[p.k]<T){S.done[p.k]++;e[p.k]++;any=true}});
+  if(!any)return;
+  S.log[tk]=e; save(); render(); toast('1 günlük kaza eklendi');
+}
+
+function render(){
+  const T=totalDays(), tk=todayKey(), today=dayLog(tk);
+  document.getElementById('firstHint').hidden=!fresh;
+  const doneR=PRAYERS.reduce((a,p)=>a+S.done[p.k]*p.r,0), totR=T*DAY_REKAT;
+  const pct=totR?doneR/totR*100:0;
+  const fullDays=Math.min(...PRAYERS.map(p=>S.done[p.k]));
+  const leftDays=Math.max(...PRAYERS.map(p=>T-S.done[p.k]));
+
+  document.getElementById('totalBar').style.width=pct.toFixed(2)+'%';
+  document.getElementById('sPct').textContent='%'+(pct<10?pct.toFixed(2):pct.toFixed(1)).replace('.',',');
+  document.getElementById('sRekat').textContent=fmt(doneR)+' / '+fmt(totR)+' rekât';
+  document.getElementById('sDays').textContent=fmt(fullDays);
+  document.getElementById('sDaysOf').textContent='/ '+fmt(T)+' gün';
+  document.getElementById('sLeft').textContent=fmt(leftDays);
+  const daysToGo=Math.ceil(leftDays/S.target);
+  document.getElementById('sFinish').textContent=leftDays?longDate(addDays(daysToGo)):'Tamamlandı';
+  document.getElementById('sFinishSub').textContent=leftDays?'yaklaşık '+duration(daysToGo)+' sonra':'';
+  document.getElementById('subtitle').textContent=S.years+' yıllık borç · '+fmt(T)+' gün · her gün '+DAY_REKAT+' rekât';
+
+  // Kartlar
+  const wrap=document.getElementById('cards'); wrap.innerHTML='';
+  PRAYERS.forEach(p=>{
+    const left=T-S.done[p.k], tc=today[p.k], met=tc>=S.target;
+    const c=document.createElement('div'); c.className='card'+(met?' met':'');
+    c.innerHTML=`<div class="card-top"><b>${p.n}</b><span class="muted">${p.r} rekât</span></div>
+      <div><div class="remain num">${fmt(left)}</div><div class="muted" style="font-size:.85rem">kaldı · ${fmt(S.done[p.k])} kılındı</div></div>
+      <div class="bar thin" aria-hidden="true"><i style="width:${T?(S.done[p.k]/T*100).toFixed(2):0}%"></i></div>
+      <div><span class="chip num">Bugün ${tc} / ${S.target}${met?' ✓':''}</span></div>
+      <div class="actions"><button aria-label="${p.n} bugünkü kaydı geri al" ${tc>0?'':'disabled'}>−</button><button class="primary">+1 kıldım</button></div>`;
+    const [minus,plus]=c.querySelectorAll('button');
+    minus.onclick=()=>change(p.k,-1);
+    plus.onclick=()=>change(p.k,1);
+    plus.disabled=left<=0;
+    wrap.appendChild(c);
+  });
+  const todaySum=PRAYERS.reduce((a,p)=>a+today[p.k],0);
+  document.getElementById('todayText').textContent='Hedef: her vakitten '+S.target+' kaza · bugün '+todaySum+' / '+(6*S.target)+' vakit';
+
+  // Hedef seçimi
+  const seg=document.getElementById('targetSeg'); seg.innerHTML='';
+  [1,2,3,4,5].forEach(n=>{
+    const b=document.createElement('button'); b.textContent=n+' gün / gün';
+    b.setAttribute('aria-pressed',S.target===n?'true':'false');
+    b.onclick=()=>{S.target=n;save();render()};
+    seg.appendChild(b);
+  });
+  document.getElementById('pTarget').textContent=leftDays?(duration(daysToGo)+' · '+longDate(addDays(daysToGo))):'Borç tamamlandı';
+
+  // Son 30 gün hızı
+  let sum30=0; for(let i=0;i<30;i++){const e=dayLog(dkey(addDays(-i)));sum30+=PRAYERS.reduce((a,p)=>a+e[p.k],0)}
+  const pace=sum30/6/30;
+  document.getElementById('pPace').textContent=!leftDays?'–':pace>0?(pace.toFixed(2).replace('.',',')+' gün/gün · '+longDate(addDays(Math.ceil(leftDays/pace)))):'Henüz kayıt yok';
+
+  // Seri: hedefin tutturulduğu ardışık günler (bugün henüz tamamlanmadıysa dünden başlar)
+  const metDay=k=>PRAYERS.every(p=>dayLog(k)[p.k]>=S.target);
+  let i=metDay(tk)?0:1, streak=0; while(metDay(dkey(addDays(-i)))){streak++;i++}
+  document.getElementById('pStreak').textContent=streak+' gün';
+
+  drawChart();
+  syncSettings();
+}
+
+function drawChart(){
+  const days=[]; for(let i=13;i>=0;i--){const d=addDays(-i);const e=dayLog(dkey(d));days.push({d,v:PRAYERS.reduce((a,p)=>a+e[p.k],0)/6})}
+  const W=640,H=200,L=36,R=8,Tp=12,B=28, iw=W-L-R, ih=H-Tp-B;
+  const maxV=Math.max(S.target+1,Math.ceil(Math.max(...days.map(x=>x.v))));
+  const y=v=>Tp+ih-(v/maxV)*ih, bw=iw/14;
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Son 14 günde kılınan kaza miktarı">`;
+  for(let t=0;t<=maxV;t++){s+=`<line x1="${L}" x2="${W-R}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)" stroke-width="1"/><text x="${L-8}" y="${y(t)+4}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="IBM Plex Mono, monospace">${t}</text>`}
+  days.forEach((x,i)=>{
+    const h=(x.v/maxV)*ih, bx=L+i*bw+bw*0.18, w=bw*0.64, met=x.v>=S.target;
+    if(x.v>0)s+=`<rect x="${bx}" y="${y(x.v)}" width="${w}" height="${h}" rx="3" fill="${met?'var(--turq)':'var(--cobalt)'}" opacity="${met?1:.7}"><title>${longDate(x.d)}: ${x.v.toFixed(2).replace('.',',')} gün</title></rect>`;
+    if(i%2===1||i===13)s+=`<text x="${L+i*bw+bw/2}" y="${H-8}" text-anchor="middle" font-size="11" fill="var(--muted)" font-family="IBM Plex Sans, sans-serif">${i===13?'Bugün':x.d.getDate()+'.'+(x.d.getMonth()+1)}</text>`;
+  });
+  s+=`<line x1="${L}" x2="${W-R}" y1="${y(S.target)}" y2="${y(S.target)}" stroke="var(--ink)" stroke-width="1.5" stroke-dasharray="5 4" opacity=".55"/>`;
+  s+='</svg>';
+  document.getElementById('chart').innerHTML=s;
+}
+
+function syncSettings(){
+  const det=document.getElementById('settings');
+  if(det.open&&det.contains(document.activeElement))return;
+  document.getElementById('years').value=S.years;
+  document.getElementById('extra').value=S.extra;
+  document.getElementById('totalNote').textContent='Toplam '+fmt(totalDays())+' gün (artık yıllar dahil) · '+fmt(totalDays()*DAY_REKAT)+' rekât. Ergenlikten itibaren hesapla; emin değilsen fazla tut.';
+  const f=document.getElementById('doneForm'); f.innerHTML='';
+  PRAYERS.forEach(p=>{f.insertAdjacentHTML('beforeend',`<label for="d_${p.k}">${p.n}<input id="d_${p.k}" type="number" min="0" step="1" inputmode="numeric" value="${S.done[p.k]}"></label>`)});
+}
+
+document.getElementById('fullDay').onclick=fullDay;
+document.getElementById('saveSettings').onclick=()=>{
+  S.years=Math.max(0,+document.getElementById('years').value||0);
+  S.extra=Math.max(0,Math.floor(+document.getElementById('extra').value||0));
+  const T=totalDays();
+  PRAYERS.forEach(p=>{S.done[p.k]=Math.min(T,Math.max(0,Math.floor(+document.getElementById('d_'+p.k).value||0)))});
+  save(); document.activeElement.blur(); render(); toast('Kaydedildi');
+};
+document.getElementById('exportBtn').onclick=()=>{const t=document.getElementById('backupText');t.value=JSON.stringify(S);t.select()};
+document.getElementById('copyBtn').onclick=()=>{
+  const t=document.getElementById('backupText'); if(!t.value)t.value=JSON.stringify(S);
+  const fallback=()=>{t.focus();t.select();toast('Kod seçildi, kopyalayabilirsin')};
+  try{navigator.clipboard.writeText(t.value).then(()=>toast('Yedek kodu kopyalandı'),fallback)}catch(e){fallback()}
+};
+document.getElementById('importBtn').onclick=()=>{
+  try{const o=JSON.parse(document.getElementById('backupText').value);if(!o||!o.done)throw 0;S=sanitize(o);save();render();toast('Yedek geri yüklendi')}
+  catch(e){toast('Kod okunamadı. Yedek kodunun tamamını yapıştır.')}
+};
+document.getElementById('resetBtn').onclick=()=>{document.getElementById('resetRow').hidden=true;document.getElementById('resetConfirm').hidden=false};
+document.getElementById('resetNo').onclick=()=>{document.getElementById('resetRow').hidden=false;document.getElementById('resetConfirm').hidden=true};
+document.getElementById('resetYes').onclick=()=>{const y=S.years,ex=S.extra;S=defaults();S.years=y;S.extra=ex;save();document.getElementById('resetNo').onclick();render();toast('Kayıtlar sıfırlandı')};
+
+render();
+</script>
+</body>
+</html>
