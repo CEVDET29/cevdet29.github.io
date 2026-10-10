@@ -132,6 +132,9 @@ details.sub summary{font-weight:500;color:var(--muted)}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:36px}
 .install{min-height:36px;padding:.3rem .8rem;font-size:.88rem;font-weight:600;color:var(--cobalt);border-color:var(--cobalt);background:var(--cobalt-soft)}
 .back{color:var(--muted);text-decoration:none;font-size:.9rem;justify-self:start}
+/* Ana ekrandan uygulama olarak açılınca sitenin geri kalanına dönüş bağlantısı gösterilmez. */
+@media (display-mode: standalone){.topbar{display:none}}
+.standalone .topbar{display:none}
 .back:hover{color:var(--cobalt)}
 .hint{background:var(--cobalt-soft);color:var(--cobalt);border-radius:10px;padding:.6rem .8rem;font-size:.9rem}
 .toast{position:fixed;white-space:nowrap;max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:.55rem 1rem;border-radius:99px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s}
@@ -242,7 +245,7 @@ details.sub summary{font-weight:500;color:var(--muted)}
       <button id="shareBtn" hidden>Paylaş (Drive, WhatsApp…)</button>
     </div>
     <div class="row">
-      <label class="filebtn">Dosyadan geri yükle<input id="fileImport" type="file" accept="application/json,.json" class="visually-hidden"></label>
+      <label class="filebtn">Dosyadan geri yükle<input id="fileImport" type="file" class="visually-hidden"></label>
     </div>
     <p class="note">İndirilen dosyayı Google Drive'a, e-postana veya WhatsApp'ta kendine göndererek sakla.</p>
 
@@ -530,9 +533,11 @@ function renderBackup(){
   document.getElementById('backupReminder').hidden=!need;
   if(need)document.getElementById('reminderText').textContent=lb?'Son yedeği '+ago+' gün önce aldın. Kayıtlarını korumak için yeni bir yedek al.':'Kayıtlarının henüz yedeği yok. Telefon değişir veya veriler silinirse kaldığın yerden devam etmek için yedek al.';
 }
+/* Yedek .txt olarak üretilir: Android Chrome paylaşım menüsü .json dosyalarını kabul etmiyor,
+   düz metin dosyasını ise her yerde (WhatsApp, Drive, e-posta) paylaşabiliyor. İçerik yine JSON. */
 function backupFile(){
   const data=JSON.stringify(Object.assign({app:'kaza-defteri',surum:1,tarih:new Date().toISOString()},S,{lastBackup:Date.now()}),null,1);
-  return new File([data],'kaza-defteri-yedek-'+todayKey()+'.json',{type:'application/json'});
+  return new File([data],'kaza-defteri-yedek-'+todayKey()+'.txt',{type:'text/plain'});
 }
 function markBackedUp(){S.lastBackup=Date.now();save();renderBackup()}
 function downloadBackup(){
@@ -543,7 +548,7 @@ function downloadBackup(){
 }
 const canShareFile=()=>{try{return !!(navigator.canShare&&navigator.canShare({files:[backupFile()]}))}catch(e){return false}};
 async function shareBackup(){
-  try{await navigator.share({files:[backupFile()],title:'Kaza Defteri yedeği'});markBackedUp();toast('Yedek paylaşıldı')}
+  try{await navigator.share({files:[backupFile()]});markBackedUp();toast('Yedek paylaşıldı')}
   catch(e){if(e&&e.name!=='AbortError')toast('Paylaşılamadı. Dosyayı indirmeyi dene.')}
 }
 let pending=null;
@@ -644,7 +649,7 @@ askPersist();
   if(guvenli&&"serviceWorker" in navigator){
     window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});
   }
-  if(kurulu)return;
+  if(kurulu){document.documentElement.classList.add("standalone");return;}
   var btn=document.getElementById("installBtn"), istem=null;
   window.addEventListener("beforeinstallprompt",function(e){e.preventDefault();istem=e;btn.hidden=false;});
   btn.addEventListener("click",function(){

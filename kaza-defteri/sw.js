@@ -2,7 +2,7 @@
    Görevi: uygulama kabuğunu (HTML, ikonlar, yazı tipleri) önbelleğe alıp
    çevrimdışı açılmayı sağlamak. Kayıtlar burada tutulmaz;
    onları sayfanın kendisi localStorage'da saklar. */
-var V = "kaza-defteri-v1";
+var V = "kaza-defteri-v2";
 var SHELL = [
   "./", "./index.html", "./manifest.json",
   "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./apple-touch-icon.png"
