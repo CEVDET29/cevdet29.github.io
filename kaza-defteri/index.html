@@ -7,7 +7,7 @@
 <meta name="description" content="Kaza namazı borcunu vakit vakit takip etmek için sade bir defter.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231F4E9C'/%3E%3Cg fill='none' stroke='%23fff' stroke-width='2'%3E%3Crect x='11' y='11' width='18' height='18'/%3E%3Crect x='11' y='11' width='18' height='18' transform='rotate(45 20 20)'/%3E%3C/g%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alegreya:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&family=Amiri:wght@400&display=swap">
 <style>
 /* Düzen: üstte genel durum, ortada altı vaktin sayaç kartları, altta plan, son 14 gün ve ayarlar. İznik çinisi mavisi ve turkuazı. */
 :root{
@@ -16,6 +16,7 @@
   --f-display:"Alegreya", Georgia, "Times New Roman", serif;
   --f-body:"IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-num:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --f-ar:"Amiri", "Traditional Arabic", "Noto Naskh Arabic", "Geeza Pro", serif;
   color-scheme:light;
 }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
@@ -82,7 +83,8 @@ section{display:grid;gap:14px}
 .chart{overflow-x:auto}
 .chart svg{display:block;width:100%;min-width:320px;height:auto}
 .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
-.form label{display:grid;gap:4px;font-size:.85rem;color:var(--muted)}
+.form label{display:grid;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
+.form input{width:100%;min-width:0}
 .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 16px}
 details[open]{padding-bottom:16px}
@@ -91,6 +93,25 @@ details .inner{display:grid;gap:14px}
 .note{font-size:.85rem;color:var(--muted);max-width:65ch;margin:0}
 .list{margin:0;padding-left:1.3rem;display:grid;gap:8px;max-width:68ch}
 .list i{font-style:italic;color:var(--cobalt)}
+/* Rehber */
+.legend{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:.85rem;color:var(--muted)}
+.tag{display:inline-block;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;padding:.12rem .5rem;border-radius:6px;white-space:nowrap}
+.tag.vakit{background:var(--cobalt-soft);color:var(--cobalt)}
+.tag.kaza{background:var(--turq-soft);color:var(--turq)}
+.flow{display:grid;gap:8px;padding-top:4px}
+.flow-h{font-family:var(--f-display);font-weight:700;font-size:1.1rem}
+.steps{list-style:none;margin:0;padding:0;display:grid;border:1px solid var(--line);border-radius:10px;overflow:hidden;max-width:560px}
+.steps li{display:grid;grid-template-columns:4.2rem minmax(0,1fr) auto;align-items:center;gap:10px;padding:.55rem .75rem;border-top:1px solid var(--line)}
+.steps li:first-child{border-top:0}
+.steps .rk{color:var(--muted);font-size:.85rem}
+.steps .rk::after{content:" rek.";font-family:var(--f-body)}
+.ar{font-family:var(--f-ar);font-size:1.4rem;line-height:2;margin:0 0 2px;text-align:right;color:var(--ink)}
+.big-ar{font-size:1.65rem;line-height:2.15}
+.duas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.dua{margin:0;background:var(--bg);border-radius:10px;padding:12px 14px;display:grid;gap:6px;min-width:0}
+.dua blockquote{margin:0;font-family:var(--f-display);font-size:1.08rem;line-height:1.5}
+.istigfar{display:grid;gap:8px;border:1px solid var(--line);border-radius:12px;padding:16px}
+.translit{margin:0;font-style:italic;color:var(--cobalt);max-width:68ch}
 .back{color:var(--muted);text-decoration:none;font-size:.9rem;justify-self:start}
 .back:hover{color:var(--cobalt)}
 .hint{background:var(--cobalt-soft);color:var(--cobalt);border-radius:10px;padding:.6rem .8rem;font-size:.9rem}
@@ -199,11 +220,58 @@ details .inner{display:grid;gap:14px}
     <div class="inner">
       <ul class="list">
         <li><b>Niyet:</b> “Üzerimde olan, kılmadığım ilk sabah namazının farzını kılmaya niyet ettim.” Vakit adını değiştirerek her kazada aynı şekilde niyet edilir.</li>
-        <li>Kazada sünnet kılınmaz. Yalnız farzlar ve vitir kılınır.</li>
+        <li>Kazada sünnet kılınmaz. Yalnız <b>farzlar</b> ve <b>vitir</b> kılınır. Hanefî mezhebinde vitir vacip olduğu için kılınmayan vitirler de kaza edilir.</li>
+        <li><b>Günlük borç:</b> sabah 2, öğle 4, ikindi 4, akşam 3, yatsı 4 ve vitir 3 rekât. Toplam 20 rekât.</li>
         <li>Farzların 3. ve 4. rekâtlarında yalnız Fâtiha okunur.</li>
+        <li><b>Vitir kazası</b> normal vitir gibi 3 rekâttır. Üçüncü rekâtta Fâtiha ve sureden sonra tekbir alınır, Kunut duaları okunur. Niyet: “Kılmadığım ilk vitir namazını kaza etmeye niyet ettim.”</li>
         <li>Güneş doğarken, tam tepedeyken ve batarken kılınmaz. Sabah ve ikindi namazından sonra kılınabilir.</li>
         <li>Borcu 5 vakti aşan kişi için kazalar arasında ve vakit namazıyla sıra gözetmek gerekmez.</li>
       </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>Bir vakitte sıra nasıl olur?</summary>
+    <div class="inner">
+      <p class="note">Günlük hedef 1 gün ise her vakitte o vaktin <b>bir</b> kazası kılınır. Sünnetlerin kazası yoktur. Hedef 2 gün ise her vakitte o vaktin iki kazası kılınır.</p>
+      <div class="legend"><span class="tag vakit">Vakit</span> o günün namazı <span class="tag kaza">Kaza</span> borçtan düşen namaz</div>
+
+      <div class="flow">
+        <div class="flow-h">Yatsı vakti</div>
+        <ol class="steps">
+          <li><span class="tag vakit">Vakit</span><span>Yatsının ilk sünneti</span><span class="rk num">4</span></li>
+          <li><span class="tag vakit">Vakit</span><span>Yatsının farzı</span><span class="rk num">4</span></li>
+          <li><span class="tag vakit">Vakit</span><span>Yatsının son sünneti</span><span class="rk num">2</span></li>
+          <li><span class="tag vakit">Vakit</span><span>Bu gecenin vitri</span><span class="rk num">3</span></li>
+          <li><span class="tag kaza">Kaza</span><span>Yatsı kazası (farz)</span><span class="rk num">4</span></li>
+          <li><span class="tag kaza">Kaza</span><span>Vitir kazası</span><span class="rk num">3</span></li>
+        </ol>
+        <p class="note">Defterde yatsıya ve vitre birer kez “+1 kıldım” de.</p>
+      </div>
+
+      <div class="flow">
+        <div class="flow-h">Gün içinde hiç kaza kılamadıysan, akşam vakti</div>
+        <ol class="steps">
+          <li><span class="tag vakit">Vakit</span><span>Akşamın farzı</span><span class="rk num">3</span></li>
+          <li><span class="tag vakit">Vakit</span><span>Akşamın sünneti</span><span class="rk num">2</span></li>
+          <li><span class="tag kaza">Kaza</span><span>Sabah kazası</span><span class="rk num">2</span></li>
+          <li><span class="tag kaza">Kaza</span><span>Öğle kazası</span><span class="rk num">4</span></li>
+          <li><span class="tag kaza">Kaza</span><span>İkindi kazası</span><span class="rk num">4</span></li>
+          <li><span class="tag kaza">Kaza</span><span>Akşam kazası</span><span class="rk num">3</span></li>
+        </ol>
+        <p class="note">Yatsı ve vitir kazası yatsı vaktinde kılınır. Akşam vakti yetmezse kalanları yatsıdan sonra kılabilirsin.</p>
+      </div>
+
+      <div class="flow">
+        <div class="flow-h">Ramazan gecesi, teravihle</div>
+        <ol class="steps">
+          <li><span class="tag vakit">Vakit</span><span>Yatsının farzı, tercihen cemaatle</span><span class="rk num">4</span></li>
+          <li><span class="tag vakit">Vakit</span><span>Teravih</span><span class="rk num">20</span></li>
+          <li><span class="tag vakit">Vakit</span><span>Bu gecenin vitri, cemaatle</span><span class="rk num">3</span></li>
+          <li><span class="tag kaza">Kaza</span><span>Yatsı ve vitir kazası, evde</span><span class="rk num">7</span></li>
+        </ol>
+        <p class="note">Teravihi kazaya feda etme. Yatsı vakti imsaka kadar sürer, ikisine de vakit yeter.</p>
+      </div>
     </div>
   </details>
 
@@ -214,12 +282,48 @@ details .inner{display:grid;gap:14px}
       <div class="label">Namaz sonrası tesbihat sırası</div>
       <ol class="list">
         <li>Selamdan sonra 3 kez <i>Estağfirullah</i>.</li>
-        <li><i>Allâhümme ente's-selâm ve minke's-selâm, tebârakte yâ ze'l-celâli ve'l-ikrâm.</i></li>
+        <li>
+          <p class="ar" lang="ar" dir="rtl">اللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ</p>
+          <i>Allâhümme ente's-selâm ve minke's-selâm, tebârakte yâ ze'l-celâli ve'l-ikrâm.</i>
+        </li>
         <li>Âyetü'l-Kürsî.</li>
         <li><span class="num">33</span> kez <i>Sübhânallah</i>, <span class="num">33</span> kez <i>Elhamdülillah</i>, <span class="num">33</span> kez <i>Allâhu ekber</i>.</li>
-        <li><i>Lâ ilâhe illallâhu vahdehû lâ şerîke leh, lehü'l-mülkü ve lehü'l-hamdü ve hüve alâ külli şey'in kadîr.</i></li>
+        <li>
+          <p class="ar" lang="ar" dir="rtl">لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ</p>
+          <i>Lâ ilâhe illallâhu vahdehû lâ şerîke leh, lehü'l-mülkü ve lehü'l-hamdü ve hüve alâ külli şey'in kadîr.</i>
+        </li>
         <li>Kendi dilinle dua. Geçmişte kılamadıkların için tövbe ve kılabildiklerin için şükür bu dua için güzel bir konu.</li>
       </ol>
+    </div>
+  </details>
+
+  <details>
+    <summary>Tövbe nasıl edilir?</summary>
+    <div class="inner">
+      <p class="note">Tövbe için kalıp bir cümle şartı yoktur. Önemli olan üç şeydir: kılınmayan namazlara içten pişman olmak, namazı bir daha bırakmamaya karar vermek ve kazayla telafiye başlamak. Bunları kendi dilinle söylemen yeterli. Aşağıdakiler yalnızca örnek.</p>
+      <div class="duas">
+        <figure class="dua">
+          <figcaption class="label">Kısa</figcaption>
+          <blockquote>Allah'ım, yıllarca kılmadığım namazlar için pişmanım. Beni affet. Bundan sonra namazımı bırakmamayı ve borcumu ödemeyi nasip et.</blockquote>
+        </figure>
+        <figure class="dua">
+          <figcaption class="label">Kaza oturumunun sonunda</figcaption>
+          <blockquote>Rabbim, geç kalmış olsam da sana döndüm. Kıldığım bu kazaları kabul et, eksiklerimi bağışla. Ömrüm borcumu bitirmeye yetsin, yetmezse niyetimi kabul et.</blockquote>
+        </figure>
+        <figure class="dua">
+          <figcaption class="label">Şükürle birlikte</figcaption>
+          <blockquote>Allah'ım, bana yeniden secdeye dönmeyi nasip ettiğin için sana hamdolsun. Geçmişimi affet, beni bu yolda sebatlı kıl.</blockquote>
+        </figure>
+      </div>
+
+      <div class="istigfar">
+        <div class="label">Seyyidü'l-İstiğfar · Buhârî'de geçen istiğfarların en üstünü</div>
+        <p class="ar big-ar" lang="ar" dir="rtl">اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ بِذَنْبِي، فَاغْفِرْ لِي، فَإِنَّهُ لَا يَغْفِرُ الذُّنُوبَ إِلَّا أَنْتَ</p>
+        <div class="label">Okunuşu</div>
+        <p class="translit">Allâhümme ente rabbî, lâ ilâhe illâ ente, halaktenî ve ene abdük, ve ene alâ ahdike ve va'dike me'steta'tü. Eûzü bike min şerri mâ sana'tü. Ebûü leke bi ni'metike aleyye, ve ebûü bi zenbî, fağfir lî, fe innehû lâ yağfiru'z-zünûbe illâ ente.</p>
+        <div class="label">Anlamı</div>
+        <p class="note">Allah'ım, sen benim Rabbimsin, senden başka ilah yoktur. Beni sen yarattın, ben senin kulunum ve gücüm yettiğince sana verdiğim söz üzereyim. Yaptıklarımın kötülüğünden sana sığınırım. Bana verdiğin nimetleri ve günahımı itiraf ederim. Beni bağışla, çünkü günahları senden başka bağışlayan yoktur.</p>
+      </div>
     </div>
   </details>
 
