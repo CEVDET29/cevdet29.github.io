@@ -70,7 +70,7 @@ header{display:grid;gap:14px}
 .remain{font-size:1.45rem;line-height:1.1}
 .chip{display:inline-block;font-size:.78rem;padding:.15rem .55rem;border-radius:99px;background:var(--cobalt-soft);color:var(--cobalt);font-weight:600}
 .card.met .chip{background:var(--turq-soft);color:var(--turq)}
-.actions{display:grid;grid-template-columns:44px 1fr;gap:8px}
+.actions{display:grid;grid-template-columns:44px minmax(0,1fr) 48px;gap:6px}
 .actions button{padding:.5rem}
 
 /* Bölümler */
@@ -115,7 +115,7 @@ details .inner{display:grid;gap:14px}
 .back{color:var(--muted);text-decoration:none;font-size:.9rem;justify-self:start}
 .back:hover{color:var(--cobalt)}
 .hint{background:var(--cobalt-soft);color:var(--cobalt);border-radius:10px;padding:.6rem .8rem;font-size:.9rem}
-.toast{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:.55rem 1rem;border-radius:99px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast{position:fixed;white-space:nowrap;max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:.55rem 1rem;border-radius:99px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s}
 .toast.show{opacity:1}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -394,7 +394,7 @@ function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t
 
 function change(k,delta){
   const T=totalDays(), tk=todayKey(), e=dayLog(tk);
-  if(delta>0){ if(S.done[k]>=T)return; S.done[k]++; e[k]++; }
+  if(delta>0){ const n=Math.min(delta,T-S.done[k]); if(n<=0)return; S.done[k]+=n; e[k]+=n; if(n>1)toast(PRAYERS.find(p=>p.k===k).n+': '+n+' kaza eklendi'); }
   else { if(e[k]<=0||S.done[k]<=0)return; S.done[k]--; e[k]--; }
   S.log[tk]=e; save(); render();
 }
@@ -433,11 +433,12 @@ function render(){
       <div><div class="remain num">${fmt(left)}</div><div class="muted" style="font-size:.85rem">kaldı · ${fmt(S.done[p.k])} kılındı</div></div>
       <div class="bar thin" aria-hidden="true"><i style="width:${T?(S.done[p.k]/T*100).toFixed(2):0}%"></i></div>
       <div><span class="chip num">Bugün ${tc} / ${S.target}${met?' ✓':''}</span></div>
-      <div class="actions"><button aria-label="${p.n} bugünkü kaydı geri al" ${tc>0?'':'disabled'}>−</button><button class="primary">+1 kıldım</button></div>`;
-    const [minus,plus]=c.querySelectorAll('button');
+      <div class="actions"><button aria-label="${p.n} bugünkü kaydı geri al" ${tc>0?'':'disabled'}>−</button><button class="primary">+1 kıldım</button><button aria-label="${p.n} için 5 kaza ekle">+5</button></div>`;
+    const [minus,plus,plus5]=c.querySelectorAll('button');
     minus.onclick=()=>change(p.k,-1);
     plus.onclick=()=>change(p.k,1);
-    plus.disabled=left<=0;
+    plus5.onclick=()=>change(p.k,5);
+    plus.disabled=plus5.disabled=left<=0;
     wrap.appendChild(c);
   });
   const todaySum=PRAYERS.reduce((a,p)=>a+today[p.k],0);
