@@ -119,6 +119,16 @@ details .inner{display:grid;gap:14px}
 .dua blockquote{margin:0;font-family:var(--f-display);font-size:1.08rem;line-height:1.5}
 .istigfar{display:grid;gap:8px;border:1px solid var(--line);border-radius:12px;padding:16px}
 .translit{margin:0;font-style:italic;color:var(--cobalt);max-width:68ch}
+.reminder{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;background:var(--surface);border:1px solid var(--warn);border-radius:12px;padding:.6rem .8rem;font-size:.92rem}
+.reminder button{min-height:38px;padding:.35rem .9rem}
+.status-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px 24px}
+.status-list div{display:grid;gap:2px}
+.ok{color:var(--turq);font-weight:600}
+.filebtn{display:inline-flex;align-items:center;min-height:44px;padding:.55rem .9rem;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#fileImport:focus-visible+.filebtn,.filebtn:focus-within{outline:3px solid var(--cobalt);outline-offset:2px}
+details.sub{border:0;padding:0;background:transparent}
+details.sub summary{font-weight:500;color:var(--muted)}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:36px}
 .install{min-height:36px;padding:.3rem .8rem;font-size:.88rem;font-weight:600;color:var(--cobalt);border-color:var(--cobalt);background:var(--cobalt-soft)}
 .back{color:var(--muted);text-decoration:none;font-size:.9rem;justify-self:start}
@@ -150,6 +160,11 @@ details .inner{display:grid;gap:14px}
       <h1>Kaza Defteri</h1>
       <div class="muted" id="subtitle">Kaza namazı takip tablosu</div>
     </div>
+  </div>
+
+  <div class="reminder" id="backupReminder" hidden>
+    <span id="reminderText">Kayıtlarının yedeği yok.</span>
+    <button class="primary" id="reminderBtn">Şimdi yedekle</button>
   </div>
 
   <div class="hint" id="firstHint" hidden>Sayfa 20 yıllık örnek bir borçla açılır. Kendi borcunu “Ayarlar ve düzeltme” bölümünden gir.</div>
@@ -215,10 +230,32 @@ details .inner{display:grid;gap:14px}
 <details id="backup">
   <summary>Yedekle ve geri yükle</summary>
   <div class="inner">
-    <p class="note">Kayıtlar yalnızca bu tarayıcıda tutulur. Tarayıcı verilerini silersen kaybolur. Ara sıra yedek kodunu kopyalayıp bir yere (not, e-posta) kaydet.</p>
-    <div class="row"><button id="exportBtn">Yedek kodunu göster</button><button id="copyBtn">Kopyala</button></div>
-    <textarea id="backupText" aria-label="Yedek kodu" placeholder="Yedek kodu burada görünür. Geri yüklemek için kaydettiğin kodu buraya yapıştır."></textarea>
-    <div class="row"><button class="primary" id="importBtn">Bu koddan geri yükle</button></div>
+    <p class="note">Kayıtlar yalnızca bu cihazda tutulur, hiçbir sunucuya gönderilmez. Tarayıcı verilerini silersen veya telefon değiştirirsen yedek dosyasıyla kaldığın yerden devam edebilirsin.</p>
+    <div class="status-list">
+      <div><span class="label">Kalıcı depolama</span><span id="persistState">Kontrol ediliyor…</span></div>
+      <div><span class="label">Son yedek</span><span id="lastBackupText">Henüz alınmadı</span></div>
+    </div>
+
+    <div class="label">Yedek dosyası</div>
+    <div class="row">
+      <button class="primary" id="fileExportBtn">Yedek dosyasını indir</button>
+      <button id="shareBtn" hidden>Paylaş (Drive, WhatsApp…)</button>
+    </div>
+    <div class="row">
+      <label class="filebtn">Dosyadan geri yükle<input id="fileImport" type="file" accept="application/json,.json" class="visually-hidden"></label>
+    </div>
+    <p class="note">İndirilen dosyayı Google Drive'a, e-postana veya WhatsApp'ta kendine göndererek sakla.</p>
+
+    <details class="sub">
+      <summary>Yedek kodu ile (kopyala / yapıştır)</summary>
+      <div class="inner">
+        <div class="row"><button id="exportBtn">Yedek kodunu göster</button><button id="copyBtn">Kopyala</button></div>
+        <textarea id="backupText" aria-label="Yedek kodu" placeholder="Yedek kodu burada görünür. Geri yüklemek için kaydettiğin kodu buraya yapıştır."></textarea>
+        <div class="row"><button id="importBtn">Bu koddan geri yükle</button></div>
+      </div>
+    </details>
+
+    <div class="row" id="restoreConfirm" hidden><span class="muted" id="restoreText"></span><button class="primary" id="restoreYes">Evet, geri yükle</button><button id="restoreNo">Vazgeç</button></div>
     <hr style="border:0;border-top:1px solid var(--line);width:100%;margin:4px 0">
     <div class="row" id="resetRow"><button class="danger" id="resetBtn">Tüm kayıtları sıfırla</button></div>
     <div class="row" id="resetConfirm" hidden><span class="muted">Bütün sayaçlar ve geçmiş silinecek.</span><button class="danger" id="resetYes">Evet, sıfırla</button><button id="resetNo">Vazgeç</button></div>
@@ -371,7 +408,7 @@ const nf=new Intl.NumberFormat('tr-TR');
 const fmt=n=>nf.format(n);
 
 function blank(){const o={};PRAYERS.forEach(p=>o[p.k]=0);return o}
-function defaults(){return {years:20,extra:0,target:1,done:blank(),log:{}}}
+function defaults(){return {years:20,extra:0,target:1,done:blank(),log:{},lastBackup:0}}
 let fresh=true;
 let S=load();
 
@@ -384,6 +421,7 @@ function sanitize(o){
   if(!o||typeof o!=='object')return d;
   d.years=Math.max(0,+o.years||0); d.extra=Math.max(0,+o.extra||0);
   d.target=[1,2,3,4,5].includes(+o.target)?+o.target:1;
+  d.lastBackup=Math.max(0,+o.lastBackup||0);
   PRAYERS.forEach(p=>{d.done[p.k]=Math.max(0,Math.floor(+(o.done&&o.done[p.k])||0))});
   if(o.log&&typeof o.log==='object'){for(const day in o.log){if(/^\d{4}-\d{2}-\d{2}$/.test(day)){const e=blank();PRAYERS.forEach(p=>e[p.k]=Math.max(0,Math.floor(+o.log[day][p.k]||0)));d.log[day]=e}}}
   return d;
@@ -479,6 +517,52 @@ function render(){
 
   drawChart();
   syncSettings();
+  renderBackup();
+}
+
+/* ---- Yedekleme ---- */
+const DAY_MS=864e5;
+function totalDone(){return PRAYERS.reduce((a,p)=>a+S.done[p.k],0)}
+function renderBackup(){
+  const lb=S.lastBackup, ago=lb?Math.floor((Date.now()-lb)/DAY_MS):null;
+  document.getElementById('lastBackupText').textContent=lb?(ago===0?'Bugün':ago+' gün önce')+' · '+longDate(new Date(lb)):'Henüz alınmadı';
+  const need=totalDone()>0&&(!lb||ago>=7);
+  document.getElementById('backupReminder').hidden=!need;
+  if(need)document.getElementById('reminderText').textContent=lb?'Son yedeği '+ago+' gün önce aldın. Kayıtlarını korumak için yeni bir yedek al.':'Kayıtlarının henüz yedeği yok. Telefon değişir veya veriler silinirse kaldığın yerden devam etmek için yedek al.';
+}
+function backupFile(){
+  const data=JSON.stringify(Object.assign({app:'kaza-defteri',surum:1,tarih:new Date().toISOString()},S,{lastBackup:Date.now()}),null,1);
+  return new File([data],'kaza-defteri-yedek-'+todayKey()+'.json',{type:'application/json'});
+}
+function markBackedUp(){S.lastBackup=Date.now();save();renderBackup()}
+function downloadBackup(){
+  const f=backupFile(), url=URL.createObjectURL(f), a=document.createElement('a');
+  a.href=url;a.download=f.name;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),4000);
+  markBackedUp();toast('Yedek dosyası indirildi');
+}
+const canShareFile=()=>{try{return !!(navigator.canShare&&navigator.canShare({files:[backupFile()]}))}catch(e){return false}};
+async function shareBackup(){
+  try{await navigator.share({files:[backupFile()],title:'Kaza Defteri yedeği'});markBackedUp();toast('Yedek paylaşıldı')}
+  catch(e){if(e&&e.name!=='AbortError')toast('Paylaşılamadı. Dosyayı indirmeyi dene.')}
+}
+let pending=null;
+function askRestore(obj){
+  const d=sanitize(obj), days=Math.min(...PRAYERS.map(p=>d.done[p.k]));
+  if(!(obj&&obj.done)){toast('Bu dosya bir Kaza Defteri yedeği değil.');return}
+  pending=d;
+  document.getElementById('restoreText').textContent='Yedekte '+d.years+' yıllık borç ve '+fmt(days)+' tamamlanmış gün var. Bu cihazdaki kayıtların yerine geçecek.';
+  document.getElementById('restoreConfirm').hidden=false;
+  document.getElementById('restoreConfirm').scrollIntoView({block:'center',behavior:'smooth'});
+}
+async function askPersist(){
+  const el=document.getElementById('persistState');
+  if(!(navigator.storage&&navigator.storage.persist)){el.textContent='Bu tarayıcı desteklemiyor. Düzenli yedek al.';return}
+  try{
+    let ok=await navigator.storage.persisted();
+    if(!ok)ok=await navigator.storage.persist();
+    el.innerHTML=ok?'<span class="ok">Açık</span> · telefon yer açarken kayıtları silmez':'Tarayıcı izin vermedi. Uygulamayı ana ekrana eklemek ve düzenli yedek almak en güvenlisi.';
+  }catch(e){el.textContent='Kontrol edilemedi. Düzenli yedek al.'}
 }
 
 function drawChart(){
@@ -520,17 +604,34 @@ document.getElementById('exportBtn').onclick=()=>{const t=document.getElementByI
 document.getElementById('copyBtn').onclick=()=>{
   const t=document.getElementById('backupText'); if(!t.value)t.value=JSON.stringify(S);
   const fallback=()=>{t.focus();t.select();toast('Kod seçildi, kopyalayabilirsin')};
-  try{navigator.clipboard.writeText(t.value).then(()=>toast('Yedek kodu kopyalandı'),fallback)}catch(e){fallback()}
+  try{navigator.clipboard.writeText(t.value).then(()=>{markBackedUp();toast('Yedek kodu kopyalandı')},fallback)}catch(e){fallback()}
 };
 document.getElementById('importBtn').onclick=()=>{
-  try{const o=JSON.parse(document.getElementById('backupText').value);if(!o||!o.done)throw 0;S=sanitize(o);save();render();toast('Yedek geri yüklendi')}
+  try{askRestore(JSON.parse(document.getElementById('backupText').value))}
   catch(e){toast('Kod okunamadı. Yedek kodunun tamamını yapıştır.')}
 };
+document.getElementById('fileExportBtn').onclick=downloadBackup;
+document.getElementById('reminderBtn').onclick=()=>{ if(canShareFile()&&matchMedia('(pointer:coarse)').matches)shareBackup(); else downloadBackup(); };
+const shareBtn=document.getElementById('shareBtn');
+if(canShareFile()){shareBtn.hidden=false;shareBtn.onclick=shareBackup}
+document.getElementById('fileImport').onchange=e=>{
+  const f=e.target.files&&e.target.files[0]; e.target.value=''; if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{askRestore(JSON.parse(r.result))}catch(err){toast('Dosya okunamadı. Kaza Defteri yedeğini seç.')}};
+  r.readAsText(f);
+};
+document.getElementById('restoreYes').onclick=()=>{
+  if(!pending)return; const keep=S.lastBackup;
+  S=pending; S.lastBackup=Math.max(S.lastBackup||0,keep,Date.now()); pending=null;
+  document.getElementById('restoreConfirm').hidden=true; save(); render(); toast('Yedek geri yüklendi');
+};
+document.getElementById('restoreNo').onclick=()=>{pending=null;document.getElementById('restoreConfirm').hidden=true};
 document.getElementById('resetBtn').onclick=()=>{document.getElementById('resetRow').hidden=true;document.getElementById('resetConfirm').hidden=false};
 document.getElementById('resetNo').onclick=()=>{document.getElementById('resetRow').hidden=false;document.getElementById('resetConfirm').hidden=true};
 document.getElementById('resetYes').onclick=()=>{const y=S.years,ex=S.extra;S=defaults();S.years=y;S.extra=ex;save();document.getElementById('resetNo').onclick();render();toast('Kayıtlar sıfırlandı')};
 
 render();
+askPersist();
 </script>
 
 <script>
