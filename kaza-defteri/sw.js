@@ -2,7 +2,7 @@
    Görevi: uygulama kabuğunu (HTML, ikonlar, yazı tipleri) önbelleğe alıp
    çevrimdışı açılmayı sağlamak. Kayıtlar burada tutulmaz;
    onları sayfanın kendisi localStorage'da saklar. */
-var V = "kaza-defteri-v2";
+var V = "kaza-defteri-v3";
 var SHELL = [
   "./", "./index.html", "./manifest.json",
   "./icon-192.png", "./icon-512.png", "./icon-maskable-512.png", "./apple-touch-icon.png"
@@ -36,10 +36,11 @@ self.addEventListener("fetch", function(e){
   var yaziTipi   = (u.hostname === "fonts.googleapis.com" || u.hostname === "fonts.gstatic.com");
   if(!ayniKaynak && !yaziTipi) return;
 
-  /* Sayfa açılışı: önce ağ, olmazsa önbellekteki son kopya. */
+  /* Sayfa açılışı: önce ağ, olmazsa önbellekteki son kopya.
+     cache:"no-cache" tarayıcının HTTP önbelleğindeki eski sayfayı atlar; böylece yeni sürüm hemen gelir. */
   if(r.mode === "navigate"){
     e.respondWith(
-      fetch(r).then(function(res){
+      fetch(r.url, {cache:"no-cache", credentials:"same-origin"}).then(function(res){
         if(res && res.ok && res.type === "basic"){
           var kopya = res.clone();
           caches.open(V).then(function(c){ c.put("./index.html", kopya); });

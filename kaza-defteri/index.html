@@ -133,7 +133,7 @@ details.sub summary{font-weight:500;color:var(--muted)}
 .install{min-height:36px;padding:.3rem .8rem;font-size:.88rem;font-weight:600;color:var(--cobalt);border-color:var(--cobalt);background:var(--cobalt-soft)}
 .back{color:var(--muted);text-decoration:none;font-size:.9rem;justify-self:start}
 /* Ana ekrandan uygulama olarak açılınca sitenin geri kalanına dönüş bağlantısı gösterilmez. */
-@media (display-mode: standalone){.topbar{display:none}}
+@media (display-mode: standalone),(display-mode: minimal-ui),(display-mode: fullscreen),(display-mode: window-controls-overlay){.topbar{display:none}}
 .standalone .topbar{display:none}
 .back:hover{color:var(--cobalt)}
 .hint{background:var(--cobalt-soft);color:var(--cobalt);border-radius:10px;padding:.6rem .8rem;font-size:.9rem}
@@ -645,9 +645,10 @@ askPersist();
 (function(){
   var h=location.hostname;
   var guvenli=(location.protocol==="https:"||h==="localhost"||h==="127.0.0.1");
-  var kurulu=window.matchMedia&&window.matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
+  var kurulu=["standalone","minimal-ui","fullscreen","window-controls-overlay"].some(function(m){return window.matchMedia&&window.matchMedia("(display-mode: "+m+")").matches;})||navigator.standalone===true;
   if(guvenli&&"serviceWorker" in navigator){
-    window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js").catch(function(){});});
+    /* updateViaCache:"none" → sw.js her açılışta sunucudan kontrol edilir, güncellemeler gecikmez. */
+    window.addEventListener("load",function(){navigator.serviceWorker.register("sw.js",{updateViaCache:"none"}).catch(function(){});});
   }
   if(kurulu){document.documentElement.classList.add("standalone");return;}
   var btn=document.getElementById("installBtn"), istem=null;
