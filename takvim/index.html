@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dini ve Özel Günler Takvimi</title>
+<meta name="description" content="Kare ızgaralı yıllık ve aylık takvim: dini günler, kandiller, bayramlar, resmî tatiller ve özel günler.">
+<meta name="theme-color" content="#F6F3EC" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14130F" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%231E6B4A'/%3E%3Cg stroke='%23fff' stroke-width='1.6' fill='none'%3E%3Crect x='9' y='11' width='22' height='20' rx='2'/%3E%3Cpath d='M9 17h22M16 17v14M23 17v14M9 24h22M15 8v5M25 8v5'/%3E%3C/g%3E%3Crect x='23.8' y='24.8' width='6.4' height='5.4' fill='%23F2C14E'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+/* Düzen: üstte başlık + sıradaki özel gün, araç çubuğu (gezinme, Yıl/Ay, "sadece özel günler" düğmesi, kategori anahtarları),
+   ortada kare çizgili takvim ızgarası, filtre açıkken altta özel günler listesi. Kâğıt tonlu açık tema, koyu tema destekli. */
+:root{
+  --bg:#F6F3EC; --surface:#FFFFFF; --surface-2:#EFEBE1; --ink:#1D1B16; --muted:#6B665A; --line:#DDD6C7; --grid:#CFC7B5;
+  --dini:#1E6B4A; --dini-soft:#DCEFE4;
+  --resmi:#B3261E; --resmi-soft:#F8E0DC;
+  --ozel:#5240B0; --ozel-soft:#E6E2F7;
+  --today:#C98A0B; --weekend:#F3EFE6;
+  --f-display:"Fraunces", Georgia, "Times New Roman", serif;
+  --f-body:"Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#14130F; --surface:#1D1B16; --surface-2:#26241D; --ink:#EEEAE0; --muted:#A39D8E; --line:#34312A; --grid:#3E3A31;
+  --dini:#6FD3A0; --dini-soft:#163A2A;
+  --resmi:#F08A7E; --resmi-soft:#43201C;
+  --ozel:#B3A6F5; --ozel-soft:#2A2547;
+  --today:#F2C14E; --weekend:#191813;
+  color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --bg:#14130F; --surface:#1D1B16; --surface-2:#26241D; --ink:#EEEAE0; --muted:#A39D8E; --line:#34312A; --grid:#3E3A31;
+  --dini:#6FD3A0; --dini-soft:#163A2A;
+  --resmi:#F08A7E; --resmi-soft:#43201C;
+  --ozel:#B3A6F5; --ozel-soft:#2A2547;
+  --today:#F2C14E; --weekend:#191813;
+  color-scheme:dark; }
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--f-body);-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 64px;display:grid;gap:20px}
+h1,h2,h3{font-family:var(--f-display);margin:0;letter-spacing:-.01em;text-wrap:balance}
+.num{font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--today);outline-offset:2px}
+
+/* Başlık */
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px}
+.back{display:inline-block;font-size:.85rem;color:var(--muted);text-decoration:none;margin-bottom:6px}
+.back:hover{color:var(--ink)}
+h1{font-size:clamp(1.9rem,5vw,2.8rem);line-height:1.05}
+.next{display:flex;flex-wrap:wrap;gap:8px;max-width:100%}
+.next button{display:grid;gap:1px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.5rem .8rem;min-width:0}
+.next button:hover{border-color:var(--muted)}
+.next .k{font-size:.7rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.next .t{font-weight:600}
+.next .s{font-size:.82rem;color:var(--muted)}
+
+/* Araç çubuğu */
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0;border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:6px}
+.nav .title{font:700 1.25rem var(--f-display);min-width:8.5ch;text-align:center}
+.ib{display:grid;place-items:center;width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface)}
+.ib:hover,.btn:hover{border-color:var(--muted)}
+.btn{min-height:40px;padding:.4rem .85rem;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-weight:600}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;min-height:40px;padding:.4rem .9rem;font-weight:600;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.spacer{flex:1}
+.only{min-height:44px;padding:.5rem 1rem;border-radius:12px;border:2px solid var(--dini);background:var(--surface);color:var(--dini);font-weight:700;display:inline-flex;align-items:center;gap:8px}
+.only[aria-pressed="true"]{background:var(--dini);color:var(--bg)}
+.only svg{width:18px;height:18px}
+.cats{display:flex;flex-wrap:wrap;gap:6px;width:100%}
+.cat{display:inline-flex;align-items:center;gap:7px;min-height:34px;padding:.25rem .75rem;border-radius:99px;border:1px solid var(--line);background:var(--surface);font-size:.85rem;font-weight:600}
+.cat i{width:12px;height:12px;border-radius:3px;background:var(--c)}
+.cat[aria-pressed="false"]{opacity:.45;text-decoration:line-through}
+.cat.dini{--c:var(--dini)} .cat.resmi{--c:var(--resmi)} .cat.ozel{--c:var(--ozel)}
+.cat.tatil i{background:transparent;border:2px solid var(--resmi);width:14px;height:14px}
+.cat.tatil{cursor:default}
+
+/* Yıl görünümü: 12 küçük ay, her biri kare çizgili */
+.year{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:18px}
+.month{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 12px 14px;min-width:0}
+.month h3{font-size:1.1rem;margin-bottom:8px}
+.month h3 button{border:0;background:none;padding:0;font:inherit;text-align:left}
+.month h3 button:hover{text-decoration:underline;text-underline-offset:3px}
+.wd,.g{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.wd span{font-size:.68rem;font-weight:700;text-align:center;color:var(--muted);padding-bottom:4px;letter-spacing:.02em}
+.wd span:nth-child(n+6){color:var(--resmi)}
+.g{border-top:1px solid var(--grid);border-left:1px solid var(--grid)}
+.c{position:relative;aspect-ratio:1;border:0;border-right:1px solid var(--grid);border-bottom:1px solid var(--grid);background:var(--surface);padding:0;display:grid;place-items:center;font-size:.82rem;font-weight:500;min-width:0}
+.c.e{background:var(--surface-2)}
+.c.we{background:var(--weekend)}
+.c.we .n{color:var(--muted)}
+button.c:hover{box-shadow:inset 0 0 0 2px var(--muted)}
+.c.k-dini{background:var(--dini-soft)} .c.k-dini .n{color:var(--dini);font-weight:700}
+.c.k-resmi{background:var(--resmi-soft)} .c.k-resmi .n{color:var(--resmi);font-weight:700}
+.c.k-ozel{background:var(--ozel-soft)} .c.k-ozel .n{color:var(--ozel);font-weight:700}
+.c.tatil{box-shadow:inset 0 0 0 2px var(--resmi)}
+.c.yarim{box-shadow:inset 0 0 0 2px var(--resmi);background-image:linear-gradient(135deg,transparent 50%,color-mix(in srgb,var(--resmi) 18%,transparent) 50%)}
+.c.today .n{display:grid;place-items:center;width:1.9em;height:1.9em;border-radius:50%;background:var(--today);color:#1D1B16!important;font-weight:800}
+.lbl{display:none}
+.dots{position:absolute;bottom:2px;left:0;right:0;display:flex;justify-content:center;gap:2px}
+.dots b{width:4px;height:4px;border-radius:50%}
+.dots .dini{background:var(--dini)} .dots .resmi{background:var(--resmi)} .dots .ozel{background:var(--ozel)}
+
+/* Ay görünümü: büyük kareler, gün adlarıyla */
+.mview{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px}
+.mview .wd span{font-size:.8rem;padding-bottom:6px}
+.mview .c{aspect-ratio:auto;min-height:104px;place-items:start stretch;align-content:start;padding:6px;gap:4px;text-align:left;font-size:.95rem}
+.mview .c .n{justify-self:start}
+.mview .c.today .n{width:1.8em;height:1.8em}
+.mview .lbl{display:block;font-size:.72rem;line-height:1.25;font-weight:600;padding:2px 5px;border-radius:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:var(--surface);border-left:3px solid var(--c);color:var(--ink)}
+.mview .lbl.dini{--c:var(--dini)} .mview .lbl.resmi{--c:var(--resmi)} .mview .lbl.ozel{--c:var(--ozel)}
+.mview .dots{display:none}
+
+/* "Sadece özel günler" kipi: sıradan günler boş kare olarak kalır */
+.only-mode .c:not(.has){background:var(--surface-2)}
+.only-mode .c:not(.has) .n{visibility:hidden}
+.only-mode button.c:not(.has){pointer-events:none}
+
+/* Liste */
+.list{display:grid;gap:18px}
+.list h2{font-size:1.4rem}
+.lm{display:grid;gap:8px}
+.lm h3{font-size:1rem;color:var(--muted);font-family:var(--f-body);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.item{display:grid;grid-template-columns:56px minmax(0,1fr) auto;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:12px;padding:.6rem .8rem;text-align:left;width:100%}
+.item.dini{--c:var(--dini)} .item.resmi{--c:var(--resmi)} .item.ozel{--c:var(--ozel)}
+.item.past{opacity:.55}
+.item .dt{display:grid;justify-items:center;line-height:1.1}
+.item .dt b{font:700 1.5rem var(--f-display)}
+.item .dt small{font-size:.72rem;color:var(--muted);font-weight:600}
+.item .nm{font-weight:700}
+.item .meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:3px}
+.tag{font-size:.72rem;font-weight:700;padding:.1rem .5rem;border-radius:99px;background:var(--surface-2);color:var(--muted)}
+.tag.dini{background:var(--dini-soft);color:var(--dini)} .tag.resmi{background:var(--resmi-soft);color:var(--resmi)} .tag.ozel{background:var(--ozel-soft);color:var(--ozel)}
+.tag.tt{background:var(--resmi);color:var(--surface)}
+.item .rem{font-size:.8rem;color:var(--muted);font-weight:600;text-align:right;white-space:nowrap}
+.empty{padding:1rem;border:1px dashed var(--line);border-radius:12px;color:var(--muted)}
+
+/* Gün ayrıntısı (alt panel) */
+.sheet{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);width:min(440px,calc(100% - 32px));background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:0 18px 50px rgba(0,0,0,.25);padding:16px;z-index:20;display:grid;gap:10px}
+.sheet header{align-items:flex-start;flex-wrap:nowrap}
+.sheet h2{font-size:1.3rem}
+.sheet .x{flex:none}
+.sheet ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.sheet li{border-left:4px solid var(--c);padding:.2rem 0 .2rem .7rem}
+.sheet li.dini{--c:var(--dini)} .sheet li.resmi{--c:var(--resmi)} .sheet li.ozel{--c:var(--ozel)}
+.sheet li b{display:block}
+.sheet li span{font-size:.85rem;color:var(--muted)}
+
+.note{font-size:.82rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+
+@media (max-width:640px){
+  .toolbar{position:static}
+  .next{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:4px}
+  .next button{flex:none;max-width:78%}
+  .nav .title{font-size:1.1rem;min-width:7ch}
+  .only{width:100%;justify-content:center}
+  .spacer{display:none}
+  .mview{padding:8px}
+  .mview .c{min-height:0;aspect-ratio:1;padding:3px;place-items:center;align-content:center}
+  .mview .c .n{justify-self:center}
+  .mview .lbl{display:none}
+  .mview .dots{display:flex}
+  .item{grid-template-columns:48px minmax(0,1fr)}
+  .item .rem{grid-column:2;text-align:left}
+}
+@media print{
+  .toolbar,.next,.back,.sheet{display:none!important}
+  body{background:#fff}
+  .month{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <a class="back" href="../">← Projeler</a>
+      <h1>Dini ve Özel Günler Takvimi</h1>
+    </div>
+    <div class="next" id="next" aria-label="Yaklaşan günler"></div>
+  </header>
+
+  <div class="toolbar">
+    <div class="nav">
+      <button class="ib" id="prev" aria-label="Önceki">‹</button>
+      <div class="title num" id="title" aria-live="polite"></div>
+      <button class="ib" id="nextBtn" aria-label="Sonraki">›</button>
+    </div>
+    <button class="btn" id="todayBtn">Bugün</button>
+    <div class="seg" role="group" aria-label="Görünüm">
+      <button data-view="year" aria-pressed="true">Yıl</button>
+      <button data-view="month" aria-pressed="false">Ay</button>
+    </div>
+    <span class="spacer"></span>
+    <button class="only" id="only" aria-pressed="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 15.5A8.5 8.5 0 1 1 10.5 4a6.5 6.5 0 0 0 9.5 11.5Z"/></svg>
+      <span id="onlyLbl">Sadece dini ve özel günler</span>
+    </button>
+    <div class="cats" role="group" aria-label="Kategoriler">
+      <button class="cat dini" data-cat="dini" aria-pressed="true"><i></i>Dini günler</button>
+      <button class="cat resmi" data-cat="resmi" aria-pressed="true"><i></i>Millî bayram / resmî tatil</button>
+      <button class="cat ozel" data-cat="ozel" aria-pressed="true"><i></i>Özel günler</button>
+      <span class="cat tatil" aria-hidden="true"><i></i>Çerçeveli kare = tatil (taralı: yarım gün)</span>
+    </div>
+  </div>
+
+  <main id="cal"></main>
+  <section class="list" id="list" hidden></section>
+
+  <p class="note">Dini günler 2025–2027 için Diyanet İşleri Başkanlığı takvimine göredir; kandil ve Kadir gecesi, işaretli günün akşamı idrak edilir.
+  ≈ işaretli tarihler Hicri takvimden hesaplanmıştır ve bir gün sapabilir. Bayram arefeleri öğleden sonra yarım gün tatildir.</p>
+</div>
+
+<aside class="sheet" id="sheet" hidden role="dialog" aria-modal="false" aria-labelledby="sheetTitle">
+  <header>
+    <div><h2 id="sheetTitle"></h2><div class="muted" id="sheetSub"></div></div>
+    <button class="ib x" id="sheetClose" aria-label="Kapat">✕</button>
+  </header>
+  <ul id="sheetList"></ul>
+</aside>
+
+<script>
+(() => {
+'use strict';
+
+const AYLAR = ['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+const GUNLER = ['Pazar','Pazartesi','Salı','Çarşamba','Perşembe','Cuma','Cumartesi'];
+const KISA = ['Pt','Sa','Ça','Pe','Cu','Ct','Pz'];
+const GUN3 = ['Paz','Pzt','Sal','Çar','Per','Cum','Cmt'];
+const CAT_AD = {dini:'Dini gün', resmi:'Millî / resmî', ozel:'Özel gün'};
+const CAT_ORDER = ['dini','resmi','ozel'];
+
+/* ---------- Tarih yardımcıları (hepsi UTC gün, saat dilimi kayması olmasın) ---------- */
+const D = (y,m,d) => new Date(Date.UTC(y,m-1,d));
+const key = dt => dt.toISOString().slice(0,10);
+const parse = s => D(+s.slice(0,4), +s.slice(5,7), +s.slice(8,10));
+const add = (dt,n) => new Date(dt.getTime() + n*864e5);
+const todayKey = () => { const t = new Date(); return key(D(t.getFullYear(), t.getMonth()+1, t.getDate())); };
+const nthSunday = (y,m,n) => { const f = D(y,m,1); return add(f, (7 - f.getUTCDay()) % 7 + (n-1)*7); };
+
+/* ---------- Hicri takvim (tarayıcının Ümmü'l-Kura hesabı) ---------- */
+const HF = (() => {
+  for (const c of ['islamic-umalqura','islamic-civil','islamic']) {
+    try {
+      const f = new Intl.DateTimeFormat('en-u-ca-'+c, {day:'numeric',month:'numeric',year:'numeric',timeZone:'UTC'});
+      if (f.resolvedOptions().calendar === c) return f;
+    } catch (e) {}
+  }
+  return null;
+})();
+function hijri(dt){
+  const p = {};
+  for (const x of HF.formatToParts(dt)) p[x.type] = x.value;
+  return {m:+p.month, d:+p.day};
+}
+
+/* Diyanet takviminden doğrulanmış tarihler. Hesaplanan tarih bunlardan birine ±3 gün yakınsa onun yerine bu kullanılır. */
+const DIYANET = {
+  ucAylar:        ['2025-01-01','2025-12-21','2026-12-10'],
+  regaib:         ['2025-01-02','2025-12-25','2026-12-10'],
+  mirac:          ['2025-01-26','2026-01-15','2027-01-04'],
+  berat:          ['2025-02-13','2026-02-02','2027-01-22'],
+  ramazanBasi:    ['2025-03-01','2026-02-19','2027-02-08'],
+  kadir:          ['2025-03-26','2026-03-16','2027-03-05'],
+  ramazanBayrami: ['2025-03-30','2026-03-20','2027-03-09'],
+  kurbanBayrami:  ['2025-06-06','2026-05-27','2027-05-16'],
+  hicriYilbasi:   ['2025-06-26','2026-06-16'],
+  asure:          ['2025-07-05','2026-06-25'],
+  mevlid:         ['2025-09-03','2026-08-24'],
+};
+
+const KANDIL_NOT = 'Kandil gecesi bu günün akşamı idrak edilir.';
+const DINI = {
+  ucAylar:      {name:'Üç Ayların Başlangıcı', note:'Recep ayının ilk günü.'},
+  regaib:       {name:'Regaib Kandili', note:KANDIL_NOT},
+  mirac:        {name:'Miraç Kandili', note:KANDIL_NOT},
+  berat:        {name:'Berat Kandili', note:KANDIL_NOT},
+  ramazanBasi:  {name:'Ramazan Başlangıcı', note:'İlk oruç günü; ilk teravih ve sahur bir önceki gece.'},
+  kadir:        {name:'Kadir Gecesi', note:'Bu günün akşamı idrak edilir.'},
+  hicriYilbasi: {name:'Hicri Yılbaşı', note:'1 Muharrem.'},
+  asure:        {name:'Aşure Günü', note:'10 Muharrem.'},
+  mevlid:       {name:'Mevlid Kandili', note:KANDIL_NOT},
+};
+
+/* Bir miladi yılın dini günlerini Hicri takvimi tarayarak bulur. */
+function religious(year){
+  const found = {}; // anahtar -> başlangıç tarihleri
+  const push = (k,dt) => (found[k] ||= []).push(dt);
+  if (!HF) return [];
+  for (let dt = D(year-1,12,20); dt <= D(year+1,1,10); dt = add(dt,1)) {
+    const h = hijri(dt);
+    if (h.m === 7 && h.d === 1) push('ucAylar', dt);
+    if (h.m === 7 && h.d <= 7 && dt.getUTCDay() === 5) push('regaib', add(dt,-1));
+    if (h.m === 7 && h.d === 26) push('mirac', dt);
+    if (h.m === 8 && h.d === 14) push('berat', dt);
+    if (h.m === 9 && h.d === 1) push('ramazanBasi', dt);
+    if (h.m === 9 && h.d === 26) push('kadir', dt);
+    if (h.m === 10 && h.d === 1) push('ramazanBayrami', dt);
+    if (h.m === 12 && h.d === 10) push('kurbanBayrami', dt);
+    if (h.m === 1 && h.d === 1) push('hicriYilbasi', dt);
+    if (h.m === 1 && h.d === 10) push('asure', dt);
+    if (h.m === 3 && h.d === 11) push('mevlid', dt);
+  }
+  const out = [];
+  for (const [k, list] of Object.entries(found)) {
+    for (const calc of list) {
+      const ver = (DIYANET[k] || []).map(parse).find(o => Math.abs(o - calc) <= 3*864e5);
+      const start = ver || calc, approx = !ver;
+      if (k === 'ramazanBayrami' || k === 'kurbanBayrami') {
+        const ad = k === 'ramazanBayrami' ? 'Ramazan Bayramı' : 'Kurban Bayramı';
+        const n = k === 'ramazanBayrami' ? 3 : 4;
+        out.push({date:key(add(start,-1)), name:ad+' Arefesi', cat:'dini', tatil:'yarim', note:'Öğleden sonra yarım gün resmî tatil.', approx});
+        for (let i = 0; i < n; i++)
+          out.push({date:key(add(start,i)), name:`${ad} ${i+1}. Gün`, cat:'dini', tatil:'tam', note:'Resmî tatil.', approx});
+      } else {
+        out.push({date:key(start), name:DINI[k].name, cat:'dini', tatil:null, note:DINI[k].note, approx});
+      }
+    }
+  }
+  return out;
+}
+
+function fixed(year){
+  const F = (m,d,name,cat,tatil,note) => ({date:key(D(year,m,d)), name, cat, tatil:tatil||null, note:note||'', approx:false});
+  return [
+    F(1,1,'Yılbaşı','resmi','tam','Resmî tatil.'),
+    F(2,14,'Sevgililer Günü','ozel'),
+    F(3,8,'Dünya Kadınlar Günü','ozel'),
+    F(3,12,"İstiklal Marşı'nın Kabulü",'ozel','', '1921'),
+    F(3,14,'Tıp Bayramı','ozel'),
+    F(3,18,'Çanakkale Zaferi ve Şehitleri Anma Günü','ozel'),
+    F(3,21,'Nevruz','ozel'),
+    F(4,23,'Ulusal Egemenlik ve Çocuk Bayramı','resmi','tam','Resmî tatil.'),
+    F(5,1,'Emek ve Dayanışma Günü','resmi','tam','Resmî tatil.'),
+    F(5,6,'Hıdrellez','ozel'),
+    {date:key(nthSunday(year,5,2)), name:'Anneler Günü', cat:'ozel', tatil:null, note:'Mayıs ayının ikinci pazarı.', approx:false},
+    F(5,19,"Atatürk'ü Anma, Gençlik ve Spor Bayramı",'resmi','tam','Resmî tatil.'),
+    {date:key(nthSunday(year,6,3)), name:'Babalar Günü', cat:'ozel', tatil:null, note:'Haziran ayının üçüncü pazarı.', approx:false},
+    F(7,15,'Demokrasi ve Millî Birlik Günü','resmi','tam','Resmî tatil.'),
+    F(8,30,'Zafer Bayramı','resmi','tam','Resmî tatil.'),
+    F(10,28,'Cumhuriyet Bayramı Arefesi','resmi','yarim','Öğleden sonra yarım gün resmî tatil.'),
+    F(10,29,'Cumhuriyet Bayramı','resmi','tam','Resmî tatil.'),
+    F(11,10,"Atatürk'ü Anma Günü",'ozel','','Saat 09.05\'te saygı duruşu.'),
+    F(11,24,'Öğretmenler Günü','ozel'),
+    F(12,31,'Yılbaşı Gecesi','ozel'),
+  ];
+}
+
+const cache = new Map();
+function eventsOf(year){
+  if (!cache.has(year)) {
+    const map = new Map();
+    const all = [...religious(year), ...fixed(year)].filter(e => e.date.startsWith(year+'-'));
+    all.sort((a,b) => a.date.localeCompare(b.date) || CAT_ORDER.indexOf(a.cat) - CAT_ORDER.indexOf(b.cat));
+    for (const e of all) (map.get(e.date) || map.set(e.date, []).get(e.date)).push(e);
+    cache.set(year, {all, map});
+  }
+  return cache.get(year);
+}
+
+/* ---------- Durum ---------- */
+const store = {
+  get(){ try { return JSON.parse(localStorage.getItem('takvim') || '{}'); } catch (e) { return {}; } },
+  set(v){ try { localStorage.setItem('takvim', JSON.stringify(v)); } catch (e) {} },
+};
+const saved = store.get();
+const now = parse(todayKey());
+const S = {
+  view: saved.view === 'month' ? 'month' : 'year',
+  only: !!saved.only,
+  cats: Object.assign({dini:true, resmi:true, ozel:true}, saved.cats || {}),
+  y: now.getUTCFullYear(),
+  m: now.getUTCMonth() + 1,
+};
+const save = () => store.set({view:S.view, only:S.only, cats:S.cats});
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const visible = list => (list || []).filter(e => S.cats[e.cat]);
+const longDate = k => { const d = parse(k); return `${d.getUTCDate()} ${AYLAR[d.getUTCMonth()]} ${d.getUTCFullYear()}`; };
+const daysFrom = k => Math.round((parse(k) - parse(todayKey())) / 864e5);
+const remText = n => n === 0 ? 'Bugün' : n === 1 ? 'Yarın' : n > 0 ? `${n} gün kaldı` : n === -1 ? 'Dün' : `${-n} gün önce`;
+
+/* ---------- Izgara ---------- */
+function cellHTML(y,m,d){
+  const k = key(D(y,m,d));
+  const evs = visible(eventsOf(y).map.get(k));
+  const dow = D(y,m,d).getUTCDay();
+  const cls = ['c'];
+  if (dow === 0 || dow === 6) cls.push('we');
+  if (k === todayKey()) cls.push('today');
+  let dots = '', labels = '', tip = `${d} ${AYLAR[m-1]} ${y}, ${GUNLER[dow]}`;
+  if (evs.length) {
+    cls.push('has', 'k-' + evs[0].cat);
+    if (evs.some(e => e.tatil === 'tam')) cls.push('tatil');
+    else if (evs.some(e => e.tatil === 'yarim')) cls.push('yarim');
+    const cats = [...new Set(evs.map(e => e.cat))];
+    if (cats.length > 1) dots = '<span class="dots">' + cats.map(c => `<b class="${c}"></b>`).join('') + '</span>';
+    labels = evs.map(e => `<span class="lbl ${e.cat}">${esc(e.name)}</span>`).join('');
+    tip += ' — ' + evs.map(e => e.name).join(', ');
+  }
+  return `<button class="${cls.join(' ')}" data-d="${k}" title="${esc(tip)}"><span class="n num">${d}</span>${labels}${dots}</button>`;
+}
+function gridHTML(y,m){
+  const first = (D(y,m,1).getUTCDay() + 6) % 7; // pazartesi = 0
+  const days = new Date(Date.UTC(y,m,0)).getUTCDate();
+  let h = '<div class="wd" aria-hidden="true">' + KISA.map(s => `<span>${s}</span>`).join('') + '</div><div class="g">';
+  for (let i = 0; i < first; i++) h += '<span class="c e"></span>';
+  for (let d = 1; d <= days; d++) h += cellHTML(y,m,d);
+  for (let i = first + days; i < 42; i++) h += '<span class="c e"></span>';
+  return h + '</div>';
+}
+
+function render(){
+  document.body.classList.toggle('only-mode', S.only);
+  $('#only').setAttribute('aria-pressed', S.only);
+  $('#onlyLbl').textContent = S.only ? 'Tüm günleri göster' : 'Sadece dini ve özel günler';
+  document.querySelectorAll('.seg button').forEach(b => b.setAttribute('aria-pressed', b.dataset.view === S.view));
+  document.querySelectorAll('.cat[data-cat]').forEach(b => b.setAttribute('aria-pressed', S.cats[b.dataset.cat]));
+  $('#title').textContent = S.view === 'year' ? S.y : `${AYLAR[S.m-1]} ${S.y}`;
+  $('#prev').setAttribute('aria-label', S.view === 'year' ? 'Önceki yıl' : 'Önceki ay');
+  $('#nextBtn').setAttribute('aria-label', S.view === 'year' ? 'Sonraki yıl' : 'Sonraki ay');
+
+  const cal = $('#cal');
+  if (S.view === 'year') {
+    let h = '<div class="year">';
+    for (let m = 1; m <= 12; m++)
+      h += `<section class="month"><h3><button data-month="${m}">${AYLAR[m-1]}</button></h3>${gridHTML(S.y,m)}</section>`;
+    cal.innerHTML = h + '</div>';
+  } else {
+    cal.innerHTML = `<div class="mview">${gridHTML(S.y,S.m)}</div>`;
+  }
+  renderList();
+  renderNext();
+}
+
+function renderList(){
+  const list = $('#list');
+  list.hidden = !S.only;
+  if (!S.only) return;
+  const evs = visible(eventsOf(S.y).all).filter(e => S.view === 'year' || +e.date.slice(5,7) === S.m);
+  const scope = S.view === 'year' ? S.y : `${AYLAR[S.m-1]} ${S.y}`;
+  let h = `<h2>${scope} — dini ve özel günler <span class="muted num" style="font-size:.8em">(${evs.length})</span></h2>`;
+  if (!evs.length) return void (list.innerHTML = h + '<div class="empty">Seçili kategorilerde gün yok.</div>');
+  let curM = 0;
+  for (const e of evs) {
+    const m = +e.date.slice(5,7);
+    if (m !== curM) { if (curM) h += '</div>'; h += `<div class="lm"><h3>${AYLAR[m-1]}</h3>`; curM = m; }
+    const d = parse(e.date), n = daysFrom(e.date);
+    h += `<button class="item ${e.cat}${n < 0 ? ' past' : ''}" data-d="${e.date}">
+      <span class="dt"><b class="num">${d.getUTCDate()}</b><small>${GUN3[d.getUTCDay()]}</small></span>
+      <span><span class="nm">${e.approx ? '≈ ' : ''}${esc(e.name)}</span>
+        <span class="meta"><span class="tag ${e.cat}">${CAT_AD[e.cat]}</span>${e.tatil === 'tam' ? '<span class="tag tt">Tatil</span>' : e.tatil === 'yarim' ? '<span class="tag tt">Yarım gün tatil</span>' : ''}</span></span>
+      <span class="rem num">${remText(n)}</span></button>`;
+  }
+  list.innerHTML = h + '</div>';
+}
+
+function renderNext(){
+  const t = todayKey(), ty = +t.slice(0,4);
+  const up = visible([...eventsOf(ty).all, ...eventsOf(ty+1).all]).filter(e => e.date >= t);
+  const seen = new Set(), pick = [];
+  for (const e of up) {
+    const base = e.name.replace(/ \d\. Gün$/, '');
+    if (seen.has(base)) continue;
+    seen.add(base); pick.push(e);
+    if (pick.length === 3) break;
+  }
+  $('#next').innerHTML = pick.map((e,i) => `<button data-d="${e.date}">
+    <span class="k">${i ? 'Sonra' : 'Sıradaki'}</span><span class="t">${e.approx ? '≈ ' : ''}${esc(e.name.replace(/ 1\. Gün$/, ''))}</span>
+    <span class="s num">${longDate(e.date)} · ${remText(daysFrom(e.date))}</span></button>`).join('');
+}
+
+/* ---------- Gün ayrıntısı ---------- */
+let lastFocus = null;
+function openDay(k){
+  const d = parse(k), y = d.getUTCFullYear();
+  const evs = visible(eventsOf(y).map.get(k));
+  $('#sheetTitle').textContent = longDate(k);
+  $('#sheetSub').textContent = `${GUNLER[d.getUTCDay()]} · ${remText(daysFrom(k))}`;
+  $('#sheetList').innerHTML = evs.length ? evs.map(e => `<li class="${e.cat}"><b>${e.approx ? '≈ ' : ''}${esc(e.name)}</b>
+    <span>${CAT_AD[e.cat]}${e.tatil === 'tam' ? ' · Resmî tatil' : e.tatil === 'yarim' ? ' · Yarım gün tatil' : ''}${e.note && !/^Resmî tatil\.$/.test(e.note) ? ' · ' + esc(e.note) : ''}${e.approx ? ' · Hesaplanmış tarih, bir gün sapabilir.' : ''}</span></li>`).join('')
+    : '<li><span>Bu gün için kayıtlı özel gün yok.</span></li>';
+  lastFocus = document.activeElement;
+  $('#sheet').hidden = false;
+  $('#sheetClose').focus();
+}
+function closeDay(){ $('#sheet').hidden = true; if (lastFocus) lastFocus.focus(); }
+
+function goTo(k){
+  const d = parse(k);
+  S.y = d.getUTCFullYear(); S.m = d.getUTCMonth() + 1;
+  render();
+}
+
+/* ---------- Olaylar ---------- */
+document.addEventListener('click', ev => {
+  const t = ev.target.closest('button');
+  if (!t) return;
+  if (t.dataset.view) { S.view = t.dataset.view; save(); render(); return; }
+  if (t.dataset.cat) { S.cats[t.dataset.cat] = !S.cats[t.dataset.cat]; save(); render(); return; }
+  if (t.dataset.month) { S.m = +t.dataset.month; S.view = 'month'; save(); render(); return; }
+  if (t.dataset.d) {
+    if (t.closest('#next')) goTo(t.dataset.d);
+    openDay(t.dataset.d);
+  }
+});
+$('#only').addEventListener('click', () => { S.only = !S.only; save(); render(); });
+$('#prev').addEventListener('click', () => { if (S.view === 'year') S.y--; else if (--S.m < 1) { S.m = 12; S.y--; } render(); });
+$('#nextBtn').addEventListener('click', () => { if (S.view === 'year') S.y++; else if (++S.m > 12) { S.m = 1; S.y++; } render(); });
+$('#todayBtn').addEventListener('click', () => { goTo(todayKey()); openDay(todayKey()); });
+$('#sheetClose').addEventListener('click', closeDay);
+document.addEventListener('keydown', ev => {
+  if (ev.key === 'Escape' && !$('#sheet').hidden) closeDay();
+  if (ev.target.closest('input,textarea') || !$('#sheet').hidden) return;
+  if (ev.key === 'ArrowLeft' && !ev.target.closest('.g')) $('#prev').click();
+  if (ev.key === 'ArrowRight' && !ev.target.closest('.g')) $('#nextBtn').click();
+});
+
+render();
+})();
+</script>
+</body>
+</html>
