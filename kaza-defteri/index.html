@@ -91,7 +91,7 @@ section{display:grid;gap:14px}
 .chart svg{display:block;width:100%;min-width:320px;height:auto}
 .form{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
 .form label{display:grid;gap:4px;font-size:.85rem;color:var(--muted);min-width:0}
-.form input{width:100%;min-width:0}
+.form input,.form select{width:100%;min-width:0}
 .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:4px 16px}
 details[open]{padding-bottom:16px}
@@ -136,6 +136,7 @@ details.sub summary{font-weight:500;color:var(--muted)}
 @media (display-mode: standalone),(display-mode: minimal-ui),(display-mode: fullscreen),(display-mode: window-controls-overlay){.topbar{display:none}}
 .standalone .topbar{display:none}
 .back:hover{color:var(--cobalt)}
+.late{color:var(--cobalt);font-size:.88rem;font-weight:500}
 .hint{background:var(--cobalt-soft);color:var(--cobalt);border-radius:10px;padding:.6rem .8rem;font-size:.9rem}
 .toast{position:fixed;white-space:nowrap;max-width:calc(100vw - 32px);overflow:hidden;text-overflow:ellipsis;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:.55rem 1rem;border-radius:99px;font-size:.9rem;opacity:0;pointer-events:none;transition:opacity .2s}
 .toast.show{opacity:1}
@@ -187,6 +188,7 @@ details.sub summary{font-weight:500;color:var(--muted)}
     <div>
       <h2 id="todayH">Bugün</h2>
       <div class="muted" id="todayText">Hedef: her vakitten 1 kaza</div>
+      <div class="late" id="lateNote" hidden></div>
     </div>
     <button class="turq" id="fullDay">+1 gün tamamla (6 vakit)</button>
   </div>
@@ -222,7 +224,9 @@ details.sub summary{font-weight:500;color:var(--muted)}
     <div class="form">
       <label for="years">Borç (yıl)<input id="years" type="number" min="0" step="1" inputmode="numeric"></label>
       <label for="extra">Ek gün<input id="extra" type="number" min="0" step="1" inputmode="numeric"></label>
+      <label for="dayStart">Gün dönümü<select id="dayStart"></select></label>
     </div>
+    <p class="note">Gece yarısından sonra bu saate kadar kıldıkların bir önceki güne yazılır. Böylece o günün kazasını geceye bıraksan da gün hedefin ve serin bozulmaz. Sabah kazasını imsaktan sonra kılıyorsan, imsaktan önceki bir saat seç.</p>
     <div class="note" id="totalNote"></div>
     <div class="label">Şimdiye kadar kılınan (düzeltmek için)</div>
     <div class="form" id="doneForm"></div>
@@ -411,7 +415,9 @@ const nf=new Intl.NumberFormat('tr-TR');
 const fmt=n=>nf.format(n);
 
 function blank(){const o={};PRAYERS.forEach(p=>o[p.k]=0);return o}
-function defaults(){return {years:20,extra:0,target:1,done:blank(),log:{},lastBackup:0}}
+/* dayStart: günün kaçta değiştiği. Gece yarısından sonra bu saate kadar kılınanlar bir önceki güne yazılır. */
+const DAY_STARTS=[0,1,2,3,4,5];
+function defaults(){return {years:20,extra:0,target:1,dayStart:3,done:blank(),log:{},lastBackup:0}}
 let fresh=true;
 let S=load();
 
@@ -425,6 +431,7 @@ function sanitize(o){
   d.years=Math.max(0,+o.years||0); d.extra=Math.max(0,+o.extra||0);
   d.target=[1,2,3,4,5].includes(+o.target)?+o.target:1;
   d.lastBackup=Math.max(0,+o.lastBackup||0);
+  if(o.dayStart!=null&&DAY_STARTS.includes(+o.dayStart))d.dayStart=+o.dayStart;
   PRAYERS.forEach(p=>{d.done[p.k]=Math.max(0,Math.floor(+(o.done&&o.done[p.k])||0))});
   if(o.log&&typeof o.log==='object'){for(const day in o.log){if(/^\d{4}-\d{2}-\d{2}$/.test(day)){const e=blank();PRAYERS.forEach(p=>e[p.k]=Math.max(0,Math.floor(+o.log[day][p.k]||0)));d.log[day]=e}}}
   return d;
@@ -433,9 +440,13 @@ function save(){fresh=false;try{localStorage.setItem(KEY,JSON.stringify(S))}catc
 
 const totalDays=()=>Math.round(S.years*365.25)+S.extra;
 function dkey(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
-const todayKey=()=>dkey(new Date());
+/* Defterin "bugün"ü: saat gün dönümünden önceyse hâlâ dünkü gündür. */
+const inLateWindow=()=>new Date().getHours()<S.dayStart;
+function logicalNow(){const d=new Date();if(inLateWindow())d.setDate(d.getDate()-1);return d}
+const todayKey=()=>dkey(logicalNow());
+const hh=h=>String(h).padStart(2,'0')+':00';
 function dayLog(k){return S.log[k]||blank()}
-function addDays(n){const d=new Date();d.setDate(d.getDate()+n);return d}
+function addDays(n){const d=logicalNow();d.setDate(d.getDate()+n);return d}
 const longDate=d=>d.toLocaleDateString('tr-TR',{day:'numeric',month:'long',year:'numeric'});
 function duration(days){
   if(days<=0)return 'bugün';
@@ -497,6 +508,10 @@ function render(){
   });
   const todaySum=PRAYERS.reduce((a,p)=>a+today[p.k],0);
   document.getElementById('todayText').textContent='Hedef: her vakitten '+S.target+' kaza · bugün '+todaySum+' / '+(6*S.target)+' vakit';
+  const late=inLateWindow(), ln=document.getElementById('lateNote');
+  ln.hidden=!late;
+  if(late)ln.textContent='Gece yarısı geçti ama gün dönümü '+hh(S.dayStart)+'. Kıldıkların hâlâ '+logicalNow().toLocaleDateString('tr-TR',{day:'numeric',month:'long'})+' gününe yazılıyor.';
+  shownState=tk+'|'+late;
 
   // Hedef seçimi
   const seg=document.getElementById('targetSeg'); seg.innerHTML='';
@@ -592,6 +607,9 @@ function syncSettings(){
   if(det.open&&det.contains(document.activeElement))return;
   document.getElementById('years').value=S.years;
   document.getElementById('extra').value=S.extra;
+  const ds=document.getElementById('dayStart');
+  ds.innerHTML=DAY_STARTS.map(h=>`<option value="${h}">${h?hh(h):'00:00 (gece yarısı)'}</option>`).join('');
+  ds.value=S.dayStart;
   document.getElementById('totalNote').textContent='Toplam '+fmt(totalDays())+' gün (artık yıllar dahil) · '+fmt(totalDays()*DAY_REKAT)+' rekât. Ergenlikten itibaren hesapla; emin değilsen fazla tut.';
   const f=document.getElementById('doneForm'); f.innerHTML='';
   PRAYERS.forEach(p=>{f.insertAdjacentHTML('beforeend',`<label for="d_${p.k}">${p.n}<input id="d_${p.k}" type="number" min="0" step="1" inputmode="numeric" value="${S.done[p.k]}"></label>`)});
@@ -601,6 +619,7 @@ document.getElementById('fullDay').onclick=fullDay;
 document.getElementById('saveSettings').onclick=()=>{
   S.years=Math.max(0,+document.getElementById('years').value||0);
   S.extra=Math.max(0,Math.floor(+document.getElementById('extra').value||0));
+  S.dayStart=+document.getElementById('dayStart').value; if(!DAY_STARTS.includes(S.dayStart))S.dayStart=3;
   const T=totalDays();
   PRAYERS.forEach(p=>{S.done[p.k]=Math.min(T,Math.max(0,Math.floor(+document.getElementById('d_'+p.k).value||0)))});
   save(); document.activeElement.blur(); render(); toast('Kaydedildi');
@@ -635,6 +654,11 @@ document.getElementById('resetBtn').onclick=()=>{document.getElementById('resetR
 document.getElementById('resetNo').onclick=()=>{document.getElementById('resetRow').hidden=false;document.getElementById('resetConfirm').hidden=true};
 document.getElementById('resetYes').onclick=()=>{const y=S.years,ex=S.extra;S=defaults();S.years=y;S.extra=ex;save();document.getElementById('resetNo').onclick();render();toast('Kayıtlar sıfırlandı')};
 
+/* Sayfa açıkken gün dönümü veya gece yarısı geçerse ekranı tazele. */
+let shownState='';
+function tick(){if(todayKey()+'|'+inLateWindow()!==shownState)render()}
+setInterval(tick,30000);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)tick()});
 render();
 askPersist();
 </script>
