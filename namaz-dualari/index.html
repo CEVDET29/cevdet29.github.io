@@ -1,0 +1,1173 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Namazdaki Dualar ve Anlamları</title>
+<meta name="description" content="Namazda okuduğumuz Sübhâneke, Fâtiha, rükû ve secde tesbihleri, Ettehiyyâtü, Salli-Bârik, Rabbenâ, Kunut duaları ve Âmentü: Arapçası, okunuşu, kelime kelime anlamı, tefsiri, hükmü ve kaynakları.">
+<meta name="theme-color" content="#F5F0E6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#12100D" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='8' fill='%23155E63'/%3E%3Cpath d='M12 31V19a8 8 0 0 1 16 0v12M9 31h22M17 31v-6a3 3 0 0 1 6 0v6' fill='none' stroke='%23E8C068' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Figtree:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<style>
+/* Düzen: başlık + "bir rekatın akışı" adımları, yapışkan araç çubuğu (Arapça/Okunuş/Meal, yazı boyutu),
+   solda içindekiler, sağda namazın sırasıyla dua kartları. Her kartta Arapça, okunuş, meal, ifade ifade
+   anlam, tefsir ve kaynak. Namaz sonrası bölümünde tesbih sayacı. Kâğıt tonlu açık tema, koyu tema destekli. */
+:root{
+  --bg:#F5F0E6; --surface:#FFFDF8; --surface-2:#EEE7DA; --ink:#1E1B16; --muted:#665F52; --line:#E0D7C6;
+  --accent:#155E63; --accent-soft:#DDEDEC; --gold:#94650C; --gold-soft:#F4E7C8; --rose:#9A3B2E;
+  --f-display:"Fraunces", Georgia, "Times New Roman", serif;
+  --f-body:"Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-ar:"Amiri", "Traditional Arabic", "Noto Naskh Arabic", "Geeza Pro", serif;
+  --ar-scale:1;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#12100D; --surface:#1B1915; --surface-2:#25221C; --ink:#EFE9DD; --muted:#A79F8F; --line:#322E26;
+  --accent:#6CC7C2; --accent-soft:#16302F; --gold:#E3B65A; --gold-soft:#3A2E16; --rose:#E8907F;
+  color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --bg:#12100D; --surface:#1B1915; --surface-2:#25221C; --ink:#EFE9DD; --muted:#A79F8F; --line:#322E26;
+  --accent:#6CC7C2; --accent-soft:#16302F; --gold:#E3B65A; --gold-soft:#3A2E16; --rose:#E8907F;
+  color-scheme:dark; }
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16.5px/1.7 var(--f-body);-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-underline-offset:3px}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px;border-radius:6px}
+h1,h2,h3,h4{font-family:var(--f-display);margin:0;letter-spacing:-.01em;text-wrap:balance;line-height:1.15}
+[lang="ar"]{font-family:var(--f-ar);direction:rtl}
+
+.wrap{max-width:1160px;margin:0 auto;padding:0 16px 80px}
+
+/* Başlık */
+.hero{padding:28px 0 32px;border-bottom:1px solid var(--line);
+  background:
+    radial-gradient(circle at 78% 12%, color-mix(in srgb,var(--gold) 12%, transparent), transparent 32%);
+}
+.back{display:inline-block;font-size:.88rem;color:var(--muted);text-decoration:none;margin-bottom:18px}
+.back:hover{color:var(--ink)}
+.eyebrow{margin:0 0 10px;color:var(--gold);font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase}
+h1{font-size:clamp(2.1rem,6vw,3.6rem);line-height:1.02;max-width:16ch}
+.lede{margin:16px 0 0;color:var(--muted);font-size:1.08rem;max-width:44rem}
+.lede strong{color:var(--ink);font-weight:600}
+.basmala{margin:22px 0 0;font-size:clamp(1.7rem,4.5vw,2.3rem);color:var(--accent);line-height:1.6;text-align:left}
+
+/* Rekat akışı */
+.flow{margin-top:30px}
+.flow h2{font-size:1.25rem;margin-bottom:12px}
+.steps{list-style:none;margin:0;padding:0;display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin}
+.steps li{flex:0 0 auto}
+.step{display:grid;gap:2px;justify-items:start;text-align:left;min-width:108px;padding:.55rem .8rem;border-radius:12px;background:var(--surface);border:1px solid var(--line);transition:border-color .15s,background-color .15s}
+.step .n{font-size:.7rem;font-weight:600;color:var(--muted);letter-spacing:.06em}
+.step .t{font-weight:600;font-size:.95rem}
+.step:hover{border-color:color-mix(in srgb,var(--accent) 50%,var(--line))}
+.step[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.step[aria-pressed="true"] .n{color:color-mix(in srgb,var(--bg) 75%,transparent)}
+.step-panel{margin-top:10px;padding:14px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--line);min-height:84px}
+.step-panel p{margin:0}
+.step-panel .reads{margin-top:6px;display:flex;flex-wrap:wrap;gap:6px}
+.step-panel .reads a{font-size:.9rem;font-weight:600;text-decoration:none;padding:.15rem .6rem;border-radius:99px;background:var(--accent-soft)}
+.step-panel .reads a:hover{text-decoration:underline}
+
+/* Araç çubuğu */
+.bar{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:10px 0;margin-bottom:8px;
+  background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar .grp{display:flex;align-items:center;gap:6px}
+.bar .lbl{font-size:.78rem;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:.28rem .75rem;font-size:.88rem;font-weight:500;color:var(--muted)}
+.chip[aria-pressed="true"]{color:var(--ink);border-color:color-mix(in srgb,var(--accent) 55%,var(--line));background:var(--accent-soft)}
+.chip[aria-pressed="true"]::before{content:"✓ ";color:var(--accent);font-weight:700}
+.size{width:34px;height:32px;padding:0;display:grid;place-items:center;border:1px solid var(--line);background:var(--surface);border-radius:10px;font-weight:600}
+.toc-btn{display:none;margin-left:auto}
+
+/* Gövde */
+.layout{display:grid;grid-template-columns:230px minmax(0,1fr);gap:40px;align-items:start}
+.toc{position:sticky;top:70px;max-height:calc(100vh - 90px);overflow:auto;padding:12px 0 24px;font-size:.92rem}
+.toc h2{font:600 .75rem var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:16px 0 6px}
+.toc h2:first-child{margin-top:4px}
+.toc ol{list-style:none;margin:0;padding:0;border-left:1px solid var(--line)}
+.toc a{display:block;padding:.22rem 0 .22rem 12px;margin-left:-1px;border-left:2px solid transparent;color:var(--muted);text-decoration:none;line-height:1.35}
+.toc a:hover{color:var(--ink)}
+.toc a.on{color:var(--ink);border-left-color:var(--accent);font-weight:600}
+
+main{min-width:0;max-width:760px}
+.part{margin:44px 0 6px;font:600 .78rem var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px}
+.part::after{content:"";flex:1;height:1px;background:var(--line)}
+
+.dua{scroll-margin-top:72px;margin-top:18px;padding:24px clamp(16px,3.5vw,30px);background:var(--surface);border:1px solid var(--line);border-radius:22px}
+.dua-head{display:grid;gap:6px;margin-bottom:16px}
+.when{margin:0;font-size:.82rem;font-weight:600;color:var(--accent);letter-spacing:.02em}
+.dua h2{font-size:clamp(1.55rem,4vw,2rem)}
+.dua h2 small{font:500 .95rem var(--f-body);color:var(--muted);letter-spacing:0}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 0;padding:0;list-style:none}
+.tags li{font-size:.78rem;font-weight:600;padding:.12rem .6rem;border-radius:99px;background:var(--surface-2);color:var(--muted)}
+.tags li.h{background:var(--gold-soft);color:var(--gold)}
+
+.text{display:grid;gap:10px;padding:18px 0 4px;border-top:1px dashed var(--line)}
+.ar{margin:0;font-size:calc(1.75rem * var(--ar-scale));line-height:2.15;text-align:right;color:var(--ink)}
+.ar .v{color:var(--gold);font-size:.7em;margin:0 .15em}
+.ok{margin:0;font-style:italic;color:var(--accent);font-size:1.02rem}
+.meal{margin:0;font-size:1.06rem}
+.meal::before{content:"Anlamı";display:block;font:600 .72rem var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-style:normal;margin-bottom:2px}
+.ok::before{content:"Okunuşu";display:block;font:600 .72rem var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-style:normal;margin-bottom:2px}
+.sub-label{margin:14px 0 0;font:600 .72rem var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+
+html[data-ar="off"] .ar,html[data-ar="off"] .p-ar{display:none}
+html[data-ok="off"] .ok,html[data-ok="off"] .p-ok{display:none}
+html[data-meal="off"] .meal,html[data-meal="off"] .p-tr{display:none}
+
+/* İfade ifade */
+details.words{margin-top:14px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+details.words summary{cursor:pointer;padding:.6rem .9rem;font-weight:600;font-size:.94rem;list-style:none;display:flex;align-items:center;gap:8px}
+details.words summary::-webkit-details-marker{display:none}
+details.words summary::before{content:"";width:7px;height:7px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(-45deg);transition:transform .15s;margin-right:2px}
+details.words[open] summary::before{transform:rotate(45deg)}
+details.words summary span{color:var(--muted);font-weight:400;font-size:.85rem}
+.phr{list-style:none;margin:0;padding:0 .9rem .6rem}
+.phr li{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr) minmax(0,1.25fr);gap:4px 16px;align-items:baseline;padding:.55rem 0;border-top:1px solid var(--line)}
+.p-ar{font-size:calc(1.35rem * var(--ar-scale));line-height:1.9;text-align:right;order:3}
+.p-ok{font-style:italic;color:var(--accent);font-size:.95rem;order:1}
+.p-tr{font-size:.95rem;order:2}
+@media (max-width:640px){
+  .phr li{grid-template-columns:1fr;gap:0}
+  .p-ar{order:0}
+  .p-ok{order:1}
+  .p-tr{order:2;color:var(--muted)}
+}
+
+/* Tefsir */
+.tefsir{margin-top:20px}
+.tefsir h3{font-size:1.18rem;margin:22px 0 6px;color:var(--ink)}
+.tefsir h3:first-child{margin-top:0}
+.tefsir p{margin:0 0 10px}
+.tefsir ul,.tefsir ol{margin:0 0 10px;padding-left:1.2rem}
+.tefsir li{margin-bottom:4px}
+.tefsir strong{font-weight:600}
+blockquote.q{margin:12px 0 14px;padding:12px 16px;border-left:3px solid var(--gold);background:var(--gold-soft);border-radius:0 12px 12px 0}
+blockquote.q p{margin:0}
+blockquote.q .ar-q{font-family:var(--f-ar);direction:rtl;text-align:right;font-size:calc(1.3rem * var(--ar-scale));line-height:1.9;margin-bottom:4px}
+blockquote.q cite{display:block;margin-top:6px;font-size:.84rem;font-style:normal;color:var(--muted)}
+.note{margin:14px 0;padding:12px 16px;border-radius:12px;background:var(--accent-soft);font-size:.95rem}
+.note.warn{background:color-mix(in srgb,var(--rose) 12%,var(--surface))}
+.note strong{font-weight:600}
+.src{margin:18px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:.86rem;color:var(--muted)}
+.src b{font-weight:600;color:var(--ink)}
+
+.inline-dua{margin:12px 0;padding:12px 14px;border:1px solid var(--line);border-radius:14px;background:var(--bg)}
+.inline-dua .ar{font-size:calc(1.45rem * var(--ar-scale));line-height:2}
+.inline-dua .ok,.inline-dua .meal{font-size:.98rem}
+.inline-dua .ok::before,.inline-dua .meal::before{display:none}
+.inline-dua h4{font-size:1rem;margin-bottom:4px}
+
+/* Tesbih sayacı */
+.counter{display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px 24px;align-items:center;margin:16px 0 8px;padding:18px;border-radius:18px;background:var(--bg);border:1px solid var(--line)}
+@media (max-width:520px){.counter{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.tap{position:relative;width:168px;height:168px;border-radius:50%;border:0;background:var(--surface);box-shadow:0 0 0 1px var(--line),0 8px 24px -12px color-mix(in srgb,var(--ink) 40%,transparent);display:grid;place-items:center;-webkit-tap-highlight-color:transparent;touch-action:manipulation;transition:transform .08s}
+.tap:active{transform:scale(.97)}
+.tap svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.tap circle{fill:none;stroke-width:7}
+.tap .trk{stroke:var(--surface-2)}
+.tap .prg{stroke:var(--accent);stroke-linecap:round;transition:stroke-dashoffset .15s}
+.tap .in{position:relative;display:grid;gap:0;justify-items:center}
+.tap .c{font:700 2.6rem/1 var(--f-display);font-variant-numeric:tabular-nums}
+.tap .of{font-size:.8rem;color:var(--muted)}
+.cinfo h4{font-size:1.25rem}
+.cinfo .car{font-family:var(--f-ar);direction:rtl;font-size:calc(1.6rem * var(--ar-scale));line-height:1.8;color:var(--accent);margin:2px 0}
+.cinfo p{margin:0;color:var(--muted);font-size:.94rem}
+.phases{display:flex;gap:5px;margin-top:10px;flex-wrap:wrap}
+@media (max-width:520px){.phases{justify-content:center}}
+.phases span{font-size:.74rem;font-weight:600;padding:.1rem .5rem;border-radius:99px;background:var(--surface-2);color:var(--muted)}
+.phases span.on{background:var(--accent);color:var(--bg)}
+.phases span.ok2{background:var(--accent-soft);color:var(--accent)}
+.creset{margin-top:10px;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:.3rem .8rem;font-size:.86rem}
+
+/* Sorular */
+.faq details{border-top:1px solid var(--line);padding:4px 0}
+.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;font-weight:600;padding:.6rem 0;font-size:1.02rem}
+.faq details p{margin:0 0 10px}
+
+footer{margin-top:56px;padding-top:24px;border-top:1px solid var(--line);font-size:.9rem;color:var(--muted)}
+footer p{margin:0 0 8px;max-width:760px}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;gap:0}
+  .toc{position:fixed;top:0;bottom:0;left:0;width:min(300px,86vw);max-height:none;z-index:40;background:var(--surface);padding:20px;border-right:1px solid var(--line);transform:translateX(-102%);transition:transform .2s ease;box-shadow:0 0 40px -10px rgba(0,0,0,.4)}
+  .toc.open{transform:none}
+  .toc-btn{display:inline-flex}
+  .scrim{position:fixed;inset:0;z-index:30;background:rgba(0,0,0,.35)}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+@media print{.bar,.toc,.flow,.counter{display:none!important}.layout{display:block}.dua{break-inside:avoid;border:0;padding:0}details.words{display:block}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <a class="back" href="/">← Projeler</a>
+  <p class="eyebrow">Namazı anlayarak kılmak için</p>
+  <h1>Namazdaki Dualar ve Anlamları</h1>
+  <p class="lede">Her gün defalarca okuduğumuz kelimeler aslında ne diyor? Sübhâneke'den Ettehiyyâtü'ye, rükû ve secde tesbihlerinden Kunut dualarına kadar namazda okunanların <strong>Arapçası, okunuşu, ifade ifade anlamı, tefsiri, neden okunduğu ve hükmü</strong> — kaynaklarıyla birlikte. Fıkhî hükümlerde Hanefî mezhebi esas alınmış, önemli farklılıklar ayrıca belirtilmiştir.</p>
+  <p class="basmala" lang="ar">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+
+  <section class="flow" aria-labelledby="akis-baslik">
+    <h2 id="akis-baslik">Bir rekatın akışı — hangi duruşta ne okunur?</h2>
+    <ol class="steps" id="steps">
+      <li><button class="step" type="button" data-i="0"><span class="n">1</span><span class="t">Kıyam</span></button></li>
+      <li><button class="step" type="button" data-i="1"><span class="n">2</span><span class="t">Rükû</span></button></li>
+      <li><button class="step" type="button" data-i="2"><span class="n">3</span><span class="t">Kavme</span></button></li>
+      <li><button class="step" type="button" data-i="3"><span class="n">4</span><span class="t">Secde</span></button></li>
+      <li><button class="step" type="button" data-i="4"><span class="n">5</span><span class="t">Celse</span></button></li>
+      <li><button class="step" type="button" data-i="5"><span class="n">6</span><span class="t">2. Secde</span></button></li>
+      <li><button class="step" type="button" data-i="6"><span class="n">7</span><span class="t">Ka'de</span></button></li>
+      <li><button class="step" type="button" data-i="7"><span class="n">8</span><span class="t">Selam</span></button></li>
+    </ol>
+    <div class="step-panel" id="step-panel" aria-live="polite"></div>
+  </section>
+</header>
+
+<div class="bar" role="toolbar" aria-label="Görünüm">
+  <div class="grp"><span class="lbl">Göster</span>
+    <button class="chip" type="button" data-toggle="ar" aria-pressed="true">Arapça</button>
+    <button class="chip" type="button" data-toggle="ok" aria-pressed="true">Okunuş</button>
+    <button class="chip" type="button" data-toggle="meal" aria-pressed="true">Anlam</button>
+  </div>
+  <div class="grp"><span class="lbl">Arapça boyutu</span>
+    <button class="size" type="button" data-size="-1" aria-label="Arapça yazıyı küçült">A−</button>
+    <button class="size" type="button" data-size="1" aria-label="Arapça yazıyı büyüt">A+</button>
+  </div>
+  <button class="chip toc-btn" type="button" id="toc-btn" aria-controls="toc" aria-expanded="false">☰ İçindekiler</button>
+</div>
+
+<div class="layout">
+<nav class="toc" id="toc" aria-label="İçindekiler">
+  <h2>Kıyam</h2>
+  <ol>
+    <li><a href="#tekbir">Allâhu Ekber (Tekbir)</a></li>
+    <li><a href="#subhaneke">Sübhâneke</a></li>
+    <li><a href="#euzu">Eûzü – Besmele</a></li>
+    <li><a href="#fatiha">Fâtiha ve Âmin</a></li>
+  </ol>
+  <h2>Rükû ve secde</h2>
+  <ol>
+    <li><a href="#ruku">Sübhâne Rabbiye'l-Azîm</a></li>
+    <li><a href="#kavme">Semiallâhu limen hamideh</a></li>
+    <li><a href="#secde">Sübhâne Rabbiye'l-A'lâ</a></li>
+  </ol>
+  <h2>Oturuş ve selam</h2>
+  <ol>
+    <li><a href="#tahiyyat">Ettehiyyâtü</a></li>
+    <li><a href="#salli-barik">Salli – Bârik</a></li>
+    <li><a href="#rabbena">Rabbenâ duaları</a></li>
+    <li><a href="#selam">Selam</a></li>
+  </ol>
+  <h2>Namazdan sonra</h2>
+  <ol>
+    <li><a href="#ente-selam">Allâhümme ente's-selâm</a></li>
+    <li><a href="#ayetel-kursi">Âyetü'l-Kürsî</a></li>
+    <li><a href="#tesbihat">Tesbihat (sayaçlı)</a></li>
+  </ol>
+  <h2>Vitir namazı</h2>
+  <ol>
+    <li><a href="#kunut">Kunut duaları</a></li>
+  </ol>
+  <h2>İmanın özü</h2>
+  <ol>
+    <li><a href="#amentu">Âmentü</a></li>
+    <li><a href="#sorular">Sık sorulanlar</a></li>
+  </ol>
+</nav>
+
+<main>
+
+<!-- ============ KIYAM ============ -->
+<p class="part">Kıyam · Ayakta</p>
+
+<article class="dua" id="tekbir">
+  <header class="dua-head">
+    <p class="when">Namaza başlarken ve her duruş değişiminde</p>
+    <h2>Allâhu Ekber <small>· İftitah ve intikal tekbirleri</small></h2>
+    <ul class="tags"><li class="h">İftitah tekbiri: Farz</li><li class="h">Geçiş tekbirleri: Sünnet</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">اَللَّهُ أَكْبَرُ</p>
+    <p class="ok">Allâhu ekber.</p>
+    <p class="meal">Allah en büyüktür; her şeyden daha büyüktür.</p>
+  </div>
+  <div class="tefsir">
+    <h3>Ne anlama gelir?</h3>
+    <p><strong>Ekber</strong>, Arapçada "büyük" anlamındaki <em>kebîr</em> kelimesinin üstünlük (ism-i tafdîl) kalıbıdır: "daha büyük, en büyük". Cümlede neyden büyük olduğu söylenmez; çünkü kıyaslanacak hiçbir şey yoktur. Âlimler bunu "Allah, aklına gelen, gözünün gördüğü, kalbinin bağlandığı her şeyden büyüktür" diye açıklar. Yani tekbir, Allah'ı bir şeyle karşılaştırmak değil; O'nun dışındaki her şeyi küçültmektir.</p>
+    <h3>Neden "iftitah" ve "tahrîme" denir?</h3>
+    <p>Namaza başlarken alınan ilk tekbire <strong>iftitah</strong> (açılış) tekbiri veya <strong>tahrîme</strong> tekbiri denir. Tahrîme "haram kılan" demektir: Bu tekbirle birlikte namaz dışında helal olan konuşmak, yemek, sağa sola dönmek gibi şeyler artık yasaklanır. Selamla birlikte bu yasak kalkar.</p>
+    <blockquote class="q">
+      <p class="ar-q">مِفْتَاحُ الصَّلَاةِ الطُّهُورُ، وَتَحْرِيمُهَا التَّكْبِيرُ، وَتَحْلِيلُهَا التَّسْلِيمُ</p>
+      <p>"Namazın anahtarı temizlik, onu (dünya işlerine) kapatan tekbir, açan da selamdır."</p>
+      <cite>Ebû Dâvûd, Tahâret; Tirmizî, Tahâret (Hz. Ali'den)</cite>
+    </blockquote>
+    <h3>Önemi ve incelikler</h3>
+    <ul>
+      <li>İftitah tekbiri Hanefîlere göre namazın şartlarındandır; terk edilirse namaz hiç başlamamış olur.</li>
+      <li>Ellerin kaldırılması sünnettir: Erkekler başparmaklar kulak yumuşağına değecek, kadınlar parmak uçları omuz hizasında olacak şekilde kaldırır (Hanefî uygulama). Mutasavvıflar bunu "dünyayı arkaya atmak", teslim olmak şeklinde yorumlar.</li>
+      <li>Bir namazda tekbir, adeta bir "nakarat" gibi tekrarlanır: Her eğilişte, her kalkışta, her secdede yeniden "Allah en büyüktür" denir. Her duruş değişikliği, bu hakikatin yeniden hatırlanmasıdır.</li>
+    </ul>
+  </div>
+  <p class="src"><b>Kaynak:</b> Ebû Dâvûd, Tahâret 31; Tirmizî, Tahâret 3. Hükümler için: Diyanet İşleri Başkanlığı, <i>İlmihal</i> I, "Namaz" bölümü.</p>
+</article>
+
+<article class="dua" id="subhaneke">
+  <header class="dua-head">
+    <p class="when">İlk rekatta, iftitah tekbirinden hemen sonra</p>
+    <h2>Sübhâneke <small>· Senâ duası</small></h2>
+    <ul class="tags"><li class="h">Hanefî: Sünnet</li><li>Gizli okunur</li><li>Yalnız ilk rekatta</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَىٰ جَدُّكَ، وَلَا إِلَٰهَ غَيْرُكَ</p>
+    <p class="ok">Sübhânekellâhümme ve bi-hamdik, ve tebârekesmük, ve teâlâ ceddük, ve lâ ilâhe ğayruk.</p>
+    <p class="meal">Allah'ım! Seni her türlü eksiklikten uzak tutar, hamdinle överim. Adın mübarektir, şanın yücedir. Senden başka ilah yoktur.</p>
+  </div>
+  <details class="words">
+    <summary>İfade ifade anlamı <span>· 5 parça</span></summary>
+    <ol class="phr">
+      <li><span class="p-ar" lang="ar">سُبْحَانَكَ اللَّهُمَّ</span><span class="p-ok">Sübhânekellâhümme</span><span class="p-tr">Allah'ım, Seni tenzih ederim (her eksiklikten uzak tutarım)</span></li>
+      <li><span class="p-ar" lang="ar">وَبِحَمْدِكَ</span><span class="p-ok">ve bi-hamdik</span><span class="p-tr">ve bunu Sana hamd ederek yaparım</span></li>
+      <li><span class="p-ar" lang="ar">وَتَبَارَكَ اسْمُكَ</span><span class="p-ok">ve tebârekesmük</span><span class="p-tr">Senin adın ne mübarek, ne bereketlidir</span></li>
+      <li><span class="p-ar" lang="ar">وَتَعَالَىٰ جَدُّكَ</span><span class="p-ok">ve teâlâ ceddük</span><span class="p-tr">Senin şanın, azametin ne yücedir</span></li>
+      <li><span class="p-ar" lang="ar">وَلَا إِلَٰهَ غَيْرُكَ</span><span class="p-ok">ve lâ ilâhe ğayruk</span><span class="p-tr">Senden başka ilah yoktur</span></li>
+    </ol>
+  </details>
+  <div class="tefsir">
+    <h3>Ne anlama gelir?</h3>
+    <p>Sübhâneke, namazın kapısında yapılan bir <strong>övgü (senâ)</strong> duasıdır; bu yüzden fıkıh kitaplarında "senâ" diye anılır. Dört cümlesi, Allah'ı tanımanın dört basamağı gibidir:</p>
+    <ol>
+      <li><strong>Tenzih (sübhân):</strong> "Sübhân" kökü (s-b-h) suda yüzmek, uzaklaşmak anlamına gelir. Allah'ı tesbih etmek, O'nu yaratılmışlara ait her türlü eksiklik, acizlik ve benzerlikten "uzak tutmak" demektir. Önce yanlış tasavvurlar temizlenir.</li>
+      <li><strong>Hamd (bi-hamdik):</strong> Eksiklikleri reddettikten sonra kemal sıfatlar övülür. "Tesbih" olumsuzu siler, "hamd" olumluyu söyler. "Bi-hamdik" ayrıca "Seni tesbih edebilmem de Senin lütfundur, bunun için de sana hamd ederim" anlamını taşır.</li>
+      <li><strong>Bereket (tebâreke'smük):</strong> Allah'ın adı bile bereket kaynağıdır; adıyla başlanan iş bereketlenir.</li>
+      <li><strong>Azamet (teâlâ ceddük):</strong> "Cedd" kelimesi azamet, şan, büyüklük demektir. Aynı ifade Cin suresinde, Kur'an'ı dinleyen cinlerin dilinden geçer:</li>
+    </ol>
+    <blockquote class="q">
+      <p class="ar-q">وَأَنَّهُ تَعَالَىٰ جَدُّ رَبِّنَا مَا اتَّخَذَ صَاحِبَةً وَلَا وَلَدًا</p>
+      <p>"Rabbimizin şanı çok yücedir; O, ne eş edinmiştir ne de çocuk."</p>
+      <cite>Cin suresi 72/3</cite>
+    </blockquote>
+    <p>Dua, bütün bu övgülerin özü olan <strong>tevhid</strong> cümlesiyle biter: "Senden başka ilah yoktur."</p>
+    <h3>Neden okunur?</h3>
+    <p>Huzura çıkan kişi önce selam verir, sonra halini arz eder. Sübhâneke de namazın girişinde Allah'ı layık olduğu şekilde övmektir; ardından Fâtiha ile asıl "konuşma" başlar. Peygamberimizin namaza bu duayla başladığı rivayet edilir; Hz. Ömer de insanlar öğrensin diye bazen sesli okumuştur.</p>
+    <blockquote class="q">
+      <p>Hz. Âişe anlatıyor: "Resûlullah namaza başladığında 'Sübhânekellâhümme ve bi-hamdik, ve tebârekesmük, ve teâlâ ceddük, ve lâ ilâhe ğayruk' derdi."</p>
+      <cite>Ebû Dâvûd, Salât 122; Tirmizî, Salât 65. Hz. Ömer'in sesli okuması: Müslim, Salât 52</cite>
+    </blockquote>
+    <h3>Bilmekte fayda var</h3>
+    <ul>
+      <li>Yalnızca namazın <strong>ilk rekatında</strong> okunur. Cemaatle kılarken imam kıraate başlamadan yetişen de okur; imam sesli okumaya başlamışsa okumaz, dinler.</li>
+      <li><strong>Cenaze namazında</strong> "ve teâlâ ceddük"ten sonra <em>"ve celle senâük"</em> (övgün ne yücedir) ilave edilir. Diğer namazlarda bu ilave yapılmaz.</li>
+      <li>Şâfiîler iftitah duası olarak genellikle <em>"Veccehtü vechiye..."</em> (En'âm 6/79) ile başlayan duayı tercih eder. İkisi de sünnette vardır.</li>
+    </ul>
+  </div>
+  <p class="src"><b>Kaynak:</b> Ebû Dâvûd, Salât 122; Tirmizî, Salât 65; Müslim, Salât 52; Cin 72/3. Hüküm: Diyanet, <i>İlmihal</i> I.</p>
+</article>
+
+<article class="dua" id="euzu">
+  <header class="dua-head">
+    <p class="when">Sübhâneke'den sonra, Fâtiha'dan önce</p>
+    <h2>Eûzü – Besmele</h2>
+    <ul class="tags"><li class="h">Eûzü: İlk rekatta sünnet</li><li class="h">Besmele: Her rekatta Fâtiha'dan önce sünnet</li><li>Gizli okunur</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ <br>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+    <p class="ok">Eûzü billâhi mine'ş-şeytâni'r-racîm. Bismillâhi'r-rahmâni'r-rahîm.</p>
+    <p class="meal">Kovulmuş şeytandan Allah'a sığınırım. Rahmân ve Rahîm olan Allah'ın adıyla.</p>
+  </div>
+  <details class="words">
+    <summary>İfade ifade anlamı <span>· 5 parça</span></summary>
+    <ol class="phr">
+      <li><span class="p-ar" lang="ar">أَعُوذُ بِاللَّهِ</span><span class="p-ok">Eûzü billâhi</span><span class="p-tr">Allah'a sığınırım</span></li>
+      <li><span class="p-ar" lang="ar">مِنَ الشَّيْطَانِ الرَّجِيمِ</span><span class="p-ok">mine'ş-şeytâni'r-racîm</span><span class="p-tr">rahmetten kovulmuş, taşlanmış şeytandan</span></li>
+      <li><span class="p-ar" lang="ar">بِسْمِ اللَّهِ</span><span class="p-ok">Bismillâhi</span><span class="p-tr">Allah'ın adıyla (başlarım)</span></li>
+      <li><span class="p-ar" lang="ar">الرَّحْمَٰنِ</span><span class="p-ok">er-Rahmâni</span><span class="p-tr">rahmeti dünyada bütün varlıkları kuşatan</span></li>
+      <li><span class="p-ar" lang="ar">الرَّحِيمِ</span><span class="p-ok">er-Rahîm</span><span class="p-tr">merhameti sürekli olan, ahirette müminlere özel rahmet eden</span></li>
+    </ol>
+  </details>
+  <div class="tefsir">
+    <h3>Neden okunur?</h3>
+    <p>Kur'an okumaya başlamadan önce şeytandan Allah'a sığınmak, bizzat Kur'an'ın emridir. Namazda Fâtiha ile Kur'an okumaya geçileceği için önce Eûzü çekilir:</p>
+    <blockquote class="q">
+      <p class="ar-q">فَإِذَا قَرَأْتَ الْقُرْآنَ فَاسْتَعِذْ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ</p>
+      <p>"Kur'an okuyacağın zaman kovulmuş şeytandan Allah'a sığın."</p>
+      <cite>Nahl suresi 16/98</cite>
+    </blockquote>
+    <h3>Tefsir ve incelikler</h3>
+    <ul>
+      <li><strong>Önce temizlik, sonra süs:</strong> Âlimler Eûzü'yü kalbi vesveseden temizlemeye, Besmele'yi ise o temiz kalbi Allah'ın adıyla süslemeye benzetir. Önce kötüden uzaklaşılır, sonra iyiye yönelinir — tıpkı Sübhâneke'deki "tenzih, sonra hamd" sırası gibi.</li>
+      <li><strong>Racîm</strong> "taşlanmış, kovulmuş" demektir; şeytanın Allah'ın rahmetinden uzaklaştırılmış olduğunu hatırlatır. Namazda dikkatimizi dağıtan düşüncelere karşı bir kalkan niyetiyle okunur.</li>
+      <li><strong>Rahmân ve Rahîm</strong> aynı kökten (r-h-m, "rahim, şefkat") iki isimdir. Tefsircilerin çoğuna göre Rahmân, rahmetin genişliğini (mümin-kâfir herkese dünyada); Rahîm ise sürekliliğini ve müminlere ahiretteki özel rahmetini anlatır. Allah kendini tanıtırken ilk olarak rahmet sıfatlarını öne çıkarır.</li>
+      <li>Eûzü yalnızca ilk rekatta, Besmele ise her rekatta Fâtiha'dan önce gizlice okunur. Fâtiha ile zamm-ı sure arasında Besmele okumak Hanefîlerde güzel görülmüştür.</li>
+    </ul>
+  </div>
+  <p class="src"><b>Kaynak:</b> Nahl 16/98; Neml 27/30. Rahmân–Rahîm farkı için: Taberî ve Râzî tefsirleri, Fâtiha 1; Diyanet, <i>Kur'an Yolu Tefsiri</i>, Fâtiha.</p>
+</article>
+
+<article class="dua" id="fatiha">
+  <header class="dua-head">
+    <p class="when">Her rekatta, kıyamda</p>
+    <h2>Fâtiha ve Âmin <small>· Ümmü'l-Kur'an</small></h2>
+    <ul class="tags"><li class="h">Hanefî: Vacip</li><li class="h">Şâfiî: Farz (rükün)</li><li>"Âmin": gizli, sünnet</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">اَلْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ <span class="v">﴿٢﴾</span> الرَّحْمَٰنِ الرَّحِيمِ <span class="v">﴿٣﴾</span> مَالِكِ يَوْمِ الدِّينِ <span class="v">﴿٤﴾</span> إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ <span class="v">﴿٥﴾</span> اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ <span class="v">﴿٦﴾</span> صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ <span class="v">﴿٧﴾</span> <br>آمِين</p>
+    <p class="ok">Elhamdü lillâhi rabbi'l-âlemîn. Er-rahmâni'r-rahîm. Mâliki yevmi'd-dîn. İyyâke na'büdü ve iyyâke neste'în. İhdina's-sırâta'l-müstakîm. Sırâta'llezîne en'amte aleyhim ğayri'l-mağdûbi aleyhim ve le'd-dâllîn. Âmîn.</p>
+    <p class="meal">Hamd, âlemlerin Rabbi Allah'a mahsustur. O, Rahmân'dır, Rahîm'dir. Din (hesap) gününün sahibidir. (Allah'ım!) Yalnız sana kulluk eder, yalnız senden yardım dileriz. Bizi dosdoğru yola ilet; kendilerine nimet verdiklerinin yoluna — gazaba uğrayanların ve yolunu şaşırmışların yoluna değil. Âmin: Allah'ım, kabul eyle.</p>
+  </div>
+  <details class="words">
+    <summary>İfade ifade anlamı <span>· 11 parça</span></summary>
+    <ol class="phr">
+      <li><span class="p-ar" lang="ar">اَلْحَمْدُ لِلَّهِ</span><span class="p-ok">Elhamdü lillâhi</span><span class="p-tr">Her türlü övgü ve şükür Allah'a aittir</span></li>
+      <li><span class="p-ar" lang="ar">رَبِّ الْعَالَمِينَ</span><span class="p-ok">rabbi'l-âlemîn</span><span class="p-tr">bütün âlemlerin Rabbi (yaratıp terbiye eden, yöneten)</span></li>
+      <li><span class="p-ar" lang="ar">الرَّحْمَٰنِ الرَّحِيمِ</span><span class="p-ok">er-rahmâni'r-rahîm</span><span class="p-tr">rahmeti her şeyi kuşatan, merhameti sürekli olan</span></li>
+      <li><span class="p-ar" lang="ar">مَالِكِ يَوْمِ الدِّينِ</span><span class="p-ok">mâliki yevmi'd-dîn</span><span class="p-tr">din gününün (hesap ve karşılık gününün) sahibi, hükümdarı</span></li>
+      <li><span class="p-ar" lang="ar">إِيَّاكَ نَعْبُدُ</span><span class="p-ok">iyyâke na'büdü</span><span class="p-tr">yalnız sana kulluk ederiz</span></li>
+      <li><span class="p-ar" lang="ar">وَإِيَّاكَ نَسْتَعِينُ</span><span class="p-ok">ve iyyâke neste'în</span><span class="p-tr">ve yalnız senden yardım dileriz</span></li>
+      <li><span class="p-ar" lang="ar">اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ</span><span class="p-ok">ihdina's-sırâta'l-müstakîm</span><span class="p-tr">bizi dosdoğru yola ilet, o yolda sabit kıl</span></li>
+      <li><span class="p-ar" lang="ar">صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ</span><span class="p-ok">sırâta'llezîne en'amte aleyhim</span><span class="p-tr">kendilerine nimet verdiklerinin yoluna</span></li>
+      <li><span class="p-ar" lang="ar">غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ</span><span class="p-ok">ğayri'l-mağdûbi aleyhim</span><span class="p-tr">gazaba uğrayanların (yoluna) değil</span></li>
+      <li><span class="p-ar" lang="ar">وَلَا الضَّالِّينَ</span><span class="p-ok">ve le'd-dâllîn</span><span class="p-tr">yolunu kaybetmişlerin (yoluna) de değil</span></li>
+      <li><span class="p-ar" lang="ar">آمِين</span><span class="p-ok">âmîn</span><span class="p-tr">Allah'ım, kabul et; öyle olsun</span></li>
+    </ol>
+  </details>
+  <div class="tefsir">
+    <h3>Namazın kalbi: Bir karşılıklı konuşma</h3>
+    <p>Fâtiha "açan, açılış" demektir; Kur'an onunla açılır, namaz onunla başlar. Peygamberimiz ona "Kur'an'ın anası" (Ümmü'l-Kur'an) ve "tekrarlanan yedi ayet" (es-seb'u'l-mesânî) adını vermiştir. Fâtiha'nın namazdaki yerini en güzel anlatan şey, bir kudsî hadistir: Allah, Fâtiha'yı kul ile kendisi arasında bir <strong>diyalog</strong> olarak tarif eder.</p>
+    <blockquote class="q">
+      <p>Allah buyurur: "Namazı (Fâtiha'yı) kendimle kulum arasında ikiye böldüm; kuluma istediği verilecektir.<br>
+      Kul <em>'Elhamdü lillâhi rabbi'l-âlemîn'</em> dediğinde Allah: <strong>'Kulum bana hamd etti'</strong> der.<br>
+      <em>'Er-rahmâni'r-rahîm'</em> dediğinde: <strong>'Kulum beni övdü'</strong> der.<br>
+      <em>'Mâliki yevmi'd-dîn'</em> dediğinde: <strong>'Kulum beni yüceltti'</strong> der.<br>
+      <em>'İyyâke na'büdü ve iyyâke neste'în'</em> dediğinde: <strong>'Bu benimle kulum arasındadır; kuluma istediği verilecektir'</strong> der.<br>
+      <em>'İhdina's-sırâta'l-müstakîm...'</em> dediğinde: <strong>'Bu kulumundur; kuluma istediği verilecektir'</strong> der."</p>
+      <cite>Müslim, Salât 38 (Ebû Hüreyre'den)</cite>
+    </blockquote>
+    <p>Bu hadisi bilerek Fâtiha okumak, her ayetten sonra bir cevap beklemek gibidir. Okumayı biraz yavaşlatmak için güzel bir sebep.</p>
+    <h3>Tefsirden incelikler</h3>
+    <ul>
+      <li><strong>Gaibden hitaba geçiş:</strong> İlk üç ayette Allah'tan "O" diye, üçüncü şahısla söz edilir. "İyyâke" ile birden "Sen"e geçilir. Belagatte buna <em>iltifat</em> denir: Kul, Allah'ı övdükçe yakınlaşır ve sonunda doğrudan O'na hitap eder hale gelir.</li>
+      <li><strong>"Yalnız" vurgusu:</strong> Arapçada normal sıra "na'büdüke" (sana ibadet ederiz) olurdu. Nesnenin (iyyâke) öne alınması "yalnızca sana" anlamı verir. Kulluk da yardım dileme de yalnız Allah'a yöneltilir.</li>
+      <li><strong>"Ben" değil "biz":</strong> Tek başına kılınan namazda bile "ederiz, dileriz" denir. Mümin kendini bütün müminlerle birlikte Allah'ın huzurunda görür.</li>
+      <li><strong>Nimet verilenler kimdir?</strong> Kur'an bunu kendisi açıklar: "Allah'a ve Peygamber'e itaat edenler, işte onlar Allah'ın kendilerine nimet verdiği peygamberler, sıddîklar, şehitler ve salihlerle beraberdir" (Nisâ 4/69).</li>
+      <li><strong>Gazaba uğrayanlar ve sapanlar:</strong> Pek çok müfessire göre ilki hakkı bildiği halde ona uymayanları, ikincisi bilgisizlik yüzünden yolunu kaybedenleri temsil eder. Yani dua iki tehlikeye karşıdır: bilip de yapmamak ve bilmeden yanlış yapmak.</li>
+    </ul>
+    <h3>"Âmin" neden söylenir?</h3>
+    <p>Âmin Kur'an'dan bir kelime değildir; "Allah'ım kabul et" anlamında bir dua kelimesidir. Fâtiha'nın son kısmı bir talep olduğu için onu "kabul eyle" diye mühürleriz. Bu yüzden Mushaf'ta yazılmaz, gizlice söylenir (Hanefî). Şâfiîler sesli namazlarda sesli söyler.</p>
+    <blockquote class="q">
+      <p>"İmam <em>'ğayri'l-mağdûbi aleyhim ve le'd-dâllîn'</em> dediğinde siz 'âmin' deyin. Kimin âmini meleklerin âminine denk gelirse geçmiş günahları bağışlanır."</p>
+      <cite>Buhârî, Ezân 111–113; Müslim, Salât 72–76</cite>
+    </blockquote>
+    <div class="note"><strong>Hüküm:</strong> Hanefîlere göre namazda Kur'an okumak (en az bir uzun ya da üç kısa ayet) farz, Fâtiha'yı okumak ise vaciptir; unutulursa sehiv secdesi gerekir. Şâfiîlere göre Fâtiha namazın rüknüdür, okunmazsa namaz olmaz. Dayanak: "Fâtiha'yı okumayanın namazı yoktur" (Buhârî, Ezân 95; Müslim, Salât 34). Cemaatle kılarken Hanefîlere göre imamın arkasında Fâtiha okunmaz, dinlenir.</div>
+  </div>
+  <p class="src"><b>Kaynak:</b> Müslim, Salât 38; Buhârî, Ezân 95, 111; Müslim, Salât 34, 72; Nisâ 4/69. Tefsir için: Râzî, <i>Mefâtîhu'l-gayb</i>; Elmalılı, <i>Hak Dini Kur'an Dili</i>, Fâtiha.</p>
+</article>
+
+<!-- ============ RÜKÛ VE SECDE ============ -->
+<p class="part">Rükû ve secde</p>
+
+<article class="dua" id="ruku">
+  <header class="dua-head">
+    <p class="when">Rükûda, eğilmiş halde — en az üç kez</p>
+    <h2>Sübhâne Rabbiye'l-Azîm</h2>
+    <ul class="tags"><li class="h">Hanefî: Sünnet</li><li>3, 5 veya 7 kez</li><li>Gizli okunur</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">سُبْحَانَ رَبِّيَ الْعَظِيمِ</p>
+    <p class="ok">Sübhâne rabbiye'l-azîm.</p>
+    <p class="meal">Yüce (azametli) Rabbimi her türlü eksiklikten uzak tutarım.</p>
+  </div>
+  <details class="words">
+    <summary>Kelime kelime anlamı <span>· 3 kelime</span></summary>
+    <ol class="phr">
+      <li><span class="p-ar" lang="ar">سُبْحَانَ</span><span class="p-ok">Sübhâne</span><span class="p-tr">tenzih ederim; her eksiklikten uzaktır</span></li>
+      <li><span class="p-ar" lang="ar">رَبِّيَ</span><span class="p-ok">rabbiye</span><span class="p-tr">benim Rabbim (beni yaratıp terbiye eden)</span></li>
+      <li><span class="p-ar" lang="ar">الْعَظِيمِ</span><span class="p-ok">el-azîm</span><span class="p-tr">büyüklüğü akıllara sığmayan, azametli</span></li>
+    </ol>
+  </details>
+  <div class="tefsir">
+    <h3>Neden rükûda bu tesbih okunur?</h3>
+    <p>Bu tesbih doğrudan Kur'an'dan gelir. Vâkıa suresinin "Rabbinin yüce adını tesbih et" ayeti indiğinde Peygamberimiz onu rükûya yerleştirmiştir:</p>
+    <blockquote class="q">
+      <p class="ar-q">فَسَبِّحْ بِاسْمِ رَبِّكَ الْعَظِيمِ</p>
+      <p>"O halde yüce Rabbinin adını tesbih et." (Vâkıa 56/74, 96; Hâkka 69/52)</p>
+      <p style="margin-top:8px">Ukbe b. Âmir anlatıyor: Bu ayet inince Resûlullah <strong>"Bunu rükûnuzda okuyun"</strong> buyurdu. "Sebbihisme rabbike'l-a'lâ" ayeti inince de <strong>"Bunu secdenizde okuyun"</strong> buyurdu.</p>
+      <cite>Ebû Dâvûd, Salât 151; İbn Mâce, İkâme 20</cite>
+    </blockquote>
+    <h3>Beden ile sözün uyumu</h3>
+    <p>Rükû, Arapçada "eğilmek" demektir. İnsanlar arasında eğilmek, karşıdakinin büyüklüğünü kabul etmenin işaretidir. Mümin bu eğilişi yalnız Allah'a yapar ve tam o anda dilinden <strong>"Azîm"</strong> — azametli, büyük — kelimesi çıkar. Beden "Sen büyüksün" derken dil de aynı şeyi söyler.</p>
+    <p>"Rabbiye" (benim Rabbim) ifadesindeki "benim" eki de dikkat çekicidir: Âlemlerin Rabbi olan Allah'a, kul şahsi bir yakınlıkla "benim Rabbim" diye seslenir.</p>
+    <blockquote class="q">
+      <p>"Rükûda Rabbinizi yüceltin; secdede ise duaya gayret edin. Çünkü (secdedeki duanızın) kabul edilmesi umulur."</p>
+      <cite>Müslim, Salât 207 (İbn Abbas'tan)</cite>
+    </blockquote>
+    <h3>Bilmekte fayda var</h3>
+    <ul>
+      <li>Rükûda en az üç kez okumak sünnettir; tek sayılarda (5, 7) artırmak güzeldir. Üçten azı mekruh görülmüştür.</li>
+      <li>Rükûda beden tam olarak durmalı, sırt düzleşmeli, en az bir tesbih süresi kadar sükûnet olmalıdır. Buna <strong>ta'dîl-i erkân</strong> denir ve Hanefîlere göre vaciptir. Peygamberimiz rükû ve secdesini tam yapmayanı "namazından çalan hırsız" diye nitelemiştir (Ahmed b. Hanbel, <i>Müsned</i>).</li>
+      <li>Huzeyfe'nin rivayetine göre Peygamberimiz rükûda "Sübhâne rabbiye'l-azîm", secdede "Sübhâne rabbiye'l-a'lâ" derdi (Müslim, Salâtü'l-müsâfirîn 203).</li>
+    </ul>
+  </div>
+  <p class="src"><b>Kaynak:</b> Vâkıa 56/74, 96; Ebû Dâvûd, Salât 151; İbn Mâce, İkâme 20; Müslim, Salât 207; Müslim, Salâtü'l-müsâfirîn 203.</p>
+</article>
+
+<article class="dua" id="kavme">
+  <header class="dua-head">
+    <p class="when">Rükûdan doğrulurken ve ayakta dururken (kavme)</p>
+    <h2>Semiallâhu limen hamideh – Rabbenâ leke'l-hamd</h2>
+    <ul class="tags"><li class="h">Hanefî: Sünnet</li><li>İmam ilkini, cemaat ikincisini söyler</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ <br>رَبَّنَا لَكَ الْحَمْدُ</p>
+    <p class="ok">Semiallâhu limen hamideh. Rabbenâ leke'l-hamd.</p>
+    <p class="meal">Allah, kendisine hamd edeni işitti (duyar ve karşılık verir). Rabbimiz! Hamd yalnız sana mahsustur.</p>
+  </div>
+  <details class="words">
+    <summary>İfade ifade anlamı <span>· 4 parça</span></summary>
+    <ol class="phr">
+      <li><span class="p-ar" lang="ar">سَمِعَ اللَّهُ</span><span class="p-ok">Semia'llâhu</span><span class="p-tr">Allah işitti; duydu ve kabul etti</span></li>
+      <li><span class="p-ar" lang="ar">لِمَنْ حَمِدَهُ</span><span class="p-ok">limen hamideh</span><span class="p-tr">kendisine hamd edeni</span></li>
+      <li><span class="p-ar" lang="ar">رَبَّنَا</span><span class="p-ok">Rabbenâ</span><span class="p-tr">Ey Rabbimiz!</span></li>
+      <li><span class="p-ar" lang="ar">لَكَ الْحَمْدُ</span><span class="p-ok">leke'l-hamd</span><span class="p-tr">hamd sana aittir</span></li>
+    </ol>
+  </details>
+  <div class="tefsir">
+    <h3>Ne anlama gelir?</h3>
+    <p>Burada "işitmek" (semi'a) sadece duymak anlamında değildir; Allah her şeyi zaten duyar. Arapçada "semia'llâhu li-" kalıbı <strong>"kabul etti, icabet etti"</strong> demektir. Yani: "Allah, kendisine hamd edenin hamdini kabul eder." Bu bir haber cümlesidir ama aynı zamanda bir müjde ve duadır.</p>
+    <p>Hemen ardından gelen <strong>"Rabbenâ leke'l-hamd"</strong> ise bu müjdeye verilen cevaptır: "Madem hamdi kabul ediyorsun Rabbimiz, işte hamd sana!" Namazda bir soru-cevap gibi işler: İmam müjdeyi verir, cemaat hamdi sunar.</p>
+    <h3>Neden okunur? Bir müjde</h3>
+    <blockquote class="q">
+      <p>"İmam 'Semiallâhu limen hamideh' dediğinde siz 'Allâhümme rabbenâ leke'l-hamd' deyin. Kimin sözü meleklerin sözüne denk gelirse geçmiş günahları bağışlanır."</p>
+      <cite>Buhârî, Ezân; Müslim, Salât 71 (Ebû Hüreyre'den)</cite>
+    </blockquote>
+    <blockquote class="q">
+      <p>Rifâa b. Râfi' anlatıyor: Peygamberimizin arkasında namaz kılıyorduk. Rükûdan kalkarken bir adam <em>"Rabbenâ ve leke'l-hamdü hamden kesîran tayyiben mübâreken fîh"</em> (Rabbimiz, sana hamd olsun; çok, temiz ve bereketli bir hamd) dedi. Namazdan sonra Resûlullah: <strong>"Otuz küsur meleğin, bu sözü hangisi önce yazacak diye yarıştığını gördüm"</strong> buyurdu.</p>
+      <cite>Buhârî, Ezân (Rifâa b. Râfi'den)</cite>
+    </blockquote>
+    <div class="inline-dua">
+      <h4>Genişletilmiş hamd (isteğe bağlı)</h4>
+      <p class="ar" lang="ar">رَبَّنَا وَلَكَ الْحَمْدُ حَمْدًا كَثِيرًا طَيِّبًا مُبَارَكًا فِيهِ</p>
+      <p class="ok">Rabbenâ ve leke'l-hamdü hamden kesîran tayyiben mübâreken fîh.</p>
+      <p class="meal">Rabbimiz, sana hamd olsun; çok, tertemiz ve bereketli bir hamd.</p>
+    </div>
+    <h3>Bilmekte fayda var</h3>
+    <ul>
+      <li>Hanefîlere göre imam yalnız "Semiallâhu limen hamideh", cemaat yalnız "Rabbenâ leke'l-hamd" der; yalnız kılan ikisini de söyler.</li>
+      <li>"Rabbenâ leke'l-hamd" ve "Rabbenâ ve leke'l-hamd" — ikisi de sahih rivayetlerde geçer.</li>
+      <li>Kavmede tam olarak doğrulup bir an durmak (ta'dîl-i erkân) vaciptir; acele ile secdeye inmek namazı eksik kılar.</li>
+    </ul>
+  </div>
+  <p class="src"><b>Kaynak:</b> Buhârî, Ezân; Müslim, Salât 71.</p>
+</article>
+
+<article class="dua" id="secde">
+  <header class="dua-head">
+    <p class="when">Secdede, alın yerde — en az üç kez</p>
+    <h2>Sübhâne Rabbiye'l-A'lâ</h2>
+    <ul class="tags"><li class="h">Hanefî: Sünnet</li><li>3, 5 veya 7 kez</li><li>Gizli okunur</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">سُبْحَانَ رَبِّيَ الْأَعْلَىٰ</p>
+    <p class="ok">Sübhâne rabbiye'l-a'lâ.</p>
+    <p class="meal">En yüce olan Rabbimi her türlü eksiklikten uzak tutarım.</p>
+  </div>
+  <details class="words">
+    <summary>Kelime kelime anlamı <span>· 3 kelime</span></summary>
+    <ol class="phr">
+      <li><span class="p-ar" lang="ar">سُبْحَانَ</span><span class="p-ok">Sübhâne</span><span class="p-tr">tenzih ederim</span></li>
+      <li><span class="p-ar" lang="ar">رَبِّيَ</span><span class="p-ok">rabbiye</span><span class="p-tr">benim Rabbim</span></li>
+      <li><span class="p-ar" lang="ar">الْأَعْلَىٰ</span><span class="p-ok">el-a'lâ</span><span class="p-tr">en yüce, her şeyin üstünde olan</span></li>
+    </ol>
+  </details>
+  <div class="tefsir">
+    <h3>Neden secdede "A'lâ"?</h3>
+    <p>Bu tesbih A'lâ suresinin ilk ayetinden gelir: <span lang="ar" style="font-size:1.2em">سَبِّحِ اسْمَ رَبِّكَ الْأَعْلَى</span> — "Yüce Rabbinin adını tesbih et" (A'lâ 87/1). Peygamberimiz bu ayet inince "Bunu secdenizde okuyun" buyurmuştur (Ebû Dâvûd, Salât 151).</p>
+    <p>Burada çok derin bir zıtlık vardır: <strong>Secde, insanın en alçak duruşudur.</strong> Bedenin en değerli yeri olan alın, en aşağıya, toprağa konur. Tam o anda kul "A'lâ" der — en yüce. Yani: "Ben en aşağıdayım, Sen ise en yücesin." Rükûdaki "Azîm" (büyük) yerini secdede "A'lâ"ya (en yüce) bırakır; çünkü eğilmenin karşılığı büyüklük, yere kapanmanın karşılığı ise en yücelik ifadesidir. "Azîm" sıfat, "A'lâ" ise üstünlük kalıbıdır; tevazu derinleştikçe övgü de yükselir.</p>
+    <blockquote class="q">
+      <p class="ar-q">أَقْرَبُ مَا يَكُونُ الْعَبْدُ مِنْ رَبِّهِ وَهُوَ سَاجِدٌ، فَأَكْثِرُوا الدُّعَاءَ</p>
+      <p>"Kulun Rabbine en yakın olduğu an, secdede olduğu andır. Öyleyse (secdede) duayı çoğaltın."</p>
+      <cite>Müslim, Salât 215 (Ebû Hüreyre'den)</cite>
+    </blockquote>
+    <p>Kur'an da secdeyi yakınlaşmayla birlikte anar: <em>"Secde et ve (Rabbine) yaklaş"</em> (Alak 96/19). Paradoks şudur: İnsan en çok alçaldığı anda Allah'a en çok yaklaşır.</p>
+    <h3>Bilmekte fayda var</h3>
+    <ul>
+      <li>Secdede alın ve burun yere konur; eller, dizler ve ayak parmakları da yere değer. Hadiste "yedi uzuv üzerine secde etmekle emrolundum" buyrulur (Buhârî, Ezân 133).</li>
+      <li>Hanefîlere göre farz namazların secdesinde tesbihle yetinilir; nafile namazlarda secdede Kur'an dışı (hadislerde geçen) dualar Arapça olarak yapılabilir.</li>
+      <li><strong>İki secde arası (celse):</strong> Kısa bir süre oturulur. Peygamberimizin burada <em>"Rabbiğfirlî, Rabbiğfirlî"</em> (Rabbim beni bağışla) dediği rivayet edilir (Ebû Dâvûd, Salât; Nesâî, Tatbîk — Huzeyfe'den). Hanefîlerde farzlarda burada özel bir dua okunmaz, ama ta'dîl-i erkân (bir an durmak) vaciptir.</li>
+    </ul>
+  </div>
+  <p class="src"><b>Kaynak:</b> A'lâ 87/1; Alak 96/19; Ebû Dâvûd, Salât 151; Müslim, Salât 215; Buhârî, Ezân 133.</p>
+</article>
+
+<!-- ============ OTURUŞ ============ -->
+<p class="part">Oturuş (ka'de) ve selam</p>
+
+<article class="dua" id="tahiyyat">
+  <header class="dua-head">
+    <p class="when">Her iki rekatta bir oturuşta ve son oturuşta</p>
+    <h2>Ettehiyyâtü <small>· Teşehhüd</small></h2>
+    <ul class="tags"><li class="h">Hanefî: Her oturuşta vacip</li><li>Gizli okunur</li><li>İbn Mes'ûd rivayeti</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">اَلتَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، اَلسَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، اَلسَّلَامُ عَلَيْنَا وَعَلَىٰ عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ</p>
+    <p class="ok">Ettehiyyâtü lillâhi ve's-salavâtü ve't-tayyibât. Esselâmü aleyke eyyühe'n-nebiyyü ve rahmetullâhi ve berakâtüh. Esselâmü aleynâ ve alâ ibâdillâhi's-sâlihîn. Eşhedü en lâ ilâhe illallâh, ve eşhedü enne Muhammeden abdühû ve rasûlüh.</p>
+    <p class="meal">Bütün saygı ve selamlar, bütün dualar ve ibadetler, bütün güzel sözler ve ameller Allah içindir. Ey Peygamber! Allah'ın selamı, rahmeti ve bereketleri senin üzerine olsun. Selam bizim üzerimize ve Allah'ın salih kullarının üzerine olsun. Şahitlik ederim ki Allah'tan başka ilah yoktur; yine şahitlik ederim ki Muhammed O'nun kulu ve elçisidir.</p>
+  </div>
+  <details class="words">
+    <summary>İfade ifade anlamı <span>· 9 parça</span></summary>
+    <ol class="phr">
+      <li><span class="p-ar" lang="ar">اَلتَّحِيَّاتُ لِلَّهِ</span><span class="p-ok">Ettehiyyâtü lillâhi</span><span class="p-tr">Bütün tazimler, selamlar ve saygılar Allah'adır</span></li>
+      <li><span class="p-ar" lang="ar">وَالصَّلَوَاتُ</span><span class="p-ok">ve's-salavâtü</span><span class="p-tr">bütün namazlar, dualar ve ibadetler de</span></li>
+      <li><span class="p-ar" lang="ar">وَالطَّيِّبَاتُ</span><span class="p-ok">ve't-tayyibât</span><span class="p-tr">bütün güzel, temiz sözler ve ameller de (O'nadır)</span></li>
+      <li><span class="p-ar" lang="ar">اَلسَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ</span><span class="p-ok">Esselâmü aleyke eyyühe'n-nebiyyü</span><span class="p-tr">Ey Peygamber, selam sana</span></li>
+      <li><span class="p-ar" lang="ar">وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ</span><span class="p-ok">ve rahmetullâhi ve berakâtüh</span><span class="p-tr">Allah'ın rahmeti ve bereketleri de (senin üzerine olsun)</span></li>
+      <li><span class="p-ar" lang="ar">اَلسَّلَامُ عَلَيْنَا</span><span class="p-ok">Esselâmü aleynâ</span><span class="p-tr">Selam bizim üzerimize</span></li>
+      <li><span class="p-ar" lang="ar">وَعَلَىٰ عِبَادِ اللَّهِ الصَّالِحِينَ</span><span class="p-ok">ve alâ ibâdillâhi's-sâlihîn</span><span class="p-tr">ve Allah'ın bütün salih kullarının üzerine olsun</span></li>
+      <li><span class="p-ar" lang="ar">أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ</span><span class="p-ok">Eşhedü en lâ ilâhe illallâh</span><span class="p-tr">Şahitlik ederim ki Allah'tan başka ilah yoktur</span></li>
+      <li><span class="p-ar" lang="ar">وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ</span><span class="p-ok">ve eşhedü enne Muhammeden abdühû ve rasûlüh</span><span class="p-tr">ve şahitlik ederim ki Muhammed O'nun kulu ve elçisidir</span></li>
+    </ol>
+  </details>
+  <div class="tefsir">
+    <h3>Nasıl öğretildi?</h3>
+    <p>Ettehiyyâtü'nün Hanefîlerin okuduğu bu şekli, sahabeden Abdullah b. Mes'ûd'un rivayetidir. Kendisi bu duanın ne kadar özenle öğretildiğini şöyle anlatır:</p>
+    <blockquote class="q">
+      <p>"Resûlullah elim onun iki avucunun arasındayken bana teşehhüdü, Kur'an'dan bir sure öğretir gibi öğretti."</p>
+      <cite>Buhârî, İsti'zân 28; Müslim, Salât</cite>
+    </blockquote>
+    <p>Yine İbn Mes'ûd anlatır: Sahabe önceleri namazda "Allah'a selam olsun, Cebrâil'e, Mîkâil'e selam olsun..." derlerdi. Peygamberimiz <strong>"Allah'a selam olsun demeyin; çünkü Allah, Selâm'ın ta kendisidir"</strong> buyurdu ve onlara bu duayı öğretti (Buhârî, Ezân 148). Yani Allah'a "selam" (esenlik) dilenmez; O zaten esenliğin kaynağıdır. O'na tahiyyât, yani tazim sunulur.</p>
+    <h3>Üç kelime, üç tür ibadet</h3>
+    <p>Bazı âlimler ilk cümledeki üç kelimeyi ibadetin üç alanına bağlar:</p>
+    <ul>
+      <li><strong>Tahiyyât</strong> — dil ile yapılan ibadetler: zikir, övgü, selam ve saygı ifadeleri.</li>
+      <li><strong>Salavât</strong> — beden ile yapılan ibadetler: namaz, oruç, dua.</li>
+      <li><strong>Tayyibât</strong> — mal ile yapılan ibadetler ve her türlü temiz, güzel amel: sadaka, zekât, iyilik.</li>
+    </ul>
+    <p>Böylece kul, oturuşun başında sahip olduğu her şeyi — dilini, bedenini, malını — Allah'a takdim etmiş olur.</p>
+    <h3>Selamın halkaları: Peygamber, biz, bütün salihler</h3>
+    <p>Duanın akışı genişleyen bir halka gibidir: Önce <strong>Allah'a</strong> tazim, sonra <strong>Peygamber'e</strong> selam, sonra <strong>kendimize</strong>, sonra <strong>bütün salih kullara</strong>. "Salih kullar" ifadesinin ne kadar geniş olduğunu Peygamberimiz bizzat açıklamıştır:</p>
+    <blockquote class="q">
+      <p>"'Esselâmü aleynâ ve alâ ibâdillâhi's-sâlihîn' dediğiniz zaman, bu selam gökte ve yerde bulunan bütün salih kullara ulaşır."</p>
+      <cite>Buhârî, Ezân 148; Müslim, Salât 55</cite>
+    </blockquote>
+    <p>Yani tek başına evde namaz kılan biri bile, her oturuşta geçmişten geleceğe, yerden göğe bütün iyi insanlara ve meleklere selam göndermiş olur.</p>
+    <h3>Neden "kulu" önce, "elçisi" sonra?</h3>
+    <p>Şehadette Hz. Muhammed için önce <strong>"abdühû"</strong> (O'nun kulu), sonra <strong>"rasûlüh"</strong> (O'nun elçisi) denir. Bu sıralama bilinçlidir: Peygamberliğin en yüksek makamı bile kulluğun üzerine kuruludur. Kur'an da Mi'rac'ı anlatırken onu "kul" sıfatıyla anar: "Kulunu bir gece Mescid-i Haram'dan Mescid-i Aksâ'ya yürüten Allah'ın şanı yücedir" (İsrâ 17/1). Bu ifade aynı zamanda, Hıristiyanlıkta Hz. İsa'nın ilahlaştırılmasında olduğu gibi bir aşırılığa karşı ümmeti korur.</p>
+    <div class="note"><strong>Mi'rac konuşması hakkında:</strong> Halk arasında Ettehiyyâtü'nün, Mi'rac gecesinde Allah ile Peygamberimiz ve melekler arasında geçen bir konuşma olduğu yaygın olarak anlatılır. Bu anlatım duanın manasını hatırlatan güzel bir tasvir olsa da sahih hadis kitaplarında bu şekliyle yer almaz; güçlü bir senedle sabit değildir. Sahih kaynaklarda duanın nasıl öğretildiği yukarıdaki İbn Mes'ûd rivayetlerinde anlatılır.</div>
+    <h3>Bilmekte fayda var</h3>
+    <ul>
+      <li>Ettehiyyâtü'nün <strong>her iki oturuşta</strong> okunması Hanefîlere göre vaciptir. İlk oturuşta (dört rekatlı namazların ikinci rekatında) sadece Ettehiyyâtü okunur ve "abdühû ve rasûlüh"ten sonra hemen kalkılır.</li>
+      <li>Hanefî uygulamada "lâ ilâhe" derken sağ elin şehadet parmağı kaldırılır, "illallâh" derken indirilir; reddin (lâ) ve ispatın (illâ) bedenle de ifadesidir.</li>
+      <li>Şâfiî ve Mâlikîler İbn Abbas ve Hz. Ömer'den gelen, kelimeleri biraz farklı rivayetleri okur; mana aynıdır.</li>
+    </ul>
+  </div>
+  <p class="src"><b>Kaynak:</b> Buhârî, Ezân 148, 150; İsti'zân 28; Müslim, Salât 55; İsrâ 17/1. Mi'rac rivayeti değerlendirmesi için: Diyanet İşleri Başkanlığı, Din İşleri Yüksek Kurulu soru-cevap.</p>
+</article>
+
+<article class="dua" id="salli-barik">
+  <header class="dua-head">
+    <p class="when">Son oturuşta, Ettehiyyâtü'den sonra</p>
+    <h2>Salli – Bârik <small>· Salavât-ı İbrâhîmiyye</small></h2>
+    <ul class="tags"><li class="h">Hanefî: Sünnet</li><li class="h">Şâfiî: Son oturuşta farz</li><li>Gizli okunur</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">اَللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ <br>اَللَّهُمَّ بَارِكْ عَلَىٰ مُحَمَّدٍ وَعَلَىٰ آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَىٰ إِبْرَاهِيمَ وَعَلَىٰ آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ</p>
+    <p class="ok">Allâhümme salli alâ Muhammedin ve alâ âli Muhammed, kemâ salleyte alâ İbrâhîme ve alâ âli İbrâhîm, inneke hamîdün mecîd. Allâhümme bârik alâ Muhammedin ve alâ âli Muhammed, kemâ bârekte alâ İbrâhîme ve alâ âli İbrâhîm, inneke hamîdün mecîd.</p>
+    <p class="meal">Allah'ım! Hz. İbrahim'e ve ailesine rahmet ettiğin gibi Hz. Muhammed'e ve ailesine de rahmet et; onları övülecek şekilde yücelt. Şüphesiz sen övülmeye layıksın, şanı yücesin. Allah'ım! Hz. İbrahim'e ve ailesine bereket verdiğin gibi Hz. Muhammed'e ve ailesine de bereket ver. Şüphesiz sen övülmeye layıksın, şanı yücesin.</p>
+  </div>
+  <details class="words">
+    <summary>İfade ifade anlamı <span>· 7 parça</span></summary>
+    <ol class="phr">
+      <li><span class="p-ar" lang="ar">اَللَّهُمَّ صَلِّ</span><span class="p-ok">Allâhümme salli</span><span class="p-tr">Allah'ım, rahmet et; övgüyle an, yücelt</span></li>
+      <li><span class="p-ar" lang="ar">عَلَىٰ مُحَمَّدٍ</span><span class="p-ok">alâ Muhammedin</span><span class="p-tr">Muhammed'e</span></li>
+      <li><span class="p-ar" lang="ar">وَعَلَىٰ آلِ مُحَمَّدٍ</span><span class="p-ok">ve alâ âli Muhammed</span><span class="p-tr">ve Muhammed'in ailesine (âline)</span></li>
+      <li><span class="p-ar" lang="ar">كَمَا صَلَّيْتَ عَلَىٰ إِبْرَاهِيمَ</span><span class="p-ok">kemâ salleyte alâ İbrâhîme</span><span class="p-tr">İbrahim'e rahmet ettiğin gibi</span></li>
+      <li><span class="p-ar" lang="ar">وَعَلَىٰ آلِ إِبْرَاهِيمَ</span><span class="p-ok">ve alâ âli İbrâhîm</span><span class="p-tr">ve İbrahim'in ailesine</span></li>
+      <li><span class="p-ar" lang="ar">إِنَّكَ حَمِيدٌ مَجِيدٌ</span><span class="p-ok">inneke hamîdün mecîd</span><span class="p-tr">şüphesiz sen övülmeye layık, şanı yüce olansın</span></li>
+      <li><span class="p-ar" lang="ar">اَللَّهُمَّ بَارِكْ ... كَمَا بَارَكْتَ</span><span class="p-ok">Allâhümme bârik ... kemâ bârekte</span><span class="p-tr">Allah'ım, bereket ver ... bereket verdiğin gibi</span></li>
+    </ol>
+  </details>
+  <div class="tefsir">
+    <h3>Kur'an'daki emir</h3>
+    <blockquote class="q">
+      <p class="ar-q">إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا</p>
+      <p>"Şüphesiz Allah ve melekleri Peygamber'e salât ederler. Ey iman edenler! Siz de ona salât edin ve tam bir teslimiyetle selam verin."</p>
+      <cite>Ahzâb suresi 33/56</cite>
+    </blockquote>
+    <p>Bu ayet inince sahabe sordu: "Ey Allah'ın Resûlü! Sana nasıl selam vereceğimizi öğrendik (Ettehiyyâtü'deki selam), peki sana nasıl salât edelim?" Peygamberimiz onlara bu iki duayı öğretti (Buhârî, Enbiyâ 10; Müslim, Salât 66 — Ka'b b. Ucre'den). Yani Ettehiyyâtü'de <strong>selam</strong>, Salli-Bârik'te <strong>salât</strong> getirilir; ayetteki iki emir de böylece oturuşta yerine getirilmiş olur.</p>
+    <h3>"Salât" ne demek?</h3>
+    <p>Ayette aynı fiil üç farklı özneyle kullanılır ve âlimler her biri için farklı anlam verir:</p>
+    <ul>
+      <li><strong>Allah'ın salâtı:</strong> rahmet etmesi ve onu meleklerin yanında övmesi.</li>
+      <li><strong>Meleklerin salâtı:</strong> onun için dua ve istiğfar etmeleri.</li>
+      <li><strong>Müminlerin salâtı:</strong> "Allah'ım, ona salât et" diye dua etmeleri. Yani biz aslında Allah'ın yaptığını O'ndan dileriz.</li>
+    </ul>
+    <p><strong>Bereket</strong> ise bir şeydeki hayrın kalıcı olması ve çoğalmasıdır. Salli ile yüceltme ve rahmet, Bârik ile bu hayrın sürekliliği ve artması istenir.</p>
+    <h3>Neden Hz. İbrahim?</h3>
+    <p>Bu, duanın en sık sorulan yeridir. Âlimlerin üzerinde durduğu birkaç inceliği:</p>
+    <ul>
+      <li><strong>Kur'an'daki karşılığı:</strong> Melekler Hz. İbrahim'in evine geldiğinde hanımına şöyle dediler: <span lang="ar" style="font-size:1.15em">رَحْمَتُ اللَّهِ وَبَرَكَاتُهُ عَلَيْكُمْ أَهْلَ الْبَيْتِ ۚ إِنَّهُ حَمِيدٌ مَجِيدٌ</span> — "Ey ev halkı! Allah'ın rahmeti ve bereketleri üzerinize olsun. Şüphesiz O, övülmeye layıktır, şanı yücedir" (Hûd 11/73). Salli-Bârik'in sonundaki <strong>"hamîdün mecîd"</strong> ifadesi bu ayetle birebir aynıdır! Yani dua, Kur'an'da İbrahim ailesine verilmiş rahmet ve bereketin aynısını Hz. Muhammed'in ailesi için de ister.</li>
+      <li><strong>İbrahim'in duası:</strong> Hz. İbrahim Kâbe'yi inşa ederken "Rabbimiz, onlara içlerinden bir peygamber gönder" diye dua etmişti (Bakara 2/129). Peygamberimiz de "Ben babam İbrahim'in duasıyım" buyurmuştur (Ahmed b. Hanbel, <i>Müsned</i>). İki peygamber bu duada buluşur.</li>
+      <li><strong>"Gibi" (kemâ) benzetmesi:</strong> "Hz. Muhammed daha üstün değil mi, neden İbrahim'e benzetiliyor?" sorusuna âlimler, buradaki benzetmenin miktarda değil asılda olduğunu söyler: "Ona verdiğin gibi buna da ver". Ayrıca "İbrahim âli" içinde İsmail, İshak, Yakub gibi pek çok peygamber vardır; Hz. Muhammed ailesiyle birlikte bu büyük nebiler ailesine denk bir rahmet istenmektedir.</li>
+      <li><strong>Hamîd ve Mecîd:</strong> Hamîd, her haliyle övülmeye layık olan; Mecîd, şanı, şerefi ve cömertliği yüce olandır. Dua, istenen şeye uygun isimlerle biter: Övgü ve yücelik istenirken "övülen" ve "yüce" isimleriyle.</li>
+    </ul>
+    <h3>"Âl" kimdir?</h3>
+    <p>"Âl" kelimesi dar anlamda Peygamberimizin ehl-i beytini (ailesi ve soyu), geniş anlamda ise onun yolundan giden takva sahibi müminleri kapsar. Âlimlerin bir kısmı burada her iki anlamın da kastedildiğini söyler.</p>
+  </div>
+  <p class="src"><b>Kaynak:</b> Ahzâb 33/56; Hûd 11/73; Bakara 2/129; Buhârî, Enbiyâ 10, Daavât 32; Müslim, Salât 66; Ahmed b. Hanbel, <i>Müsned</i> (İrbâd b. Sâriye'den).</p>
+</article>
+
+<article class="dua" id="rabbena">
+  <header class="dua-head">
+    <p class="when">Son oturuşta, Salli-Bârik'ten sonra, selamdan önce</p>
+    <h2>Rabbenâ Duaları</h2>
+    <ul class="tags"><li class="h">Hanefî: Sünnet (selamdan önce dua)</li><li>Kur'an'dan dualar</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ <br>رَبَّنَا اغْفِرْ لِي وَلِوَالِدَيَّ وَلِلْمُؤْمِنِينَ يَوْمَ يَقُومُ الْحِسَابُ</p>
+    <p class="ok">Rabbenâ âtinâ fi'd-dünyâ haseneten ve fi'l-âhireti haseneten ve kınâ azâbe'n-nâr. Rabbenağfir lî ve li-vâlideyye ve li'l-mü'minîne yevme yekûmü'l-hisâb.</p>
+    <p class="meal">Rabbimiz! Bize dünyada da iyilik ver, ahirette de iyilik ver ve bizi ateş azabından koru. Rabbimiz! Hesap görüleceği gün beni, anne-babamı ve bütün müminleri bağışla.</p>
+  </div>
+  <details class="words">
+    <summary>İfade ifade anlamı <span>· 8 parça</span></summary>
+    <ol class="phr">
+      <li><span class="p-ar" lang="ar">رَبَّنَا آتِنَا</span><span class="p-ok">Rabbenâ âtinâ</span><span class="p-tr">Rabbimiz, bize ver</span></li>
+      <li><span class="p-ar" lang="ar">فِي الدُّنْيَا حَسَنَةً</span><span class="p-ok">fi'd-dünyâ haseneten</span><span class="p-tr">dünyada bir güzellik, iyilik</span></li>
+      <li><span class="p-ar" lang="ar">وَفِي الْآخِرَةِ حَسَنَةً</span><span class="p-ok">ve fi'l-âhireti haseneten</span><span class="p-tr">ve ahirette de bir güzellik</span></li>
+      <li><span class="p-ar" lang="ar">وَقِنَا عَذَابَ النَّارِ</span><span class="p-ok">ve kınâ azâbe'n-nâr</span><span class="p-tr">ve bizi ateş azabından koru</span></li>
+      <li><span class="p-ar" lang="ar">رَبَّنَا اغْفِرْ لِي</span><span class="p-ok">Rabbenağfir lî</span><span class="p-tr">Rabbimiz, beni bağışla</span></li>
+      <li><span class="p-ar" lang="ar">وَلِوَالِدَيَّ</span><span class="p-ok">ve li-vâlideyye</span><span class="p-tr">anne ve babamı da</span></li>
+      <li><span class="p-ar" lang="ar">وَلِلْمُؤْمِنِينَ</span><span class="p-ok">ve li'l-mü'minîne</span><span class="p-tr">ve bütün müminleri de</span></li>
+      <li><span class="p-ar" lang="ar">يَوْمَ يَقُومُ الْحِسَابُ</span><span class="p-ok">yevme yekûmü'l-hisâb</span><span class="p-tr">hesabın kurulacağı gün</span></li>
+    </ol>
+  </details>
+  <div class="tefsir">
+    <h3>Rabbenâ âtinâ: Kur'an'ın en dengeli duası</h3>
+    <p>Bu dua Bakara suresinin 201. ayetidir ve hac ayetlerinin arasında geçer. Ayetlerin bağlamı çok öğreticidir: Bir önceki ayet, Allah'tan yalnız dünyalık isteyenleri anlatır — "Rabbimiz, bize dünyada ver" derler ve onların ahirette bir payı yoktur (Bakara 2/200). Ardından gelen bu ayet ise iki dünyayı birlikte isteyenleri över. Yani Kur'an, dünyayı küçümseyen değil, onu ahiretle dengeleyen bir dua öğretir.</p>
+    <blockquote class="q">
+      <p>Enes b. Mâlik: "Peygamberimizin en çok yaptığı dua, 'Rabbenâ âtinâ fi'd-dünyâ haseneten ve fi'l-âhireti haseneten ve kınâ azâbe'n-nâr' duasıydı."</p>
+      <cite>Buhârî, Daavât 55; Müslim, Zikir 26</cite>
+    </blockquote>
+    <p><strong>"Hasene" nedir?</strong> Kelime belirsiz (nekre) gelmiştir; bu da "her türlü güzellik" anlamını verir. Tefsirciler dünyadaki haseneyi ilim, ibadet, sağlık, helal rızık, iyi bir eş ve hayırlı evlat; ahiretteki haseneyi ise af, kolay hesap ve cennet olarak açıklar. Hasan-ı Basrî'ye göre "dünyada hasene ilim ve ibadet, ahirette hasene cennettir." Tek bir kelimeyle her şey istenmiş olur.</p>
+    <h3>Rabbenağfirlî: Hz. İbrahim'in duası</h3>
+    <p>Bu dua İbrahim suresinin 41. ayetidir; Hz. İbrahim'in yaşlılığında Kâbe'nin yanında yaptığı uzun duanın son cümlesidir. Bir önceki ayet de namazla ilgilidir ve birlikte okunması çok güzeldir:</p>
+    <div class="inline-dua">
+      <h4>İbrahim 14/40 — Rabbic'alnî</h4>
+      <p class="ar" lang="ar">رَبِّ اجْعَلْنِي مُقِيمَ الصَّلَاةِ وَمِنْ ذُرِّيَّتِي ۚ رَبَّنَا وَتَقَبَّلْ دُعَاءِ</p>
+      <p class="ok">Rabbic'alnî mukîme's-salâti ve min zürriyyetî, rabbenâ ve tekabbel duâ.</p>
+      <p class="meal">Rabbim! Beni ve soyumdan gelenleri namazı dosdoğru kılanlardan eyle. Rabbimiz, duamı kabul et.</p>
+    </div>
+    <ul>
+      <li>Dua önce <strong>kendini</strong>, sonra <strong>anne-babayı</strong>, sonra <strong>bütün müminleri</strong> kapsar. Namazın sonunda kul, tıpkı Ettehiyyâtü'deki gibi, duasını bütün ümmete genişletir.</li>
+      <li><strong>"Hesabın kurulacağı gün":</strong> Bağışlanmanın en çok gerekeceği an hatırlatılır. "Yekûmu" (ayağa kalkar) fiili, hesabın bir mahkeme gibi kurulmasını tasvir eder.</li>
+      <li>Hz. İbrahim'in babası için ettiği bu dua, ona verdiği bir sözden dolayıydı; babasının Allah düşmanı olduğu kesinleşince ondan uzaklaşmıştır (Tevbe 9/114). Biz bu duayı okurken anne-babamızın mümin olarak bağışlanmasını dileriz.</li>
+    </ul>
+    <div class="note"><strong>Hüküm:</strong> Hanefîlere göre son oturuşta salavattan sonra Kur'an'daki veya hadislerdeki dualara benzer, insanlardan istenemeyecek şeyleri isteyen dualarla dua etmek sünnettir. Türkiye'de yaygın olan, yukarıdaki iki ayetin okunmasıdır; İbrahim 14/40 ayeti de bunlara eklenebilir.</div>
+  </div>
+  <p class="src"><b>Kaynak:</b> Bakara 2/200–201; İbrahim 14/40–41; Tevbe 9/114; Buhârî, Daavât 55; Müslim, Zikir 26. Tefsir: Taberî, <i>Câmiu'l-beyân</i>, Bakara 201.</p>
+</article>
+
+<article class="dua" id="selam">
+  <header class="dua-head">
+    <p class="when">Namazın sonunda, önce sağa sonra sola</p>
+    <h2>Selam</h2>
+    <ul class="tags"><li class="h">Hanefî: Vacip</li><li class="h">Şâfiî: Farz (ilk selam)</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">اَلسَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ</p>
+    <p class="ok">Esselâmü aleyküm ve rahmetullâh.</p>
+    <p class="meal">Selam ve Allah'ın rahmeti üzerinize olsun.</p>
+  </div>
+  <div class="tefsir">
+    <h3>Kime selam verilir?</h3>
+    <p>Namaz tekbirle "kapanmış", dünyadan çekilmişti; selamla tekrar dünyaya dönülür. Hadiste geçtiği üzere "onu açan selamdır" (Ebû Dâvûd, Tahâret 31). Selam verirken sağdaki ve soldaki <strong>hafaza meleklerine</strong>, cemaatle kılınıyorsa <strong>imam ve cemaate</strong> niyet edilir. Namazına kimseyle başlamayan, onu herkese selam vererek bitirir.</p>
+    <p>Namaz baştan sona "selam" kelimesiyle örülüdür: Ettehiyyâtü'de Peygamber'e, kendimize ve salihlere selam; sonunda çevremize selam. Ardından da Allah'ın "es-Selâm" ismini anarak dua ederiz (aşağıda). İslam'ın selamlaşması böylece günde onlarca kez, en yüksek anlamıyla tekrarlanır.</p>
+  </div>
+  <p class="src"><b>Kaynak:</b> Ebû Dâvûd, Tahâret 31; Tirmizî, Tahâret 3; Müslim, Mesâcid (iki tarafa selam, Sa'd b. Ebî Vakkâs'tan).</p>
+</article>
+
+<!-- ============ NAMAZDAN SONRA ============ -->
+<p class="part">Namazdan sonra</p>
+
+<article class="dua" id="ente-selam">
+  <header class="dua-head">
+    <p class="when">Selam verdikten hemen sonra</p>
+    <h2>Allâhümme ente's-selâm</h2>
+    <ul class="tags"><li class="h">Sünnet</li><li>Önce 3 kez "Estağfirullah"</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">أَسْتَغْفِرُ اللَّهَ (٣) <br>اَللَّهُمَّ أَنْتَ السَّلَامُ وَمِنْكَ السَّلَامُ، تَبَارَكْتَ يَا ذَا الْجَلَالِ وَالْإِكْرَامِ</p>
+    <p class="ok">Estağfirullâh (3 kez). Allâhümme ente's-selâmü ve minke's-selâm, tebârekte yâ ze'l-celâli ve'l-ikrâm.</p>
+    <p class="meal">Allah'tan bağışlanma dilerim. Allah'ım! Selâm (her türlü eksiklikten uzak, esenlik veren) sensin; esenlik de ancak sendendir. Ey celal ve ikram sahibi! Sen ne yücesin, ne mübareksin.</p>
+  </div>
+  <div class="tefsir">
+    <h3>Neden namazdan sonra istiğfar?</h3>
+    <p>Az önce bir ibadeti tamamlamış birinin neden bağışlanma dilediğini insan merak eder. Âlimler bunu şöyle açıklar: Namazda dalgınlık, eksiklik ve kusur olmuştur; hiçbir kul Allah'a layık olduğu şekilde ibadet edemez. İstiğfar, ibadeti "yaptım" diye övünmek yerine "eksik yaptım, kabul et" demektir. Bu, ameli kibre karşı koruyan bir mühürdür.</p>
+    <blockquote class="q">
+      <p>Sevbân anlatıyor: "Resûlullah namazını bitirince üç kez istiğfar eder, sonra 'Allâhümme ente's-selâm ve minke's-selâm, tebârekte yâ ze'l-celâli ve'l-ikrâm' derdi."</p>
+      <cite>Müslim, Mesâcid 135; Hz. Âişe'den benzeri: Müslim, Mesâcid 136</cite>
+    </blockquote>
+    <p><strong>Es-Selâm</strong> Allah'ın isimlerindendir (Haşr 59/23). Namazı selamla bitiren kul, gerçek esenliğin kaynağının Allah olduğunu itiraf eder. <strong>Zü'l-celâl ve'l-ikrâm</strong> ise hem heybet ve azamet (celal), hem de lütuf ve cömertlik (ikram) sahibi demektir; Rahmân suresinde geçer (55/27, 78).</p>
+    <div class="note">Türkiye'deki uygulamada bu dua genellikle "... ve'l-ikrâm" sözünden sonra Peygamberimize salavat getirilerek okunur. Bu ilave hadis metninde yoktur; ancak güzel bir gelenek olarak devam eder.</div>
+  </div>
+  <p class="src"><b>Kaynak:</b> Müslim, Mesâcid 135–136; Haşr 59/23; Rahmân 55/27, 78.</p>
+</article>
+
+<article class="dua" id="ayetel-kursi">
+  <header class="dua-head">
+    <p class="when">Farz namazlardan sonra</p>
+    <h2>Âyetü'l-Kürsî <small>· Bakara 2/255</small></h2>
+    <ul class="tags"><li class="h">Müstehap</li><li>Kur'an'ın en büyük ayeti</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">اَللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ</p>
+    <p class="ok">Allâhü lâ ilâhe illâ hüve'l-hayyü'l-kayyûm. Lâ te'huzühû sinetün ve lâ nevm. Lehû mâ fi's-semâvâti ve mâ fi'l-ard. Men ze'llezî yeşfeu indehû illâ bi-iznih. Ya'lemü mâ beyne eydîhim ve mâ halfehüm. Ve lâ yuhîtûne bi-şey'in min ilmihî illâ bimâ şâ'. Vesia kürsiyyühü's-semâvâti ve'l-ard. Ve lâ yeûdühû hıfzuhumâ. Ve hüve'l-aliyyü'l-azîm.</p>
+    <p class="meal">Allah, kendisinden başka hiçbir ilah olmayandır. Diridir (hayy), her şeyi ayakta tutup yönetendir (kayyûm). O'nu ne bir uyuklama ne de uyku tutar. Göklerde ve yerde ne varsa O'nundur. İzni olmadan O'nun katında kim şefaat edebilir? O, kulların önlerindekini ve arkalarındakini bilir. Onlar, O'nun dilediği kadarı dışında ilminden hiçbir şeyi kavrayamazlar. O'nun kürsüsü gökleri ve yeri kuşatmıştır. Onları koruyup gözetmek O'na ağır gelmez. O, çok yücedir, çok büyüktür.</p>
+  </div>
+  <div class="tefsir">
+    <h3>Neden okunur?</h3>
+    <blockquote class="q">
+      <p>"Kim her farz namazın ardından Âyetü'l-Kürsî'yi okursa, onun cennete girmesine ölümden başka hiçbir engel kalmaz."</p>
+      <cite>Nesâî, <i>es-Sünenü'l-kübrâ</i>, Amelü'l-yevm ve'l-leyle; Taberânî (Ebû Ümâme'den)</cite>
+    </blockquote>
+    <p>Peygamberimiz Übey b. Ka'b'a "Allah'ın kitabında hangi ayet en büyüktür?" diye sormuş, Übey "Allâhü lâ ilâhe illâ hüve'l-hayyü'l-kayyûm" deyince göğsüne vurarak "İlim sana kutlu olsun ey Ebü'l-Münzir!" buyurmuştur (Müslim, Salâtü'l-müsâfirîn 258).</p>
+    <h3>Tefsirden incelikler</h3>
+    <ul>
+      <li>Ayet, baştan sona yalnızca Allah'ı anlatır; on cümlenin her biri bir sıfatı öne çıkarır. Bu yüzden "tevhidin özeti" sayılır.</li>
+      <li><strong>Hayy ve Kayyûm:</strong> Hayy, hayatı kendinden olan, ölümsüz diri; Kayyûm, kendi kendine var olan ve her şeyi ayakta tutan demektir. Bazı âlimler bu ikisini Allah'ın en büyük ismi (ism-i a'zam) arasında sayar.</li>
+      <li><strong>"Uyuklama ve uyku tutmaz":</strong> Önce hafif olan (sine, uyuklama), sonra ağır olan (nevm, uyku) reddedilir. Bir an bile gafil olmayan bir koruyucu; namazdan sonra okuyan kişi, kendini bu koruyucuya emanet eder.</li>
+      <li><strong>Kürsî:</strong> Kelime anlamı "oturulan yer, taht"tır. Tefsircilerin çoğu bunu Allah'ın ilmi, kudreti ve hükümranlığının genişliğini anlatan bir ifade olarak açıklar.</li>
+    </ul>
+  </div>
+  <p class="src"><b>Kaynak:</b> Bakara 2/255; Müslim, Salâtü'l-müsâfirîn 258; Nesâî, <i>es-Sünenü'l-kübrâ</i>. Meal: Diyanet İşleri Başkanlığı meali esas alınarak.</p>
+</article>
+
+<article class="dua" id="tesbihat">
+  <header class="dua-head">
+    <p class="when">Farz namazlardan sonra</p>
+    <h2>Tesbihat <small>· 33 + 33 + 33 + 1</small></h2>
+    <ul class="tags"><li class="h">Sünnet</li><li>Aşağıda sayaç var</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">سُبْحَانَ اللَّهِ (٣٣) · اَلْحَمْدُ لِلَّهِ (٣٣) · اَللَّهُ أَكْبَرُ (٣٣) <br>لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ</p>
+    <p class="ok">Sübhânallâh (33), Elhamdülillâh (33), Allâhu ekber (33). Lâ ilâhe illallâhu vahdehû lâ şerîke leh, lehü'l-mülkü ve lehü'l-hamdü ve hüve alâ külli şey'in kadîr.</p>
+    <p class="meal">Allah her türlü eksiklikten uzaktır. Hamd Allah'a mahsustur. Allah en büyüktür. Allah'tan başka ilah yoktur; O tektir, ortağı yoktur. Mülk O'nundur, hamd O'nadır. O her şeye gücü yetendir.</p>
+  </div>
+
+  <div class="counter" id="counter">
+    <button class="tap" type="button" id="tap" aria-describedby="cphase">
+      <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="trk" cx="60" cy="60" r="54"/><circle class="prg" id="prg" cx="60" cy="60" r="54" stroke-dasharray="339.29" stroke-dashoffset="339.29"/></svg>
+      <span class="in"><span class="c" id="ccount">0</span><span class="of" id="cof">/ 33</span></span>
+    </button>
+    <div class="cinfo">
+      <h4 id="cphase">Sübhânallâh</h4>
+      <p class="car" lang="ar" id="car">سُبْحَانَ اللَّهِ</p>
+      <p id="cmeal">Allah her türlü eksiklikten uzaktır.</p>
+      <div class="phases" id="phases" aria-hidden="true"><span>Sübhânallâh</span><span>Elhamdülillâh</span><span>Allâhu ekber</span><span>Tevhid</span></div>
+      <button class="creset" type="button" id="creset">Sıfırla</button>
+    </div>
+  </div>
+  <p class="sub-label" style="margin-top:4px">Daireye dokunarak sayın · Klavyede boşluk tuşu da çalışır · 33'e ulaşınca bir sonrakine geçer</p>
+
+  <div class="tefsir" style="margin-top:22px">
+    <h3>Neden 33?</h3>
+    <blockquote class="q">
+      <p>"Kim her namazın ardından 33 kez Sübhânallâh, 33 kez Elhamdülillâh, 33 kez Allâhu ekber der ve yüzü tamamlamak için 'Lâ ilâhe illallâhu vahdehû lâ şerîke leh, lehü'l-mülkü ve lehü'l-hamdü ve hüve alâ külli şey'in kadîr' derse, günahları deniz köpüğü kadar olsa bile bağışlanır."</p>
+      <cite>Müslim, Mesâcid 146 (Ebû Hüreyre'den)</cite>
+    </blockquote>
+    <p>Bu tesbihatın bir de güzel hikâyesi vardır: Fakir sahabiler Peygamberimize gelip "Zenginler bizim gibi namaz kılıyor, oruç tutuyor; ama onlar sadaka veriyor, biz veremiyoruz" diye dert yandılar. Peygamberimiz onlara, yaparlarsa kimsenin kendilerine yetişemeyeceği bir amel olarak bu tesbihleri öğretti (Buhârî, Ezân 155; Müslim, Mesâcid 142). Yani tesbihat, <strong>herkesin, her gün, bedavaya</strong> yapabileceği büyük bir sadakadır.</p>
+    <h3>Dört kelime, dört hakikat</h3>
+    <ul>
+      <li><strong>Sübhânallâh</strong> — tenzih: Allah'ı eksikliklerden uzak tutmak.</li>
+      <li><strong>Elhamdülillâh</strong> — hamd: bütün güzelliklerin O'na ait olduğunu kabul etmek.</li>
+      <li><strong>Allâhu ekber</strong> — tekbir: O'nun her şeyden büyük olduğunu ilan etmek.</li>
+      <li><strong>Lâ ilâhe illallâh</strong> — tevhid: bunların hepsinin özü; O'ndan başka ilah yoktur.</li>
+    </ul>
+    <p>Dikkat edilirse Sübhâneke'deki sıra (tenzih → hamd → yücelik → tevhid) burada da tekrarlanır. Namaz bu dört temanın etrafında başlar ve biter.</p>
+    <div class="note">Ka'b b. Ucre'nin rivayetinde 33 tesbih, 33 tahmid ve <strong>34</strong> tekbir şeklinde de gelmiştir (Müslim, Mesâcid 144). Türkiye'deki uygulamada tesbihattan önce genellikle Âyetü'l-Kürsî okunur, sonra tesbihler çekilir, en sonda el açılarak dua edilir.</div>
+  </div>
+  <p class="src"><b>Kaynak:</b> Müslim, Mesâcid 142, 144, 146; Buhârî, Ezân 155.</p>
+</article>
+
+<!-- ============ VİTİR ============ -->
+<p class="part">Vitir namazı</p>
+
+<article class="dua" id="kunut">
+  <header class="dua-head">
+    <p class="when">Vitrin 3. rekatında, zamm-ı sureden sonra, tekbir alınıp rükûdan önce</p>
+    <h2>Kunut Duaları</h2>
+    <ul class="tags"><li class="h">Hanefî: Kunut okumak vacip</li><li>Bu iki duayı okumak sünnet</li><li>Gizli okunur</li></ul>
+  </header>
+  <p class="sub-label">1. Kunut duası — Allâhümme innâ nesteînüke</p>
+  <div class="text" style="border-top:0;padding-top:6px">
+    <p class="ar" lang="ar">اَللَّهُمَّ إِنَّا نَسْتَعِينُكَ وَنَسْتَغْفِرُكَ وَنَسْتَهْدِيكَ، وَنُؤْمِنُ بِكَ وَنَتُوبُ إِلَيْكَ، وَنَتَوَكَّلُ عَلَيْكَ، وَنُثْنِي عَلَيْكَ الْخَيْرَ كُلَّهُ، نَشْكُرُكَ وَلَا نَكْفُرُكَ، وَنَخْلَعُ وَنَتْرُكُ مَنْ يَفْجُرُكَ</p>
+    <p class="ok">Allâhümme innâ nesteînüke ve nestağfirüke ve nestehdîk. Ve nü'minü bike ve netûbü ileyk. Ve netevekkelü aleyk. Ve nüsnî aleyke'l-hayra küllehû. Neşkürüke ve lâ nekfürük. Ve nahleu ve netrükü men yefcürük.</p>
+    <p class="meal">Allah'ım! Senden yardım isteriz, bağışlanma dileriz, doğru yola iletmeni dileriz. Sana inanırız, sana tövbe ederiz, sana dayanıp güveniriz. Bütün hayırları sana yakıştırır, seni överiz. Sana şükrederiz, nimetlerine nankörlük etmeyiz. Sana karşı gelip yoldan çıkanı bırakır, ondan uzaklaşırız.</p>
+  </div>
+  <p class="sub-label">2. Kunut duası — Allâhümme iyyâke na'büdü</p>
+  <div class="text" style="border-top:0;padding-top:6px">
+    <p class="ar" lang="ar">اَللَّهُمَّ إِيَّاكَ نَعْبُدُ، وَلَكَ نُصَلِّي وَنَسْجُدُ، وَإِلَيْكَ نَسْعَىٰ وَنَحْفِدُ، نَرْجُو رَحْمَتَكَ وَنَخْشَىٰ عَذَابَكَ، إِنَّ عَذَابَكَ بِالْكُفَّارِ مُلْحِقٌ</p>
+    <p class="ok">Allâhümme iyyâke na'büdü ve leke nusallî ve nescüdü ve ileyke nes'â ve nahfidü. Nercû rahmeteke ve nahşâ azâbek. İnne azâbeke bi'l-küffâri mülhık.</p>
+    <p class="meal">Allah'ım! Yalnız sana kulluk ederiz; namazı yalnız senin için kılar, yalnız sana secde ederiz. Yalnız sana koşar, sana yaklaştıracak işlere can atarız. Rahmetini umar, azabından korkarız. Şüphesiz senin azabın inkârcılara ulaşacaktır.</p>
+  </div>
+  <details class="words">
+    <summary>İfade ifade anlamı <span>· 16 parça</span></summary>
+    <ol class="phr">
+      <li><span class="p-ar" lang="ar">إِنَّا نَسْتَعِينُكَ</span><span class="p-ok">innâ nesteînüke</span><span class="p-tr">Biz senden yardım isteriz</span></li>
+      <li><span class="p-ar" lang="ar">وَنَسْتَغْفِرُكَ</span><span class="p-ok">ve nestağfirüke</span><span class="p-tr">ve senden bağışlanma dileriz</span></li>
+      <li><span class="p-ar" lang="ar">وَنَسْتَهْدِيكَ</span><span class="p-ok">ve nestehdîk</span><span class="p-tr">ve senden hidayet (doğru yol) isteriz</span></li>
+      <li><span class="p-ar" lang="ar">وَنُؤْمِنُ بِكَ وَنَتُوبُ إِلَيْكَ</span><span class="p-ok">ve nü'minü bike ve netûbü ileyk</span><span class="p-tr">sana inanır, sana tövbe ederiz</span></li>
+      <li><span class="p-ar" lang="ar">وَنَتَوَكَّلُ عَلَيْكَ</span><span class="p-ok">ve netevekkelü aleyk</span><span class="p-tr">sana dayanır, güveniriz</span></li>
+      <li><span class="p-ar" lang="ar">وَنُثْنِي عَلَيْكَ الْخَيْرَ كُلَّهُ</span><span class="p-ok">ve nüsnî aleyke'l-hayra küllehû</span><span class="p-tr">seni bütün hayırlarla överiz</span></li>
+      <li><span class="p-ar" lang="ar">نَشْكُرُكَ وَلَا نَكْفُرُكَ</span><span class="p-ok">neşkürüke ve lâ nekfürük</span><span class="p-tr">sana şükreder, nankörlük etmeyiz</span></li>
+      <li><span class="p-ar" lang="ar">وَنَخْلَعُ وَنَتْرُكُ</span><span class="p-ok">ve nahleu ve netrükü</span><span class="p-tr">üzerimizden atar ve terk ederiz</span></li>
+      <li><span class="p-ar" lang="ar">مَنْ يَفْجُرُكَ</span><span class="p-ok">men yefcürük</span><span class="p-tr">sana karşı gelip yoldan çıkanı</span></li>
+      <li><span class="p-ar" lang="ar">اَللَّهُمَّ إِيَّاكَ نَعْبُدُ</span><span class="p-ok">Allâhümme iyyâke na'büdü</span><span class="p-tr">Allah'ım, yalnız sana kulluk ederiz</span></li>
+      <li><span class="p-ar" lang="ar">وَلَكَ نُصَلِّي وَنَسْجُدُ</span><span class="p-ok">ve leke nusallî ve nescüdü</span><span class="p-tr">yalnız senin için namaz kılar, secde ederiz</span></li>
+      <li><span class="p-ar" lang="ar">وَإِلَيْكَ نَسْعَىٰ</span><span class="p-ok">ve ileyke nes'â</span><span class="p-tr">yalnız sana koşarız</span></li>
+      <li><span class="p-ar" lang="ar">وَنَحْفِدُ</span><span class="p-ok">ve nahfidü</span><span class="p-tr">ve hizmetine seve seve, hızla koşarız</span></li>
+      <li><span class="p-ar" lang="ar">نَرْجُو رَحْمَتَكَ</span><span class="p-ok">nercû rahmeteke</span><span class="p-tr">rahmetini umarız</span></li>
+      <li><span class="p-ar" lang="ar">وَنَخْشَىٰ عَذَابَكَ</span><span class="p-ok">ve nahşâ azâbek</span><span class="p-tr">ve azabından korkarız</span></li>
+      <li><span class="p-ar" lang="ar">إِنَّ عَذَابَكَ بِالْكُفَّارِ مُلْحِقٌ</span><span class="p-ok">inne azâbeke bi'l-küffâri mülhık</span><span class="p-tr">şüphesiz azabın kâfirlere ulaşır</span></li>
+    </ol>
+  </details>
+  <div class="tefsir">
+    <h3>"Kunut" ne demek?</h3>
+    <p>Kunut kelimesi Arapçada <strong>itaat, huşû, Allah'ın huzurunda boyun eğerek ayakta durmak ve dua</strong> anlamlarına gelir. Kur'an'da "Allah'a gönülden boyun eğerek (kânitîn) namaza durun" (Bakara 2/238) ayetinde geçer. Fıkıhta ise namazın belirli bir yerinde ayakta yapılan özel duaya kunut denir.</p>
+    <h3>Bu duaların kaynağı</h3>
+    <p>Hanefîlerin vitirde okuduğu bu iki dua, Hz. Ömer'in kunutta okuduğu rivayet edilen dualardır (Beyhakî, <i>es-Sünenü'l-kübrâ</i>; İbn Ebî Şeybe, <i>el-Musannef</i>). İlginç bir bilgi: Sahabeden Übey b. Ka'b'ın kendi şahsi Mushaf nüshasında bu iki duanın <em>"Hal'"</em> ve <em>"Hafd"</em> adlarıyla iki kısa sure gibi yazıldığı nakledilir. Ancak Hz. Osman döneminde sahabenin ittifakıyla çoğaltılan Mushaf'a alınmamış; ümmet bunları Kur'an değil, Kur'an'a çok yakın üslupta bir <strong>dua</strong> olarak okumuştur.</p>
+    <h3>Tefsirden incelikler</h3>
+    <ul>
+      <li><strong>Fâtiha'nın yankısı:</strong> İkinci dua "iyyâke na'büdü" ile başlar — tıpkı Fâtiha'daki gibi. Birinci dua ise "nesteînüke" (senden yardım isteriz) ile, yani Fâtiha'daki "iyyâke neste'în"in karşılığıyla başlar. Gece namazının sonunda kul, Fâtiha'daki sözleşmeyi yeniler.</li>
+      <li><strong>Umut ve korku dengesi:</strong> "Rahmetini umarız, azabından korkarız." Mümin, ne ümitsizliğe düşer ne de kendini güvende sanır; Ehl-i sünnet akaidinin özü olan "havf ve recâ" (korku ve ümit) dengesi bir cümlede verilir.</li>
+      <li><strong>Nahfidü:</strong> "Hafd" kökü, hizmete hızla ve gönüllü koşmak demektir. Kul, ibadete isteksizce değil, hevesle koştuğunu ifade eder.</li>
+      <li><strong>Nahleu ve netrükü:</strong> İmanın bir de "uzak durma" boyutu vardır. Allah'a bağlılık, O'na karşı gelen yolu ve tavrı üzerimizden çıkarıp atmayı da içerir.</li>
+    </ul>
+    <div class="note"><strong>Nasıl okunur? (Hanefî)</strong> Vitrin üçüncü rekatında Fâtiha ve zamm-ı sureden sonra "Allâhu ekber" denilerek eller kulaklara kaldırılır, sonra bağlanır ve kunut duaları okunur; ardından rükûya gidilir. Kunut tekbiri ve kunut okumak vaciptir; unutulursa sehiv secdesi yapılır. Kunut dualarını bilmeyen, öğreninceye kadar <em>"Rabbenâ âtinâ fi'd-dünyâ haseneten..."</em> duasını veya üç kez <em>"Allâhümmağfir lî"</em> (Allah'ım beni bağışla) okuyabilir.</div>
+    <div class="inline-dua">
+      <h4>Şâfiîlerin kunutu — Hz. Hasan'a öğretilen dua</h4>
+      <p class="ar" lang="ar">اَللَّهُمَّ اهْدِنِي فِيمَنْ هَدَيْتَ، وَعَافِنِي فِيمَنْ عَافَيْتَ، وَتَوَلَّنِي فِيمَنْ تَوَلَّيْتَ، وَبَارِكْ لِي فِيمَا أَعْطَيْتَ، وَقِنِي شَرَّ مَا قَضَيْتَ، فَإِنَّكَ تَقْضِي وَلَا يُقْضَىٰ عَلَيْكَ، وَإِنَّهُ لَا يَذِلُّ مَنْ وَالَيْتَ، تَبَارَكْتَ رَبَّنَا وَتَعَالَيْتَ</p>
+      <p class="ok">Allâhümmehdinî fî men hedeyt, ve âfinî fî men âfeyt, ve tevellenî fî men tevelleyt, ve bârik lî fî mâ a'tayt, ve kınî şerra mâ kadayt, fe inneke takdî ve lâ yukdâ aleyk, ve innehû lâ yezillü men vâleyt, tebârekte rabbenâ ve teâleyt.</p>
+      <p class="meal">Allah'ım! Hidayet verdiklerinle birlikte beni de doğru yola ilet; afiyet verdiklerinle birlikte bana da afiyet ver; dost edindiklerinle birlikte beni de dost edin; verdiklerini bana bereketli kıl; takdir ettiğin şeyin kötülüğünden beni koru. Çünkü sen hükmedersin, sana kimse hükmedemez. Senin dost edindiğin asla zelil olmaz. Rabbimiz, sen ne mübareksin, ne yücesin!</p>
+      <p class="src" style="border:0;padding:0;margin-top:6px">Hz. Hasan: "Resûlullah bana vitirde okuyacağım şu kelimeleri öğretti..." — Ebû Dâvûd, Vitr 5; Tirmizî, Vitr 10; Nesâî. Şâfiîler bunu sabah namazında ve Ramazan'ın ikinci yarısında vitirde, rükûdan sonra okur.</p>
+    </div>
+  </div>
+  <p class="src"><b>Kaynak:</b> Bakara 2/238; Beyhakî, <i>es-Sünenü'l-kübrâ</i>; İbn Ebî Şeybe, <i>el-Musannef</i>; Suyûtî, <i>el-İtkân</i> (Übey b. Ka'b nüshası); Ebû Dâvûd, Vitr 5; Tirmizî, Vitr 10. Hüküm: Diyanet, <i>İlmihal</i> I, "Vitir namazı".</p>
+</article>
+
+<!-- ============ İMAN ============ -->
+<p class="part">İmanın özü</p>
+
+<article class="dua" id="amentu">
+  <header class="dua-head">
+    <p class="when">Namazın içinde okunmaz — ama namazın dayandığı temeldir</p>
+    <h2>Âmentü <small>· İmanın şartları</small></h2>
+    <ul class="tags"><li class="h">İman esaslarının özeti</li><li>Cibrîl hadisine dayanır</li></ul>
+  </header>
+  <div class="text">
+    <p class="ar" lang="ar">آمَنْتُ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ وَالْيَوْمِ الْآخِرِ وَبِالْقَدَرِ خَيْرِهِ وَشَرِّهِ مِنَ اللَّهِ تَعَالَىٰ، وَالْبَعْثُ بَعْدَ الْمَوْتِ حَقٌّ، أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ</p>
+    <p class="ok">Âmentü billâhi ve melâiketihî ve kütübihî ve rusülihî ve'l-yevmi'l-âhiri ve bi'l-kaderi hayrihî ve şerrihî mina'llâhi teâlâ, ve'l-ba'sü ba'de'l-mevti hakkun. Eşhedü en lâ ilâhe illallâh ve eşhedü enne Muhammeden abdühû ve rasûlüh.</p>
+    <p class="meal">Allah'a, meleklerine, kitaplarına, peygamberlerine, ahiret gününe, hayrın ve şerrin Allah'ın takdiriyle olduğuna inandım. Öldükten sonra dirilmek haktır. Şahitlik ederim ki Allah'tan başka ilah yoktur; yine şahitlik ederim ki Muhammed O'nun kulu ve elçisidir.</p>
+  </div>
+  <details class="words">
+    <summary>İfade ifade anlamı <span>· 9 parça</span></summary>
+    <ol class="phr">
+      <li><span class="p-ar" lang="ar">آمَنْتُ بِاللَّهِ</span><span class="p-ok">Âmentü billâhi</span><span class="p-tr">Allah'a iman ettim</span></li>
+      <li><span class="p-ar" lang="ar">وَمَلَائِكَتِهِ</span><span class="p-ok">ve melâiketihî</span><span class="p-tr">O'nun meleklerine</span></li>
+      <li><span class="p-ar" lang="ar">وَكُتُبِهِ</span><span class="p-ok">ve kütübihî</span><span class="p-tr">O'nun kitaplarına</span></li>
+      <li><span class="p-ar" lang="ar">وَرُسُلِهِ</span><span class="p-ok">ve rusülihî</span><span class="p-tr">O'nun peygamberlerine</span></li>
+      <li><span class="p-ar" lang="ar">وَالْيَوْمِ الْآخِرِ</span><span class="p-ok">ve'l-yevmi'l-âhiri</span><span class="p-tr">ve ahiret gününe</span></li>
+      <li><span class="p-ar" lang="ar">وَبِالْقَدَرِ خَيْرِهِ وَشَرِّهِ</span><span class="p-ok">ve bi'l-kaderi hayrihî ve şerrihî</span><span class="p-tr">kadere, hayrına ve şerrine</span></li>
+      <li><span class="p-ar" lang="ar">مِنَ اللَّهِ تَعَالَىٰ</span><span class="p-ok">mina'llâhi teâlâ</span><span class="p-tr">(her ikisinin de) yüce Allah'tan olduğuna</span></li>
+      <li><span class="p-ar" lang="ar">وَالْبَعْثُ بَعْدَ الْمَوْتِ حَقٌّ</span><span class="p-ok">ve'l-ba'sü ba'de'l-mevti hakkun</span><span class="p-tr">ölümden sonra diriliş haktır</span></li>
+      <li><span class="p-ar" lang="ar">أَشْهَدُ أَنْ لَا إِلَٰهَ إِلَّا اللَّهُ ...</span><span class="p-ok">Eşhedü en lâ ilâhe illallâh ...</span><span class="p-tr">Şahitlik ederim ki Allah'tan başka ilah yoktur ...</span></li>
+    </ol>
+  </details>
+  <div class="tefsir">
+    <h3>Neden bu sayfada?</h3>
+    <p>Âmentü namazın içinde okunan bir dua değildir; namazda karşılığı Ettehiyyâtü'deki şehadettir. Ama namazın neden kılındığını, kime ve neye inanarak kılındığını özetler. Çocukluktan itibaren namaz dualarıyla birlikte ezberlenmesinin sebebi budur: <strong>Namaz imanın bedendeki ifadesidir; Âmentü ise o imanın sözlü özetidir.</strong></p>
+    <h3>Kaynağı: Cibrîl hadisi</h3>
+    <blockquote class="q">
+      <p>Hz. Ömer anlatıyor: Bir gün Resûlullah'ın yanındayken bembeyaz elbiseli, saçları simsiyah, üzerinde yolculuk izi olmayan ve hiçbirimizin tanımadığı bir adam çıkageldi. Dizlerini Peygamber'in dizlerine dayayarak oturdu ve "Bana imandan haber ver" dedi. Resûlullah: <strong>"Allah'a, meleklerine, kitaplarına, peygamberlerine ve ahiret gününe iman etmen; kadere, hayrına ve şerrine iman etmendir"</strong> buyurdu. Adam gittikten sonra Peygamberimiz: "O Cebrâil'di; size dininizi öğretmeye geldi" dedi.</p>
+      <cite>Müslim, Îmân 1; benzeri Buhârî, Îmân 37 (Ebû Hüreyre'den)</cite>
+    </blockquote>
+    <p>Kur'an'da da bu esaslar birlikte sayılır: "Peygamber, Rabbinden kendisine indirilene iman etti, müminler de. Her biri Allah'a, meleklerine, kitaplarına ve peygamberlerine iman etti" (Bakara 2/285; ayrıca Nisâ 4/136).</p>
+    <h3>Altı esas, kısaca</h3>
+    <ol>
+      <li><strong>Allah'a iman:</strong> O'nun varlığına, birliğine, eşi ve benzeri olmadığına, bütün kemal sıfatlarla nitelendiğine inanmak. Diğer bütün esasların temeli budur.</li>
+      <li><strong>Meleklere iman:</strong> Nurdan yaratılmış, Allah'a asla isyan etmeyen, emirlerini yerine getiren varlıklara inanmak. Cebrâil, Mîkâil, İsrâfil, Azrâil büyükleridir; namazda selam verdiğimiz hafaza melekleri de onlardandır.</li>
+      <li><strong>Kitaplara iman:</strong> Tevrat, Zebur, İncil ve Kur'an'ın, ayrıca bazı peygamberlere verilen sahifelerin Allah katından indirildiğine; Kur'an'ın son ve korunmuş kitap olduğuna inanmak.</li>
+      <li><strong>Peygamberlere iman:</strong> Hz. Âdem'den Hz. Muhammed'e kadar bütün peygamberlere, aralarında ayrım yapmadan inanmak. Salli-Bârik'te Hz. İbrahim'in anılması bu zincirin bir hatırlatmasıdır.</li>
+      <li><strong>Ahiret gününe iman:</strong> Ölümden sonra dirilişe, hesaba, cennet ve cehenneme inanmak. Fâtiha'daki "Mâliki yevmi'd-dîn" ve Rabbenağfirlî'deki "yevme yekûmü'l-hisâb" her namazda bu imanı tazeler.</li>
+      <li><strong>Kadere iman:</strong> Olmuş ve olacak her şeyin Allah'ın ilmi, iradesi ve yaratmasıyla olduğuna inanmak. Bu, insanın iradesini ve sorumluluğunu ortadan kaldırmaz; kul seçer, Allah yaratır.</li>
+    </ol>
+    <h3>"Hayrı ve şerri Allah'tandır" ne demek?</h3>
+    <p>Bu ifade en çok yanlış anlaşılan cümledir. Ehl-i sünnete göre kötülüğün de <strong>yaratıcısı</strong> Allah'tır, ama Allah kötülükten <strong>razı değildir</strong>. İnsan iradesiyle bir şeyi seçer; Allah o seçimi yaratır ve insan seçiminden sorumlu olur. Ayrıca bize "şer" görünen şeylerin içinde çoğu zaman bilmediğimiz hikmetler vardır: "Hoşlanmadığınız bir şey sizin için hayırlı olabilir" (Bakara 2/216). Kadere iman, insanı tembelliğe değil; elinden geleni yaptıktan sonra sonuca razı olmaya, yani teslimiyete ve iç huzuruna götürür.</p>
+    <div class="note">Âmentü'nün bu metni Kur'an veya hadiste kelimesi kelimesine aynen geçen bir metin değil; Kur'an ayetleri ve Cibrîl hadisinden derlenmiş, Mâtürîdî-Hanefî geleneğinde iman esaslarını öğretmek için kullanılan bir özet formüldür. "Öldükten sonra diriliş haktır" cümlesi ahirete imanın içinde olduğu halde, inkârı en yaygın konu olduğu için ayrıca vurgulanmıştır.</div>
+  </div>
+  <p class="src"><b>Kaynak:</b> Müslim, Îmân 1; Buhârî, Îmân 37; Bakara 2/177, 216, 285; Nisâ 4/136. Akaid için: Diyanet, <i>İlmihal</i> I, "İman Esasları".</p>
+</article>
+
+<section class="dua faq" id="sorular" aria-labelledby="sorular-baslik">
+  <header class="dua-head">
+    <p class="when">Merak edilenler</p>
+    <h2 id="sorular-baslik">Sık sorulanlar</h2>
+  </header>
+  <details>
+    <summary>Anlamını bilmeden okuduğum namaz geçerli mi?</summary>
+    <p>Evet, geçerlidir. Namazın sahih olması için anlamı bilmek şart değildir. Ancak anlamı bilmek <strong>huşûyu</strong> (kalbin namazda olmasını) büyük ölçüde artırır. Kur'an, namaza "ne dediğinizi bilinceye kadar" yaklaşmamayı emrettiği bir ayette (Nisâ 4/43) — bu ayet sarhoşluk bağlamında olsa da — namazda söylenen sözün bilinçli söylenmesinin önemine işaret eder. "Kurtuluşa erenler, namazlarında huşû içinde olanlardır" (Mü'minûn 23/1-2).</p>
+  </details>
+  <details>
+    <summary>Namaz duaları neden Arapça okunur? Türkçe okusam olmaz mı?</summary>
+    <p>Fâtiha ve zamm-ı sure Kur'an'dır; Kur'an ise lafzı ve manasıyla birlikte Kur'an'dır, tercümesi Kur'an yerine geçmez. Bu yüzden dört mezhebin büyük çoğunluğuna göre namazda kıraat Arapça yapılır. Arapça okumak ayrıca dünyanın her yerindeki Müslümanları aynı kelimelerde birleştirir. Bu sayfadaki amaç, Arapçayı Türkçeyle değiştirmek değil; Arapça okurken ne dediğimizi bilmektir.</p>
+  </details>
+  <details>
+    <summary>Yeni öğreniyorum; duaları ezberleyene kadar ne yapabilirim?</summary>
+    <p>Bir adam Peygamberimize gelip "Kur'an'dan bir şey öğrenemiyorum, bana yetecek bir şey öğret" dedi. Peygamberimiz şunu söylemesini tavsiye etti: <em>"Sübhânallâh, ve'l-hamdü lillâh, ve lâ ilâhe illallâh, vallâhu ekber, ve lâ havle ve lâ kuvvete illâ billâh"</em> (Ebû Dâvûd, Salât; Nesâî, İftitâh — İbn Ebî Evfâ'dan). Âlimler, yeni Müslüman olan veya henüz ezberleyemeyen kişinin öğreninceye kadar bildiği kadarını okuyup gerisinde tesbih ve zikirle yetinebileceğini söylemiştir. Öğrenmeye öncelikle Fâtiha ve kısa bir sure ile başlamak en doğrusudur.</p>
+  </details>
+  <details>
+    <summary>Bir duayı unutursam veya yanlış yerde okursam ne olur?</summary>
+    <p>Hanefîlere göre <strong>vacip</strong> olan bir şey (Fâtiha, zamm-ı sure, Ettehiyyâtü, kunut gibi) yanılarak terk edilir veya geciktirilirse namazın sonunda <strong>sehiv secdesi</strong> yapılır: Son oturuşta Ettehiyyâtü okunduktan sonra sağa selam verilir, iki secde yapılır, tekrar oturup Ettehiyyâtü, Salli-Bârik ve Rabbenâ okunarak selam verilir. <strong>Sünnet</strong> olan bir şeyin (Sübhâneke, tesbihler, Salli-Bârik) unutulmasıyla namaz bozulmaz, sehiv secdesi de gerekmez. Farz bir şey terk edilirse namaz yeniden kılınır.</p>
+  </details>
+  <details>
+    <summary>Namazda huşûyu artırmak için ne yapabilirim?</summary>
+    <p>Birkaç pratik öneri: (1) Bu sayfadaki anlamları önce namaz dışında okuyun, sonra namazda o anlamı düşünerek söyleyin. (2) Her namazda yalnızca bir duaya odaklanın; bugün Sübhâneke, yarın Ettehiyyâtü. (3) Fâtiha'yı, yukarıdaki kudsî hadisi hatırlayarak ayet ayet, durarak okuyun. (4) Rükû ve secdede tesbihleri acele etmeden, en az üçer kez söyleyin. (5) Peygamberimizin tavsiyesini hatırlayın: "Namazına, veda eden birinin namazı gibi dur" (İbn Mâce, Zühd 15).</p>
+  </details>
+</section>
+
+<footer>
+  <p><strong>Not:</strong> Bu sayfa namazdaki dua ve zikirlerin anlamını öğrenmeye yardımcı olmak için hazırlanmış bir çalışmadır. Fıkhî hükümlerde Hanefî mezhebi esas alınmış, önemli farklılıklar belirtilmiştir. Hadis kaynakları kitap ve bölüm adıyla verilmiştir; numaralar baskılara göre küçük farklılıklar gösterebilir. Ayrıntılı fıkhî sorular için Diyanet İşleri Başkanlığı'nın yayınlarına ve ehil bir hocaya başvurulması tavsiye edilir.</p>
+  <p>Mealler Diyanet İşleri Başkanlığı Kur'an Yolu meali esas alınarak sadeleştirilmiştir. · <a href="/">← Projeler</a></p>
+</footer>
+
+</main>
+</div>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+
+  /* Görünüm anahtarları */
+  var toggles=document.querySelectorAll('[data-toggle]');
+  toggles.forEach(function(b){
+    var key=b.getAttribute('data-toggle');
+    var saved=store('nd-'+key);
+    if(saved==='off'){root.setAttribute('data-'+key,'off');b.setAttribute('aria-pressed','false')}
+    b.addEventListener('click',function(){
+      var on=b.getAttribute('aria-pressed')==='true';
+      var onCount=0;toggles.forEach(function(x){if(x.getAttribute('aria-pressed')==='true')onCount++});
+      if(on&&onCount===1)return; /* en az biri açık kalsın */
+      b.setAttribute('aria-pressed',on?'false':'true');
+      if(on)root.setAttribute('data-'+key,'off');else root.removeAttribute('data-'+key);
+      store('nd-'+key,on?'off':'on');
+    });
+  });
+
+  /* Arapça boyutu */
+  var scale=parseFloat(store('nd-scale'))||1;
+  function applyScale(){root.style.setProperty('--ar-scale',scale.toFixed(2))}
+  applyScale();
+  document.querySelectorAll('[data-size]').forEach(function(b){
+    b.addEventListener('click',function(){
+      scale=Math.min(1.6,Math.max(.8,scale+parseInt(b.getAttribute('data-size'),10)*.1));
+      applyScale();store('nd-scale',String(scale));
+    });
+  });
+
+  /* Mobil içindekiler */
+  var toc=document.getElementById('toc'),tocBtn=document.getElementById('toc-btn'),scrim=null;
+  function closeToc(){toc.classList.remove('open');tocBtn.setAttribute('aria-expanded','false');if(scrim){scrim.remove();scrim=null}}
+  tocBtn.addEventListener('click',function(){
+    if(toc.classList.contains('open')){closeToc();return}
+    toc.classList.add('open');tocBtn.setAttribute('aria-expanded','true');
+    scrim=document.createElement('div');scrim.className='scrim';scrim.addEventListener('click',closeToc);document.body.appendChild(scrim);
+  });
+  toc.addEventListener('click',function(e){if(e.target.closest('a'))closeToc()});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeToc()});
+
+  /* İçindekiler vurgusu */
+  var links={};toc.querySelectorAll('a').forEach(function(a){links[a.getAttribute('href').slice(1)]=a});
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){
+          Object.keys(links).forEach(function(k){links[k].classList.remove('on')});
+          var a=links[en.target.id];if(a)a.classList.add('on');
+        }
+      });
+    },{rootMargin:'-30% 0px -60% 0px'});
+    document.querySelectorAll('.dua[id]').forEach(function(s){io.observe(s)});
+  }
+
+  /* Bir rekatın akışı */
+  var steps=[
+    {t:'Kıyam — ayakta durmak',d:'İlk rekatta iftitah tekbiriyle başlanır, Sübhâneke ve Eûzü-Besmele okunur. Her rekatta Fâtiha ve ardından bir sure (zamm-ı sure) okunur. Farzların 3. ve 4. rekatlarında yalnız Fâtiha okunur.',r:[['tekbir','Tekbir'],['subhaneke','Sübhâneke'],['euzu','Eûzü-Besmele'],['fatiha','Fâtiha ve Âmin']]},
+    {t:'Rükû — eğilmek',d:'"Allâhu ekber" denilerek eğilinir; sırt düz, eller dizlerde. En az üç kez tesbih okunur.',r:[['ruku','Sübhâne Rabbiye\'l-Azîm ×3']]},
+    {t:'Kavme — rükûdan doğrulmak',d:'Doğrulurken "Semiallâhu limen hamideh", tam doğrulunca "Rabbenâ leke\'l-hamd" denir. Bir an tam dik durmak vaciptir.',r:[['kavme','Semiallâhu limen hamideh']]},
+    {t:'Secde — yere kapanmak',d:'"Allâhu ekber" denilerek alın ve burun yere konur. En az üç kez tesbih okunur. Kulun Rabbine en yakın olduğu andır.',r:[['secde','Sübhâne Rabbiye\'l-A\'lâ ×3']]},
+    {t:'Celse — iki secde arası oturuş',d:'"Allâhu ekber" denilerek secdeden kalkılıp bir tesbih süresi kadar oturulur. Hanefîlerde farzlarda özel dua okunmaz; hadiste "Rabbiğfirlî" dendiği rivayet edilir.',r:[['secde','Secde bölümündeki not']]},
+    {t:'İkinci secde',d:'Tekrar "Allâhu ekber" denilerek ikinci secdeye varılır ve aynı tesbih en az üç kez okunur. Ardından ya yeni rekat için kalkılır ya da oturulur.',r:[['secde','Sübhâne Rabbiye\'l-A\'lâ ×3']]},
+    {t:'Ka\'de — oturuş',d:'Her iki rekatta bir oturulur. İlk oturuşta yalnız Ettehiyyâtü; son oturuşta Ettehiyyâtü, Salli-Bârik ve Rabbenâ duaları okunur.',r:[['tahiyyat','Ettehiyyâtü'],['salli-barik','Salli-Bârik'],['rabbena','Rabbenâ duaları']]},
+    {t:'Selam — namazdan çıkış',d:'Önce sağa, sonra sola selam verilir. Ardından istiğfar, "Allâhümme ente\'s-selâm", Âyetü\'l-Kürsî ve tesbihat gelir.',r:[['selam','Selam'],['ente-selam','Ente\'s-selâm'],['tesbihat','Tesbihat']]}
+  ];
+  var stepBtns=document.querySelectorAll('.step'),panel=document.getElementById('step-panel');
+  function showStep(i){
+    stepBtns.forEach(function(b){b.setAttribute('aria-pressed',String(+b.getAttribute('data-i')===i))});
+    var s=steps[i];
+    panel.innerHTML='';
+    var h=document.createElement('p');h.innerHTML='<strong></strong>';h.firstChild.textContent=s.t;
+    var d=document.createElement('p');d.className='muted';d.style.color='var(--muted)';d.style.marginTop='4px';d.textContent=s.d;
+    var r=document.createElement('div');r.className='reads';
+    s.r.forEach(function(x){var a=document.createElement('a');a.href='#'+x[0];a.textContent=x[1]+' →';r.appendChild(a)});
+    panel.appendChild(h);panel.appendChild(d);panel.appendChild(r);
+  }
+  stepBtns.forEach(function(b){b.addEventListener('click',function(){showStep(+b.getAttribute('data-i'))})});
+  showStep(0);
+
+  /* Tesbih sayacı */
+  var phases=[
+    {n:33,t:'Sübhânallâh',ar:'سُبْحَانَ اللَّهِ',m:'Allah her türlü eksiklikten uzaktır.'},
+    {n:33,t:'Elhamdülillâh',ar:'اَلْحَمْدُ لِلَّهِ',m:'Hamd Allah\'a mahsustur.'},
+    {n:33,t:'Allâhu ekber',ar:'اَللَّهُ أَكْبَرُ',m:'Allah en büyüktür.'},
+    {n:1,t:'Lâ ilâhe illallâhu vahdehû...',ar:'لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ',m:'Yüzü tamamlayan tevhid: Allah\'tan başka ilah yoktur, O tektir, ortağı yoktur; mülk ve hamd O\'nundur, O her şeye kadirdir.'}
+  ];
+  var C=339.29,pi=0,count=0;
+  var el={tap:document.getElementById('tap'),prg:document.getElementById('prg'),c:document.getElementById('ccount'),of:document.getElementById('cof'),
+    ph:document.getElementById('cphase'),ar:document.getElementById('car'),m:document.getElementById('cmeal'),chips:document.querySelectorAll('#phases span'),reset:document.getElementById('creset')};
+  function render(){
+    var done=pi>=phases.length;
+    var p=phases[Math.min(pi,phases.length-1)];
+    el.c.textContent=done?'100':count;
+    el.of.textContent=done?'tamamlandı':'/ '+p.n;
+    el.ph.textContent=done?'Tamamlandı — Allah kabul etsin':p.t;
+    el.ar.textContent=done?'تَقَبَّلَ اللَّهُ':p.ar;
+    el.m.textContent=done?'Şimdi ellerinizi açıp dua edebilirsiniz.':p.m;
+    el.prg.setAttribute('stroke-dashoffset',done?0:(C*(1-count/p.n)).toFixed(2));
+    el.chips.forEach(function(s,i){s.className=i<pi?'ok2':(i===pi?'on':'')});
+    el.tap.setAttribute('aria-label',done?'Tesbihat tamamlandı':(p.t+', '+count+' / '+p.n+'. Saymak için dokunun.'));
+  }
+  el.tap.addEventListener('click',function(){
+    if(pi>=phases.length)return;
+    count++;
+    if(count>=phases[pi].n){
+      pi++;count=0;
+      try{if(navigator.vibrate)navigator.vibrate(pi>=phases.length?[60,60,60]:40)}catch(e){}
+    }
+    render();
+  });
+  el.reset.addEventListener('click',function(){pi=0;count=0;render()});
+  render();
+})();
+</script>
+</body>
+</html>
